@@ -1,4 +1,4 @@
-package com.tkap11.spendingrecord;
+package com.tkap11.spendingrecord.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;

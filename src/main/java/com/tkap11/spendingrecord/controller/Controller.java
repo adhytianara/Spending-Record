@@ -1,13 +1,11 @@
-package com.tkap11.spendingrecord;
+package com.tkap11.spendingrecord.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.LineSignatureValidator;
-import com.linecorp.bot.model.ReplyMessage;
-import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.*;
-import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
+import com.tkap11.spendingrecord.model.EventsModel;
+import com.tkap11.spendingrecord.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -15,10 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 public class Controller {
+
+    @Autowired
+    private BotService botService;
 
     @Autowired
     @Qualifier("lineMessagingClient")
@@ -42,30 +42,12 @@ public class Controller {
             EventsModel eventsModel = objectMapper.readValue(eventsPayload, EventsModel.class);
 
             eventsModel.getEvents().forEach((event)->{
-                if (event instanceof MessageEvent) {
-                    MessageEvent messageEvent = (MessageEvent) event;
-                    TextMessageContent textMessageContent = (TextMessageContent) messageEvent.getMessage();
-                    replyText(messageEvent.getReplyToken(), textMessageContent.getText());
-                }
+
             });
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
-
-    private void reply(ReplyMessage replyMessage) {
-        try {
-            lineMessagingClient.replyMessage(replyMessage).get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void replyText(String replyToken, String messageToUser){
-        TextMessage textMessage = new TextMessage(messageToUser);
-        ReplyMessage replyMessage = new ReplyMessage(replyToken, textMessage);
-        reply(replyMessage);
     }
 }
