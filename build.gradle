@@ -1,7 +1,21 @@
+buildscript {
+	ext.junitVersion = '5.6.0'
+	ext.checkstyleVersion = '8.29'
+	ext.checkstyleConfig = 'google_checks.xml'
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'checkstyle'
+}
+
+checkstyle {
+	toolVersion = checkstyleVersion
+	config = resources.text.fromFile(configDirectory.file("${checkstyleConfig}"))
+	maxWarnings = 0  // Fail the build if there are any warnings
+	sourceSets = []  // Do not run checkstyle on gradle build/check
 }
 
 group = 'com.tkap11'
