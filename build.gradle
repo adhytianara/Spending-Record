@@ -21,7 +21,6 @@ jacocoTestReport {
 		html.enabled true
 	}
 
-	// Gradle > 6.0 not deprecated
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it,
@@ -35,13 +34,13 @@ test.finalizedBy jacocoTestReport
 checkstyle {
 	toolVersion = checkstyleVersion
 	config = resources.text.fromFile(configDirectory.file("${checkstyleConfig}"))
-	maxWarnings = 0  // Fail the build if there are any warnings
-	sourceSets = []  // Do not run checkstyle on gradle build/check
+	maxWarnings = 0
+	sourceSets = []
 }
 
 group = 'com.tkap11'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
