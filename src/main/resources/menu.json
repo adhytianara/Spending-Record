@@ -1,0 +1,72 @@
+{
+  "type": "bubble",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Apa yang ingin kamu lakukan?",
+        "align": "center"
+      }
+    ]
+  },
+  "hero": {
+    "type": "image",
+    "url": "https://www.pngkey.com/png/detail/308-3086025_money-saving-purple-money-png.png",
+    "size": "full",
+    "aspectRatio": "2:1"
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "secondary",
+        "action": {
+          "type": "message",
+          "label": "Catat Pengeluaran ",
+          "text": "Catat Pengeluaran "
+        }
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "action": {
+          "type": "message",
+          "label": "Lihat Laporan ",
+          "text": "Lihat Laporan "
+        }
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "action": {
+          "type": "message",
+          "label": "Atur Budget",
+          "text": "Atur Budget"
+        }
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "action": {
+          "type": "message",
+          "label": "Sisa Budget",
+          "text": "Sisa Budget"
+        }
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "action": {
+          "type": "message",
+          "label": "Ingatkan Saya ",
+          "text": "Ingatkan Saya "
+        }
+      }
+    ]
+  }
+}

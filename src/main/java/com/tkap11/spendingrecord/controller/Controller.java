@@ -3,12 +3,17 @@ package com.tkap11.spendingrecord.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.LineSignatureValidator;
+import com.linecorp.bot.model.event.FollowEvent;
+import com.linecorp.bot.model.event.JoinEvent;
+import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.ReplyEvent;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.Multicast;
 import com.tkap11.spendingrecord.model.EventsModel;
 import com.tkap11.spendingrecord.service.BotService;
+import com.tkap11.spendingrecord.service.BotTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -49,7 +54,12 @@ public class Controller {
             EventsModel eventsModel = objectMapper.readValue(eventsPayload, EventsModel.class);
 
             eventsModel.getEvents().forEach((event)->{
-
+                if (event instanceof FollowEvent) {
+                    String replyToken = ((ReplyEvent) event).getReplyToken();
+                    botService.greetingMessage(replyToken);
+                } else if(event instanceof MessageEvent){
+                    botService.handleMessageEvent((MessageEvent) event);
+                }
             });
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
