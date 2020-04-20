@@ -1,12 +1,47 @@
+buildscript {
+	ext.junitVersion = '5.6.0'
+	ext.checkstyleVersion = '8.29'
+	ext.checkstyleConfig = 'google_checks.xml'
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'checkstyle'
+	id 'jacoco'
+}
+
+jacoco {
+	toolVersion = "0.8.5"
+}
+
+jacocoTestReport {
+	reports {
+		html.enabled true
+	}
+
+	// Gradle > 6.0 not deprecated
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it,
+					exclude: [])
+		}))
+	}
+}
+
+test.finalizedBy jacocoTestReport
+
+checkstyle {
+	toolVersion = checkstyleVersion
+	config = resources.text.fromFile(configDirectory.file("${checkstyleConfig}"))
+	maxWarnings = 0  // Fail the build if there are any warnings
+	sourceSets = []  // Do not run checkstyle on gradle build/check
 }
 
 group = 'com.tkap11'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -17,6 +52,7 @@ dependencies {
 	implementation('com.linecorp.bot:line-bot-api-client:1.20.0')
 	implementation('com.linecorp.bot:line-bot-model:1.20.0')
 	implementation('org.apache.commons:commons-io:1.3.2')
+	testImplementation 'org.mockito:mockito-inline:2.13.0'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

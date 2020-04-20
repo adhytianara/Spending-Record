@@ -1,6 +1,38 @@
-  
+image: gradle:6.1.1-jdk11
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=true"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
 stages:
+  - build
+  - test
   - deploy
+
+# Main CI Jobs
+Build:
+  stage: build
+  script:
+    - gradle assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
+
+CheckStyle:
+  stage: test
+  script: gradle checkstyleMain
+  allow_failure: true
+
+TestMain:
+  stage: test
+  script:
+    - gradle check
+    - gradle test
+    - gradle jacocoTestReport
+    - cat build/reports/jacoco/test/html/index.html
 
 Deployment:
     image: ruby:2.4
@@ -11,7 +43,6 @@ Deployment:
     script:
         - dpl --provider=heroku --app=$HEROKU_APPNAME --api-key=$HEROKU_APIKEY
         - export HEROKU_API_KEY=$HEROKU_APIKEY
-        # - heroku config:set --app $HEROKU_APPNAME SECRET_KEY=$SECRET_KEY
         - heroku config:set --app $HEROKU_APPNAME LINE_CHANNEL_SECRET=$LINE_CHANNEL_SECRET
         - heroku config:set --app $HEROKU_APPNAME LINE_CHANNEL_ACCESS_TOKEN=$LINE_CHANNEL_ACCESS_TOKEN
         - heroku run --app $HEROKU_APPNAME migrate
