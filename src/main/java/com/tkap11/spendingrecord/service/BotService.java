@@ -2,6 +2,7 @@ package com.tkap11.spendingrecord.service;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.Source;
@@ -31,24 +32,16 @@ public class BotService {
 
     public void replyFlexMenu(String replyToken){
         FlexMessage flexMessage = botTemplate.createFlexMenu();
-        ReplyMessage replyMessage = new ReplyMessage(replyToken, flexMessage);
-        reply(replyMessage);
-    }
-
-    public void handleMessageEvent(MessageEvent messageEvent){
-        TextMessageContent textMessageContent = (TextMessageContent) messageEvent.getMessage();
-        String replyToken = messageEvent.getReplyToken();
-        String userMessage = textMessageContent.getText();
-        if (userMessage.toLowerCase().equals("menu")){
-            replyFlexMenu(replyToken);
-        } else{
-            replyText(replyToken, "Sedang dalam pengembangan");
-        }
+        reply(replyToken, flexMessage);
     }
 
     private void replyText(String replyToken, String message){
         TextMessage textMessage = new TextMessage(message);
-        ReplyMessage replyMessage = new ReplyMessage(replyToken, textMessage);
+        reply(replyToken, textMessage);
+    }
+
+    public void reply(String replyToken, Message message) {
+        ReplyMessage replyMessage = new ReplyMessage(replyToken, message);
         reply(replyMessage);
     }
 
@@ -57,6 +50,18 @@ public class BotService {
             lineMessagingClient.replyMessage(replyMessage).get();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void handleMessageEvent(MessageEvent messageEvent){
+        TextMessageContent textMessageContent = (TextMessageContent) messageEvent.getMessage();
+        String replyToken = messageEvent.getReplyToken();
+        String userMessage = textMessageContent.getText();
+        boolean userMessageIsEqualsToMenu = userMessage.equalsIgnoreCase("menu");
+        if (userMessageIsEqualsToMenu){
+            replyFlexMenu(replyToken);
+        } else{
+            replyText(replyToken, "Sedang dalam pengembangan");
         }
     }
 }
