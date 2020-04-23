@@ -1,6 +1,5 @@
-[![pipeline status](https://gitlab.com/TKAdpro11/SpendingRecord/badges/master/pipeline.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/master) 
-[![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/master/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/master)
-
+[![pipeline status](https://gitlab.com/TKAdpro11/SpendingRecord/badges/CatatPengeluaran-Adhytia/pipeline.svg)]
+[![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/CatatPengeluaran-Adhytia/coverage.svg)]
 # Spending Record TK AP 11 ADPRO B
 Spending Record adalah aplikasi berbasis LINEBOT yang berfungsi untuk mencatat pengeluaran. <br>
 Anggota Kelompok :
