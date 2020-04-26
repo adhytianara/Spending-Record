@@ -59,11 +59,12 @@ public class BotService {
         boolean userMessageIsEqualsToMenu=userMessage.equalsIgnoreCase("menu");
         if (userMessageIsEqualsToMenu){
             replyFlexMenu(replyToken);
-        } else{
-            replyText(replyToken, "Sedang dalam pengembangan");
-        }
-        if (textMessageContent.getText().toLowerCase().contains("sisa")){
+        } else if (textMessageContent.getText().toLowerCase().contains("sisa")){
             relpyFlexSisa(replyToken);
         }
+        else{
+            replyText(replyToken, "Sedang dalam pengembangan");
+        }
+
     }
 }
