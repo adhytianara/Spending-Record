@@ -114,9 +114,9 @@
         "style": "primary",
         "height": "sm",
         "action": {
-          "type": "postback",
+          "type": "message",
           "label": "Atur Ulang Budget",
-          "data": "hello"
+          "text": "Atur Budget"
         },
         "color": "#348255"
       },
