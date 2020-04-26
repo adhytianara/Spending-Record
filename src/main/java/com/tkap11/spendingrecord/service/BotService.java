@@ -29,6 +29,11 @@ public class BotService {
         reply(replyToken, flexMessage);
     }
 
+    public void relpyFlexSisa(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexSisa();
+        reply(replyToken, flexMessage);
+    }
+
     private void replyText(String replyToken, String message){
         TextMessage textMessage=new TextMessage(message);
         reply(replyToken, textMessage);
@@ -56,6 +61,9 @@ public class BotService {
             replyFlexMenu(replyToken);
         } else{
             replyText(replyToken, "Sedang dalam pengembangan");
+        }
+        if (textMessageContent.getText().toLowerCase().contains("sisa")){
+            relpyFlexSisa(replyToken);
         }
     }
 }
