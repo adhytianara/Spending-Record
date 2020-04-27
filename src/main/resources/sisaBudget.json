@@ -7,8 +7,8 @@
     "aspectRatio": "20:13",
     "aspectMode": "cover",
     "action": {
-      "type": "uri",
-      "uri": "http://linecorp.com/"
+      "type": "message",
+      "text": "menu"
     }
   },
   "body": {
@@ -31,7 +31,6 @@
             "text": "XXX",
             "size": "xl",
             "weight": "bold",
-            "color": "#348255",
             "align": "center"
           }
         ]
