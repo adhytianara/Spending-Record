@@ -16,7 +16,7 @@
                 "type": "image",
                 "url": "https://www.picturepaste.ca/images/2020/04/27/3.png",
                 "aspectMode": "cover",
-                "aspectRatio": "150:98",
+                "aspectRatio": "1.51:1",
                 "size": "full",
                 "action": {
                   "type": "message",
@@ -32,7 +32,7 @@
                 "url": "https://www.picturepaste.ca/images/2020/04/27/4.png",
                 "size": "full",
                 "aspectMode": "cover",
-                "aspectRatio": "150:98",
+                "aspectRatio": "1.51:1",
                 "action": {
                   "type": "message",
                   "text": "Atur Budget"
@@ -53,7 +53,7 @@
                 "url": "https://www.picturepaste.ca/images/2020/04/27/2.png",
                 "size": "full",
                 "aspectMode": "cover",
-                "aspectRatio": "150:98",
+                "aspectRatio": "1.51:1",
                 "action": {
                   "type": "message",
                   "text": "Sisa Budget"
@@ -65,7 +65,7 @@
               {
                 "type": "image",
                 "url": "https://www.picturepaste.ca/images/2020/04/27/5.png",
-                "aspectRatio": "150:98",
+                "aspectRatio": "1.51:1",
                 "size": "full",
                 "aspectMode": "cover",
                 "action": {
@@ -85,7 +85,7 @@
             "type": "image",
             "url": "https://www.picturepaste.ca/images/2020/04/27/ingatkan-saya-2.png",
             "aspectMode": "cover",
-            "aspectRatio": "20:5",
+            "aspectRatio": "3:1",
             "size": "5xl",
             "action": {
               "type": "message",

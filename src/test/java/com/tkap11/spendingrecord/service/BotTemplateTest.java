@@ -14,6 +14,7 @@ class BotTemplateTest {
         assertTrue(flexMessage instanceof FlexMessage);
     }
 
+    @Test
     void createFlexSisa() {
         FlexMessage flexMessage = botTemplate.createFlexSisa();
         assertTrue(flexMessage instanceof FlexMessage);
