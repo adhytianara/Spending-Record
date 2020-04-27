@@ -89,7 +89,7 @@
             "size": "5xl",
             "action": {
               "type": "message",
-              "text": "hello"
+              "text": "Ingatkan Saya"
             }
           }
         ],
