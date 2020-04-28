@@ -29,6 +29,11 @@ public class BotService {
         reply(replyToken, flexMessage);
     }
 
+    public void relpyFlexChooseCategory(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexChooseCategory();
+        reply(replyToken, flexMessage);
+    }
+
     private void replyText(String replyToken, String message){
         TextMessage textMessage=new TextMessage(message);
         reply(replyToken, textMessage);
@@ -54,6 +59,8 @@ public class BotService {
         boolean userMessageIsEqualsToMenu=userMessage.equalsIgnoreCase("menu");
         if (userMessageIsEqualsToMenu){
             replyFlexMenu(replyToken);
+        } else if (userMessage.toLowerCase().contains("catat")) {
+            relpyFlexChooseCategory(replyToken);
         } else{
             replyText(replyToken, "Sedang dalam pengembangan");
         }

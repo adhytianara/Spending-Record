@@ -30,7 +30,20 @@ public class BotTemplate {
         return flexMessage;
     }
 
-    public FlexMessage createFlexChooseCategory() {
-        return null;
+    public FlexMessage createFlexChooseCategory(){
+        FlexMessage flexMessage=new FlexMessage("Kategori pengeluaran", null);
+        try {
+            ClassLoader classLoader=getClass().getClassLoader();
+            String encoding=StandardCharsets.UTF_8.name();
+            String flexTemplate=IOUtils.toString(Objects.requireNonNull(
+                    classLoader.getResourceAsStream("ChooseCategory.json")), encoding);
+
+            ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
+            FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
+            flexMessage=new FlexMessage("Kategori pengeluaran", flexContainer);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return flexMessage;
     }
 }
