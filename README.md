@@ -8,5 +8,7 @@ Anggota Kelompok :
 3. 1806205193 - Muhammad Dahlan Yasadipura 
 4. 1706979386 - Nabilah Adani Nurulizzah 
 5. 1506737666 - Ismail Shalih Abdul Kholiq
-
+<br>
+ *Link logo Spending Record : https://www.picturepaste.ca/images/2020/04/24/Spending-Record-1.png<br>
+ *Warna dasar : #348255
  

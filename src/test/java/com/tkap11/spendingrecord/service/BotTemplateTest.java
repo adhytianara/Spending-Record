@@ -19,4 +19,10 @@ class BotTemplateTest {
         FlexMessage flexMessage = botTemplate.createFlexChooseCategory();
         assertTrue(flexMessage instanceof FlexMessage);
     }
+
+    @Test
+    void createFlexSisa() {
+        FlexMessage flexMessage = botTemplate.createFlexSisa();
+        assertTrue(flexMessage instanceof FlexMessage);
+    }
 }

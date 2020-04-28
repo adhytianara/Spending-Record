@@ -7,6 +7,9 @@ import com.linecorp.bot.model.event.FollowEvent;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.ReplyEvent;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
+import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.PushMessage;
+import com.linecorp.bot.model.Multicast;
 import com.tkap11.spendingrecord.model.EventsModel;
 import com.tkap11.spendingrecord.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.Set;
+import java.util.Arrays;
+import java.util.HashSet;
 
 @RestController
 public class Controller {
@@ -61,6 +68,53 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value="/pushmessage/{id}/{message}", method=RequestMethod.GET)
+    public ResponseEntity<String> pushmessage(
+            @PathVariable("id") String userId,
+            @PathVariable("message") String textMsg 
+    ){
+        TextMessage textMessage = new TextMessage(textMsg);
+        PushMessage pushMessage = new PushMessage(userId, textMessage);
+        push(pushMessage);
+    
+        return new ResponseEntity<String>("Push message:"+textMsg+"\nsent to: "+userId, HttpStatus.OK);
+    }
+
+    private void push(PushMessage pushMessage){
+        try {
+            lineMessagingClient.pushMessage(pushMessage).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @RequestMapping(value="/multicast", method=RequestMethod.GET)
+    public ResponseEntity<String> multicast(){
+        String[] userIdList = {
+        "U206d25c2ea6bd87c17655609xxxxxxxx",
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"};
+        Set<String> listUsers = new HashSet<String>(Arrays.asList(userIdList));
+        if(listUsers.size() > 0){
+            String textMsg = "Ini pesan multicast";
+            sendMulticast(listUsers, textMsg);
+        }
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
+
+    private void sendMulticast(Set<String> sourceUsers, String txtMessage){
+        TextMessage message = new TextMessage(txtMessage);
+        Multicast multicast = new Multicast(sourceUsers, message);
+     
+        try {
+            lineMessagingClient.multicast(multicast).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
         }
     }
 }

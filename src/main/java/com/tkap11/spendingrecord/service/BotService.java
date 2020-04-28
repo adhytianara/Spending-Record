@@ -33,6 +33,11 @@ public class BotService {
         FlexMessage flexMessage=botTemplate.createFlexChooseCategory();
         reply(replyToken, flexMessage);
     }
+    
+    public void relpyFlexSisa(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexSisa();
+        reply(replyToken, flexMessage);
+    }
 
     private void replyText(String replyToken, String message){
         TextMessage textMessage=new TextMessage(message);
@@ -61,8 +66,12 @@ public class BotService {
             replyFlexMenu(replyToken);
         } else if (userMessage.toLowerCase().contains("catat")) {
             relpyFlexChooseCategory(replyToken);
-        } else{
+        } else if (textMessageContent.getText().toLowerCase().contains("sisa")){
+            relpyFlexSisa(replyToken);
+        }
+        else{
             replyText(replyToken, "Sedang dalam pengembangan");
         }
+
     }
 }
