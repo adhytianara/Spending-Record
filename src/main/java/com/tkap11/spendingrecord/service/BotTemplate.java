@@ -30,6 +30,23 @@ public class BotTemplate {
         return flexMessage;
     }
 
+    public FlexMessage createFlexSisa() {
+        FlexMessage flexMessage=new FlexMessage("Sisa Pengeluaran", null);
+        try {
+            ClassLoader classLoader=getClass().getClassLoader();
+            String encoding=StandardCharsets.UTF_8.name();
+            String flexTemplate=IOUtils.toString(Objects.requireNonNull(
+                    classLoader.getResourceAsStream("sisaBudget.json")), encoding);
+
+            ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
+            FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
+            flexMessage=new FlexMessage("Sisa Pengeluaran", flexContainer);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return flexMessage;
+    }
+
     public FlexMessage createFlexChooseCategory(){
         FlexMessage flexMessage=new FlexMessage("Kategori pengeluaran", null);
         try {
