@@ -29,4 +29,8 @@ public class BotTemplate {
         }
         return flexMessage;
     }
+
+    public FlexMessage createFlexChooseCategory() {
+        return null;
+    }
 }
