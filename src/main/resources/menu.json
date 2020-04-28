@@ -14,7 +14,7 @@
             "contents": [
               {
                 "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/3.png",
+                "url": "https://i.ibb.co/QDC9gQ5/3.png",
                 "aspectMode": "cover",
                 "aspectRatio": "1.51:1",
                 "size": "full",
@@ -29,7 +29,7 @@
               },
               {
                 "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/4.png",
+                "url": "https://i.ibb.co/wrcNRPY/4.png",
                 "size": "full",
                 "aspectMode": "cover",
                 "aspectRatio": "1.51:1",
@@ -50,7 +50,7 @@
             "contents": [
               {
                 "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/2.png",
+                "url": "https://i.ibb.co/WgkK60z/2.png",
                 "size": "full",
                 "aspectMode": "cover",
                 "aspectRatio": "1.51:1",
@@ -64,7 +64,7 @@
               },
               {
                 "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/5.png",
+                "url": "https://i.ibb.co/mtdypQg/5.png",
                 "aspectRatio": "1.51:1",
                 "size": "full",
                 "aspectMode": "cover",
@@ -83,7 +83,7 @@
         "contents": [
           {
             "type": "image",
-            "url": "https://www.picturepaste.ca/images/2020/04/27/ingatkan-saya-2.png",
+            "url": "https://i.ibb.co/5rjgnDD/ingatkan-saya-2.png",
             "aspectMode": "cover",
             "aspectRatio": "3:1",
             "size": "5xl",
@@ -108,5 +108,6 @@
       }
     ],
     "paddingAll": "0px"
-  }
+  },
+  "size": "giga"
 }
