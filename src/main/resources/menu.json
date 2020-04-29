@@ -1,95 +1,245 @@
 {
-  "type": "bubble",
-  "size": "giga",
-  "hero": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/QDC9gQ5/3.png"
+      },
+      "body": {
         "type": "box",
-        "layout": "horizontal",
+        "layout": "vertical",
         "contents": [
           {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://i.ibb.co/QDC9gQ5/3.png",
-                "size": "full",
-                "aspectRatio": "1.51:1",
-                "aspectMode": "cover"
-              },
-              {
-                "type": "separator"
-              },
-              {
-                "type": "image",
-                "url": "https://i.ibb.co/wrcNRPY/4.png",
-                "aspectRatio": "1.51:1",
-                "aspectMode": "cover",
-                "size": "full"
-              }
-            ]
+            "type": "spacer",
+            "size": "md"
           },
           {
-            "type": "separator"
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Catat Pengeluaran",
+              "text": "Catat Pengeluaran"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "md"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
           },
           {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://i.ibb.co/WgkK60z/2.png",
-                "aspectRatio": "1.51:1",
-                "size": "full",
-                "aspectMode": "cover"
-              },
-              {
-                "type": "separator"
-              },
-              {
-                "type": "image",
-                "url": "https://i.ibb.co/mtdypQg/5.png",
-                "aspectRatio": "1.51:1",
-                "size": "full",
-                "aspectMode": "cover"
-              }
-            ]
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://i.ibb.co/wrcNRPY/4.png",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Atur Budget",
+              "text": "Atur Budget"
+            },
+            "style": "primary",
+            "color": "#348255"
           }
         ]
-      }
-    ]
-  },
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "image",
-        "url": "https://i.ibb.co/5rjgnDD/ingatkan-saya-2.png",
-        "aspectRatio": "3:1",
-        "size": "5xl",
-        "aspectMode": "cover"
-      }
-    ]
-  },
-  "footer": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "separator",
-        "color": "#348255"
       },
-      {
-        "type": "text",
-        "text": "Action Menu",
-        "size": "sm",
-        "align": "center"
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
       }
-    ],
-    "height": "30px"
-  }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/WgkK60z/2.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Sisa Budget",
+              "text": "Sisa Budget"
+            },
+            "style": "primary",
+            "color": "#348255"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/mtdypQg/5.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Laporan",
+              "text": "Lihat Laporan"
+            },
+            "style": "primary",
+            "color": "#348255"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/N7SvdV9/6.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Ingatkan Saya",
+              "text": "Ingatkan Saya"
+            },
+            "style": "primary",
+            "color": "#348255"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      }
+    }
+  ]
 }
