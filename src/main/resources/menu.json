@@ -59,6 +59,59 @@
       "type": "bubble",
       "hero": {
         "type": "image",
+        "url": "https://i.ibb.co/f1CpkSx/4.png",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Atur Budget",
+              "text": "Atur Budget"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "• Action Menu •",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover",
@@ -116,7 +169,7 @@
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover",
-        "url": "https://i.ibb.co/r525jPK/5.png"
+        "url": "https://i.ibb.co/PTBWNbN/5.png"
       },
       "body": {
         "type": "box",
@@ -167,63 +220,10 @@
       "type": "bubble",
       "hero": {
         "type": "image",
-        "url": "https://i.ibb.co/QFQT3xZ/4.png",
-        "size": "full",
-        "aspectRatio": "20:13",
-        "aspectMode": "cover"
-      },
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "spacer",
-            "size": "md"
-          },
-          {
-            "type": "button",
-            "action": {
-              "type": "message",
-              "label": "Atur Budget",
-              "text": "Atur Budget"
-            },
-            "style": "primary",
-            "color": "#348255",
-            "height": "sm"
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "separator",
-            "color": "#348255"
-          },
-          {
-            "type": "text",
-            "text": "• Action Menu •",
-            "size": "sm",
-            "align": "center"
-          }
-        ],
-        "height": "30px"
-      },
-      "styles": {
-        "header": {
-          "backgroundColor": "#348255"
-        }
-      }
-    },
-    {
-      "type": "bubble",
-      "hero": {
-        "type": "image",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover",
-        "url": "https://i.ibb.co/SckNgYX/6.png"
+        "url": "https://i.ibb.co/VMFkcfY/6.png"
       },
       "body": {
         "type": "box",
