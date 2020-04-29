@@ -34,62 +34,82 @@ class BotServiceTest {
 
     @Test
     void greetingMessageTest() {
-        // mock line bot api client response
         when(lineMessagingClient.replyMessage(new ReplyMessage(
                 "replyToken", singletonList(null)
         ))).thenReturn(CompletableFuture.completedFuture(
                 new BotApiResponse("ok", Collections.emptyList())
         ));
-
         botService.greetingMessage("replyToken");
-
-        // confirm createFlexMenu is called
         verify(botTemplate, times(1)).createFlexMenu();
     }
 
     @Test
     void handleMessageEventWhenUserSendMenuMessage() {
-        // if user send "menu" as text message
         final MessageEvent request = new MessageEvent<>(
                 "replyToken",
                 new UserSource("userId"),
                 new TextMessageContent("id", "menu"),
                 Instant.now()
         );
-
-        // mock line bot api client response
         when(lineMessagingClient.replyMessage(new ReplyMessage(
                 "replyToken", singletonList(null)
         ))).thenReturn(CompletableFuture.completedFuture(
                 new BotApiResponse("ok", Collections.emptyList())
         ));
-
         botService.handleMessageEvent(request);
-
-        // confirm createFlexMenu is called
         verify(botTemplate, times(1)).createFlexMenu();
     }
 
     @Test
-    void handleMessageEventWhenUserSendOtherThanMenuMessage() {
+    void handleMessageEventWhenUserSendCatatMessage() {
         final MessageEvent request = new MessageEvent<>(
                 "replyToken",
                 new UserSource("userId"),
-                new TextMessageContent("id", "text"),
+                new TextMessageContent("id", "catat"),
                 Instant.now()
         );
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(null)
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.handleMessageEvent(request);
+        verify(botTemplate, times(1)).createFlexChooseCategory();
+    }
 
-        // mock line bot api client response
+    @Test
+    void handleMessageEventWhenUserSendSisaMessage() {
+        final MessageEvent request = new MessageEvent<>(
+                "replyToken",
+                new UserSource("userId"),
+                new TextMessageContent("id", "sisa"),
+                Instant.now()
+        );
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(null)
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.handleMessageEvent(request);
+        verify(botTemplate, times(1)).createFlexSisa();
+    }
+
+    @Test
+    void handleMessageEventWhenUserSendRandomMessage() {
+        final MessageEvent request = new MessageEvent<>(
+                "replyToken",
+                new UserSource("userId"),
+                new TextMessageContent("id", "ds"),
+                Instant.now()
+        );
         when(lineMessagingClient.replyMessage(new ReplyMessage(
                 "replyToken", singletonList(new TextMessage("Sedang dalam pengembangan"))
         ))).thenReturn(CompletableFuture.completedFuture(
                 new BotApiResponse("ok", Collections.emptyList())
         ));
-
         botService.handleMessageEvent(request);
-
-        // confirm createFlexMenu is called
         verify(lineMessagingClient).replyMessage(new ReplyMessage(
                 "replyToken", singletonList(new TextMessage("Sedang dalam pengembangan"))
-        ));    }
+        ));
+    }
 }
