@@ -1,9 +1,38 @@
 {
   "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://files.catbox.moe/02n9ge.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "message",
+      "text": "menu"
+    }
+  },
   "body": {
     "type": "box",
     "layout": "vertical",
     "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Catat Pengeluaran",
+            "size": "xl",
+            "color": "#348255",
+            "weight": "bold",
+            "decoration": "none"
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "lg"
+      },
       {
         "type": "box",
         "layout": "horizontal",
@@ -14,13 +43,13 @@
             "contents": [
               {
                 "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/3.png",
+                "url": "https://files.catbox.moe/qtiriw.png",
                 "aspectMode": "cover",
                 "aspectRatio": "1.51:1",
                 "size": "full",
                 "action": {
                   "type": "message",
-                  "text": "Catat Pengeluaran"
+                  "text": "Makanan"
                 }
               },
               {
@@ -29,13 +58,13 @@
               },
               {
                 "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/4.png",
+                "url": "https://files.catbox.moe/ftpawv.png",
                 "size": "full",
                 "aspectMode": "cover",
                 "aspectRatio": "1.51:1",
                 "action": {
                   "type": "message",
-                  "text": "Atur Budget"
+                  "text": "Tagihan"
                 }
               }
             ],
@@ -50,13 +79,13 @@
             "contents": [
               {
                 "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/2.png",
+                "url": "https://files.catbox.moe/gqafbt.png",
                 "size": "full",
                 "aspectMode": "cover",
                 "aspectRatio": "1.51:1",
                 "action": {
                   "type": "message",
-                  "text": "Sisa Budget"
+                  "text": "Transportasi"
                 }
               },
               {
@@ -64,18 +93,23 @@
               },
               {
                 "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/5.png",
+                "url": "https://files.catbox.moe/v3udib.png",
                 "aspectRatio": "1.51:1",
                 "size": "full",
                 "aspectMode": "cover",
                 "action": {
                   "type": "message",
-                  "text": "Lihat Laporan"
+                  "text": "Belanja"
                 }
               }
             ]
           }
-        ]
+        ],
+        "paddingTop": "0px",
+        "paddingBottom": "0px"
+      },
+      {
+        "type": "separator"
       },
       {
         "type": "box",
@@ -83,30 +117,53 @@
         "contents": [
           {
             "type": "image",
-            "url": "https://www.picturepaste.ca/images/2020/04/27/ingatkan-saya-2.png",
-            "aspectMode": "cover",
+            "url": "https://files.catbox.moe/62wud2.png",
+            "aspectMode": "fit",
             "aspectRatio": "3:1",
-            "size": "5xl",
+            "size": "4xl",
             "action": {
               "type": "message",
-              "text": "Ingatkan Saya"
+              "text": "Lainnya"
             }
           }
         ],
-        "spacing": "xl",
-        "paddingAll": "20px"
+        "spacing": "none",
+        "margin": "none"
       },
       {
-        "type": "separator",
+        "type": "separator"
+      }
+    ],
+    "spacing": "none",
+    "paddingBottom": "0px"
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "none",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "label": "Batal",
+          "text": "Batal"
+        },
         "color": "#348255"
       },
       {
-        "type": "text",
-        "text": "Action Menu",
-        "align": "center",
+        "type": "spacer",
         "size": "sm"
       }
     ],
-    "paddingAll": "0px"
+    "flex": 0,
+    "margin": "none"
+  },
+  "styles": {
+    "body": {
+      "separator": false
+    }
   }
 }
