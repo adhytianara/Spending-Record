@@ -3,11 +3,11 @@
   "contents": [
     {
       "type": "bubble",
-      "size": "micro",
+      "size": "nano",
       "hero": {
         "type": "image",
         "size": "full",
-        "aspectRatio": "20:13",
+        "aspectRatio": "4:3",
         "aspectMode": "cover",
         "url": "https://i.ibb.co/QDC9gQ5/3.png"
       },
@@ -44,7 +44,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "xs",
+            "size": "xxs",
             "align": "center"
           }
         ],
@@ -53,12 +53,12 @@
     },
     {
       "type": "bubble",
-      "size": "micro",
+      "size": "nano",
       "hero": {
         "type": "image",
         "url": "https://i.ibb.co/wrcNRPY/4.png",
         "size": "full",
-        "aspectRatio": "20:13",
+        "aspectRatio": "4:3",
         "aspectMode": "cover"
       },
       "body": {
@@ -93,7 +93,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "xs",
+            "size": "xxs",
             "align": "center"
           }
         ],
@@ -102,11 +102,11 @@
     },
     {
       "type": "bubble",
-      "size": "micro",
+      "size": "nano",
       "hero": {
         "type": "image",
         "size": "full",
-        "aspectRatio": "20:13",
+        "aspectRatio": "4:3",
         "aspectMode": "cover",
         "url": "https://i.ibb.co/WgkK60z/2.png"
       },
@@ -143,7 +143,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "xs",
+            "size": "xxs",
             "align": "center"
           }
         ],
@@ -152,11 +152,11 @@
     },
     {
       "type": "bubble",
-      "size": "micro",
+      "size": "nano",
       "hero": {
         "type": "image",
         "size": "full",
-        "aspectRatio": "20:13",
+        "aspectRatio": "4:3",
         "aspectMode": "cover",
         "url": "https://i.ibb.co/mtdypQg/5.png"
       },
@@ -193,7 +193,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "xs",
+            "size": "xxs",
             "align": "center"
           }
         ],
@@ -202,11 +202,11 @@
     },
     {
       "type": "bubble",
-      "size": "micro",
+      "size": "nano",
       "hero": {
         "type": "image",
         "size": "full",
-        "aspectRatio": "20:13",
+        "aspectRatio": "4:3",
         "aspectMode": "cover",
         "url": "https://i.ibb.co/N7SvdV9/6.png"
       },
@@ -243,7 +243,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "xs",
+            "size": "xxs",
             "align": "center"
           }
         ],
