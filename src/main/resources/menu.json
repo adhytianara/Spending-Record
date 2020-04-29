@@ -12,8 +12,8 @@
             "text": "• Spending Record •",
             "color": "#ffffff",
             "size": "xs",
-            "style": "italic",
-            "align": "center"
+            "align": "center",
+            "weight": "bold"
           }
         ],
         "height": "30px",
@@ -82,8 +82,8 @@
             "text": "• Spending Record •",
             "color": "#ffffff",
             "size": "xs",
-            "style": "italic",
-            "align": "center"
+            "align": "center",
+            "weight": "bold"
           }
         ],
         "height": "30px",
@@ -133,6 +133,11 @@
           }
         ],
         "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
       }
     },
     {
@@ -146,8 +151,8 @@
             "text": "• Spending Record •",
             "color": "#ffffff",
             "size": "xs",
-            "style": "italic",
-            "align": "center"
+            "align": "center",
+            "weight": "bold"
           }
         ],
         "height": "30px",
@@ -198,6 +203,11 @@
           }
         ],
         "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
       }
     },
     {
@@ -211,8 +221,8 @@
             "text": "• Spending Record •",
             "color": "#ffffff",
             "size": "xs",
-            "style": "italic",
-            "align": "center"
+            "align": "center",
+            "weight": "bold"
           }
         ],
         "height": "30px",
@@ -263,6 +273,11 @@
           }
         ],
         "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
       }
     },
     {
@@ -276,8 +291,8 @@
             "text": "• Spending Record •",
             "color": "#ffffff",
             "size": "xs",
-            "style": "italic",
-            "align": "center"
+            "align": "center",
+            "weight": "bold"
           }
         ],
         "height": "30px",
@@ -328,6 +343,11 @@
           }
         ],
         "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
       }
     }
   ]
