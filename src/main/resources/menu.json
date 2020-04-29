@@ -1,137 +1,334 @@
 {
-  "type": "bubble",
-  "size": "kilo",
-  "header": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "text",
-        "text": "• Spending Record •",
-        "color": "#ffffff",
-        "offsetBottom": "10px",
-        "size": "xxs",
-        "align": "center",
-        "weight": "bold"
-      },
-      {
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "header": {
         "type": "box",
-        "layout": "horizontal",
+        "layout": "vertical",
         "contents": [
           {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://i.ibb.co/QDC9gQ5/3.png",
-                "aspectMode": "cover",
-                "aspectRatio": "1.51:1",
-                "size": "full",
-                "action": {
-                  "type": "message",
-                  "text": "Catat Pengeluaran"
-                }
-              },
-              {
-                "type": "separator"
-              },
-              {
-                "type": "image",
-                "url": "https://i.ibb.co/wrcNRPY/4.png",
-                "size": "full",
-                "aspectMode": "cover",
-                "aspectRatio": "1.51:1",
-                "action": {
-                  "type": "message",
-                  "text": "Atur Budget"
-                }
-              }
-            ],
-            "flex": 1
-          },
-          {
-            "type": "separator"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://i.ibb.co/WgkK60z/2.png",
-                "size": "full",
-                "aspectMode": "cover",
-                "aspectRatio": "1.51:1",
-                "action": {
-                  "type": "message",
-                  "text": "Sisa Budget"
-                }
-              },
-              {
-                "type": "separator"
-              },
-              {
-                "type": "image",
-                "url": "https://i.ibb.co/mtdypQg/5.png",
-                "aspectRatio": "1.51:1",
-                "size": "full",
-                "aspectMode": "cover",
-                "action": {
-                  "type": "message",
-                  "text": "Lihat Laporan"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "position": "relative",
-    "backgroundColor": "#348255"
-  },
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "image",
-            "url": "https://i.ibb.co/5rjgnDD/ingatkan-saya-2.png",
-            "aspectMode": "cover",
-            "size": "5xl",
-            "action": {
-              "type": "message",
-              "text": "Ingatkan Saya"
-            },
-            "aspectRatio": "3:1",
-            "offsetBottom": "33px"
+            "type": "text",
+            "text": "• Spending Record •",
+            "color": "#ffffff",
+            "size": "xs",
+            "style": "italic",
+            "align": "center"
           }
         ],
-        "spacing": "xl",
-        "paddingAll": "20px"
-      }
-    ],
-    "height": "60px"
-  },
-  "footer": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "separator",
-        "color": "#348255"
+        "height": "30px",
+        "backgroundColor": "#348255"
       },
-      {
-        "type": "text",
-        "text": "Action Menu",
-        "size": "xs",
-        "align": "center"
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/QDC9gQ5/3.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Catat Pengeluaran",
+              "text": "Catat Pengeluaran"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
       }
-    ],
-    "height": "30px"
-  }
+    },
+    {
+      "type": "bubble",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "• Spending Record •",
+            "color": "#ffffff",
+            "size": "xs",
+            "style": "italic",
+            "align": "center"
+          }
+        ],
+        "height": "30px",
+        "backgroundColor": "#348255"
+      },
+      "hero": {
+        "type": "image",
+        "url": "https://i.ibb.co/wrcNRPY/4.png",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Atur Budget",
+              "text": "Atur Budget"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      }
+    },
+    {
+      "type": "bubble",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "• Spending Record •",
+            "color": "#ffffff",
+            "size": "xs",
+            "style": "italic",
+            "align": "center"
+          }
+        ],
+        "height": "30px",
+        "backgroundColor": "#348255"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/WgkK60z/2.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Sisa Budget",
+              "text": "Sisa Budget"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      }
+    },
+    {
+      "type": "bubble",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "• Spending Record •",
+            "color": "#ffffff",
+            "size": "xs",
+            "style": "italic",
+            "align": "center"
+          }
+        ],
+        "height": "30px",
+        "backgroundColor": "#348255"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/mtdypQg/5.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Laporan",
+              "text": "Lihat Laporan"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      }
+    },
+    {
+      "type": "bubble",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "• Spending Record •",
+            "color": "#ffffff",
+            "size": "xs",
+            "style": "italic",
+            "align": "center"
+          }
+        ],
+        "height": "30px",
+        "backgroundColor": "#348255"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/N7SvdV9/6.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Ingatkan Saya",
+              "text": "Ingatkan Saya"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      }
+    }
+  ]
 }
