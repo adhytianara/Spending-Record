@@ -3,6 +3,7 @@
   "contents": [
     {
       "type": "bubble",
+      "size": "micro",
       "hero": {
         "type": "image",
         "size": "full",
@@ -22,12 +23,12 @@
             "type": "button",
             "action": {
               "type": "message",
-              "label": "Catat Pengeluaran",
+              "label": "Submit",
               "text": "Catat Pengeluaran"
             },
             "style": "primary",
             "color": "#348255",
-            "height": "md"
+            "height": "sm"
           }
         ],
         "borderColor": "#348255"
@@ -43,7 +44,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "sm",
+            "size": "xs",
             "align": "center"
           }
         ],
@@ -52,6 +53,7 @@
     },
     {
       "type": "bubble",
+      "size": "micro",
       "hero": {
         "type": "image",
         "url": "https://i.ibb.co/wrcNRPY/4.png",
@@ -71,11 +73,12 @@
             "type": "button",
             "action": {
               "type": "message",
-              "label": "Atur Budget",
+              "label": "Submit",
               "text": "Atur Budget"
             },
             "style": "primary",
-            "color": "#348255"
+            "color": "#348255",
+            "height": "sm"
           }
         ]
       },
@@ -90,7 +93,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "sm",
+            "size": "xs",
             "align": "center"
           }
         ],
@@ -99,6 +102,7 @@
     },
     {
       "type": "bubble",
+      "size": "micro",
       "hero": {
         "type": "image",
         "size": "full",
@@ -118,11 +122,12 @@
             "type": "button",
             "action": {
               "type": "message",
-              "label": "Sisa Budget",
+              "label": "Submit",
               "text": "Sisa Budget"
             },
             "style": "primary",
-            "color": "#348255"
+            "color": "#348255",
+            "height": "sm"
           }
         ],
         "borderColor": "#348255"
@@ -138,7 +143,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "sm",
+            "size": "xs",
             "align": "center"
           }
         ],
@@ -147,6 +152,7 @@
     },
     {
       "type": "bubble",
+      "size": "micro",
       "hero": {
         "type": "image",
         "size": "full",
@@ -166,11 +172,12 @@
             "type": "button",
             "action": {
               "type": "message",
-              "label": "Lihat Laporan",
+              "label": "Submit",
               "text": "Lihat Laporan"
             },
             "style": "primary",
-            "color": "#348255"
+            "color": "#348255",
+            "height": "sm"
           }
         ],
         "borderColor": "#348255"
@@ -186,7 +193,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "sm",
+            "size": "xs",
             "align": "center"
           }
         ],
@@ -195,6 +202,7 @@
     },
     {
       "type": "bubble",
+      "size": "micro",
       "hero": {
         "type": "image",
         "size": "full",
@@ -214,11 +222,12 @@
             "type": "button",
             "action": {
               "type": "message",
-              "label": "Ingatkan Saya",
+              "label": "Submit",
               "text": "Ingatkan Saya"
             },
             "style": "primary",
-            "color": "#348255"
+            "color": "#348255",
+            "height": "sm"
           }
         ],
         "borderColor": "#348255"
@@ -234,7 +243,7 @@
           {
             "type": "text",
             "text": "Action Menu",
-            "size": "sm",
+            "size": "xs",
             "align": "center"
           }
         ],
