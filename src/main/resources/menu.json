@@ -3,28 +3,12 @@
   "contents": [
     {
       "type": "bubble",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "• Spending Record •",
-            "color": "#ffffff",
-            "size": "xs",
-            "align": "center",
-            "weight": "bold"
-          }
-        ],
-        "height": "30px",
-        "backgroundColor": "#348255"
-      },
       "hero": {
         "type": "image",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover",
-        "url": "https://i.ibb.co/QDC9gQ5/3.png"
+        "url": "https://i.ibb.co/qdNBGDf/3.png"
       },
       "body": {
         "type": "box",
@@ -58,7 +42,7 @@
           },
           {
             "type": "text",
-            "text": "Action Menu",
+            "text": "• Action Menu •",
             "size": "sm",
             "align": "center"
           }
@@ -73,97 +57,12 @@
     },
     {
       "type": "bubble",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "• Spending Record •",
-            "color": "#ffffff",
-            "size": "xs",
-            "align": "center",
-            "weight": "bold"
-          }
-        ],
-        "height": "30px",
-        "backgroundColor": "#348255"
-      },
-      "hero": {
-        "type": "image",
-        "url": "https://i.ibb.co/wrcNRPY/4.png",
-        "size": "full",
-        "aspectRatio": "20:13",
-        "aspectMode": "cover"
-      },
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "spacer",
-            "size": "md"
-          },
-          {
-            "type": "button",
-            "action": {
-              "type": "message",
-              "label": "Atur Budget",
-              "text": "Atur Budget"
-            },
-            "style": "primary",
-            "color": "#348255",
-            "height": "sm"
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "separator",
-            "color": "#348255"
-          },
-          {
-            "type": "text",
-            "text": "Action Menu",
-            "size": "sm",
-            "align": "center"
-          }
-        ],
-        "height": "30px"
-      },
-      "styles": {
-        "header": {
-          "backgroundColor": "#348255"
-        }
-      }
-    },
-    {
-      "type": "bubble",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "• Spending Record •",
-            "color": "#ffffff",
-            "size": "xs",
-            "align": "center",
-            "weight": "bold"
-          }
-        ],
-        "height": "30px",
-        "backgroundColor": "#348255"
-      },
       "hero": {
         "type": "image",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover",
-        "url": "https://i.ibb.co/WgkK60z/2.png"
+        "url": "https://i.ibb.co/7t08Jh6/2.png"
       },
       "body": {
         "type": "box",
@@ -197,7 +96,7 @@
           },
           {
             "type": "text",
-            "text": "Action Menu",
+            "text": "• Action Menu •",
             "size": "sm",
             "align": "center"
           }
@@ -212,28 +111,12 @@
     },
     {
       "type": "bubble",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "• Spending Record •",
-            "color": "#ffffff",
-            "size": "xs",
-            "align": "center",
-            "weight": "bold"
-          }
-        ],
-        "height": "30px",
-        "backgroundColor": "#348255"
-      },
       "hero": {
         "type": "image",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover",
-        "url": "https://i.ibb.co/mtdypQg/5.png"
+        "url": "https://i.ibb.co/r525jPK/5.png"
       },
       "body": {
         "type": "box",
@@ -282,28 +165,65 @@
     },
     {
       "type": "bubble",
-      "header": {
+      "hero": {
+        "type": "image",
+        "url": "https://i.ibb.co/QFQT3xZ/4.png",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
         "type": "box",
         "layout": "vertical",
         "contents": [
           {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Atur Budget",
+              "text": "Atur Budget"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
             "type": "text",
-            "text": "• Spending Record •",
-            "color": "#ffffff",
-            "size": "xs",
-            "align": "center",
-            "weight": "bold"
+            "text": "• Action Menu •",
+            "size": "sm",
+            "align": "center"
           }
         ],
-        "height": "30px",
-        "backgroundColor": "#348255"
+        "height": "30px"
       },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
       "hero": {
         "type": "image",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover",
-        "url": "https://i.ibb.co/N7SvdV9/6.png"
+        "url": "https://i.ibb.co/SckNgYX/6.png"
       },
       "body": {
         "type": "box",
@@ -337,7 +257,7 @@
           },
           {
             "type": "text",
-            "text": "Action Menu",
+            "text": "• Action Menu •",
             "size": "sm",
             "align": "center"
           }
