@@ -41,7 +41,7 @@
         "style": "secondary",
         "action": {
           "type": "postback",
-          "label": "Ubah",
+          "label": "Ubah Waktu",
           "displayText": "Ubah Waktu",
           "data": "Ubah"
         }
