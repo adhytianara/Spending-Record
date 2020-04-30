@@ -1,4 +1,4 @@
-package com.tkap11.spendingrecord;
+package com.tkap11.spendingrecord.database;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.LineSignatureValidator;
