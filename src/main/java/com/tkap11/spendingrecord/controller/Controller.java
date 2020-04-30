@@ -59,6 +59,7 @@ public class Controller {
             eventsModel.getEvents().forEach(event->{
                 if (event instanceof FollowEvent) {
                     String replyToken=((ReplyEvent) event).getReplyToken();
+                    botService.source = event.getSource();
                     botService.greetingMessage(replyToken);
                 } else if(event instanceof MessageEvent){
                     botService.handleMessageEvent((MessageEvent) event);
