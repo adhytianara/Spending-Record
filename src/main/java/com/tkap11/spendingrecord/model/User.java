@@ -1,33 +1,38 @@
 package com.tkap11.spendingrecord.model;
 
 public class User {
-    public User(Long id, String userId, String displayName) {
+    private Long id;
+    private String userId;
+    private String displayName;
+
+    public User(Long aId, String aUserId, String aDisplayName)
+    {
+        id=aId;
+        userId=aUserId;
+        displayName=aDisplayName;
     }
 
     public Long getId() {
-        //TODO
-        return null;
+        return id;
     }
 
-    public void setId(long id) {
-        //TODO
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserId() {
-        //TODO
-        return null;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        //TODO
+        this.userId = userId;
     }
 
     public String getDisplayName() {
-        //TODO
-        return null;
+        return displayName;
     }
 
     public void setDisplayName(String displayName) {
-        //TODO
+        this.displayName = displayName;
     }
 }
