@@ -44,6 +44,11 @@ public class BotService {
         reply(replyToken, flexMessage);
     }
 
+    private void replyUbahAlarm(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexUbah();
+        reply(replyToken, flexMessage);
+    }
+
     private void replyText(String replyToken, String message){
         TextMessage textMessage=new TextMessage(message);
         reply(replyToken, textMessage);
@@ -75,6 +80,8 @@ public class BotService {
             relpyFlexSisa(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")){
             replyFlexAlarm(replyToken);
+        } else if (textMessageContent.getText().toLowerCase().contains("ubah")){
+            replyUbahAlarm(replyToken);
         }
         else{
             replyText(replyToken, "Sedang dalam pengembangan");
