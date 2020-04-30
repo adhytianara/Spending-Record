@@ -2,6 +2,8 @@ package com.tkap11.spendingrecord.service;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.PushMessage;
+import com.linecorp.bot.model.Multicast;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.FlexMessage;
@@ -10,6 +12,8 @@ import com.linecorp.bot.model.message.TextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
+
+import java.util.Set;
 
 @Service
 public class BotService {
@@ -62,6 +66,39 @@ public class BotService {
     private void reply(ReplyMessage replyMessage) {
         try {
             lineMessagingClient.replyMessage(replyMessage).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void push(PushMessage pushMessage){
+        try {
+            lineMessagingClient.pushMessage(pushMessage).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void pushAlarm(String to, Message message){
+        PushMessage pushMessage = new PushMessage(to, message);
+        push(pushMessage);
+    }
+
+    public void multicast(Set<String> to, Message message) {
+        try {
+            Multicast multicast = new Multicast(to, message);
+            lineMessagingClient.multicast(multicast).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendMulticast(Set<String> sourceUsers, String txtMessage){
+        TextMessage message = new TextMessage(txtMessage);
+        Multicast multicast = new Multicast(sourceUsers, message);
+
+        try {
+            lineMessagingClient.multicast(multicast).get();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
