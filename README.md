@@ -1,7 +1,9 @@
 # Spending Record TK AP 11 ADPRO B
 
 Spending Record adalah aplikasi berbasis LINEBOT yang berfungsi untuk mencatat pengeluaran. <br>
+<br>
 Master : [![pipeline status](https://gitlab.com/TKAdpro11/SpendingRecord/badges/master/pipeline.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/master) [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/master/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/master) <br>
+<br>
 Anggota Kelompok : <br>
 1806141321 - Muhamad Adhytia Wana Putra R - Catat Pengeluaran [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/CatatPengeluaran-Adhytia/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/CatatPengeluaran-Adhytia)<br>
 1806205193 - Muhammad Dahlan Yasadipura - Lihat Laporan [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/LihatLaporan-Dahlan/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/LihatLaporan-Dahlan)<br>
