@@ -48,7 +48,7 @@ public class BotService {
         reply(replyToken, flexMessage);
     }
 
-    private void replyUbahAlarm(String replyToken){
+    public void replyUbahAlarm(String replyToken){
         FlexMessage flexMessage=botTemplate.createFlexUbah();
         reply(replyToken, flexMessage);
     }
