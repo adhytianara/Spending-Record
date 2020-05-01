@@ -13,6 +13,6 @@ Anggota Kelompok : <br>
 
 
 <br>
- *Link logo Spending Record : https://www.picturepaste.ca/images/2020/04/24/Spending-Record-1.png<br>
+ *Link logo Spending Record : https://i.ibb.co/HH32hbg/Spending-Record-1.png <br>
  *Warna dasar : #348255
  

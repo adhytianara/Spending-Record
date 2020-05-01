@@ -2,6 +2,8 @@ package com.tkap11.spendingrecord.service;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.PushMessage;
+import com.linecorp.bot.model.Multicast;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.Source;
@@ -12,6 +14,8 @@ import com.linecorp.bot.model.profile.UserProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
+
+import java.util.Set;
 
 @Service
 public class BotService {
@@ -53,6 +57,16 @@ public class BotService {
         reply(replyToken, flexMessage);
     }
 
+    public void replyFlexAlarm(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexAlarm();
+        reply(replyToken, flexMessage);
+    }
+
+    private void replyUbahAlarm(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexUbah();
+        reply(replyToken, flexMessage);
+    }
+
     private void replyText(String replyToken, String message){
         TextMessage textMessage=new TextMessage(message);
         reply(replyToken, textMessage);
@@ -79,6 +93,39 @@ public class BotService {
         }
     }
 
+    private void push(PushMessage pushMessage){
+        try {
+            lineMessagingClient.pushMessage(pushMessage).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void pushAlarm(String to, Message message){
+        PushMessage pushMessage = new PushMessage(to, message);
+        push(pushMessage);
+    }
+
+    public void multicast(Set<String> to, Message message) {
+        try {
+            Multicast multicast = new Multicast(to, message);
+            lineMessagingClient.multicast(multicast).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendMulticast(Set<String> sourceUsers, String txtMessage){
+        TextMessage message = new TextMessage(txtMessage);
+        Multicast multicast = new Multicast(sourceUsers, message);
+
+        try {
+            lineMessagingClient.multicast(multicast).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void handleMessageEvent(MessageEvent messageEvent){
         TextMessageContent textMessageContent=(TextMessageContent) messageEvent.getMessage();
         String replyToken=messageEvent.getReplyToken();
@@ -90,6 +137,10 @@ public class BotService {
             relpyFlexChooseCategory(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("sisa")){
             relpyFlexSisa(replyToken);
+        } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")){
+            replyFlexAlarm(replyToken);
+        } else if (textMessageContent.getText().toLowerCase().contains("ubah")){
+            replyUbahAlarm(replyToken);
         }
         else{
             replyText(replyToken, "Sedang dalam pengembangan");
