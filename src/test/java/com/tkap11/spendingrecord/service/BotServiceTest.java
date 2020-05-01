@@ -91,5 +91,31 @@ class BotServiceTest {
         // confirm createFlexMenu is called
         verify(lineMessagingClient).replyMessage(new ReplyMessage(
                 "replyToken", singletonList(new TextMessage("Sedang dalam pengembangan"))
-        ));    }
+        ));
+    }
+
+    @Test
+    void handleMessageEventWhenUserSendSisaMessage(){
+        // if the user text message contains "sisa"
+        final MessageEvent request = new MessageEvent<>(
+                "replyToken",
+                new UserSource("userId"),
+                new TextMessageContent("id", "sisa"),
+                Instant.now()
+        );
+
+        // mock line bot api client response
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(null)
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+
+        botService.handleMessageEvent(request);
+
+        // confirm createFlexSisa is called
+        verify(botTemplate, times(1)).createFlexSisa();
+    }
+
+
 }
