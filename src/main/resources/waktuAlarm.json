@@ -1,5 +1,16 @@
 {
   "type": "bubble",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Ingatkan Saya",
+        "weight": "bold"
+      }
+    ]
+  },
   "hero": {
     "type": "image",
     "url": "https://www.picturepaste.ca/images/2020/04/27/ingatkan-saya-2.png",
@@ -30,7 +41,6 @@
             "action": {
               "type": "datetimepicker",
               "label": "pilih waktu",
-              "data": "hello",
               "mode": "time",
               "max": "23:59",
               "min": "00:00",
