@@ -1,112 +1,274 @@
 {
-  "type": "bubble",
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/qdNBGDf/3.png"
+      },
+      "body": {
         "type": "box",
-        "layout": "horizontal",
+        "layout": "vertical",
         "contents": [
           {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/3.png",
-                "aspectMode": "cover",
-                "aspectRatio": "1.51:1",
-                "size": "full",
-                "action": {
-                  "type": "message",
-                  "text": "Catat Pengeluaran"
-                }
-              },
-              {
-                "type": "separator",
-                "margin": "none"
-              },
-              {
-                "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/4.png",
-                "size": "full",
-                "aspectMode": "cover",
-                "aspectRatio": "1.51:1",
-                "action": {
-                  "type": "message",
-                  "text": "Atur Budget"
-                }
-              }
-            ],
-            "flex": 1
+            "type": "spacer",
+            "size": "md"
           },
           {
-            "type": "separator"
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Catat Pengeluaran",
+              "text": "Catat Pengeluaran"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
           },
           {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/2.png",
-                "size": "full",
-                "aspectMode": "cover",
-                "aspectRatio": "1.51:1",
-                "action": {
-                  "type": "message",
-                  "text": "Sisa Budget"
-                }
-              },
-              {
-                "type": "separator"
-              },
-              {
-                "type": "image",
-                "url": "https://www.picturepaste.ca/images/2020/04/27/5.png",
-                "aspectRatio": "1.51:1",
-                "size": "full",
-                "aspectMode": "cover",
-                "action": {
-                  "type": "message",
-                  "text": "Lihat Laporan"
-                }
-              }
-            ]
+            "type": "text",
+            "text": "• Action Menu •",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://i.ibb.co/f1CpkSx/4.png",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Atur Budget",
+              "text": "Atur Budget"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
           }
         ]
       },
-      {
+      "footer": {
         "type": "box",
-        "layout": "horizontal",
+        "layout": "vertical",
         "contents": [
           {
-            "type": "image",
-            "url": "https://www.picturepaste.ca/images/2020/04/27/ingatkan-saya-2.png",
-            "aspectMode": "cover",
-            "aspectRatio": "3:1",
-            "size": "5xl",
-            "action": {
-              "type": "message",
-              "text": "Ingatkan Saya"
-            }
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "• Action Menu •",
+            "size": "sm",
+            "align": "center"
           }
         ],
-        "spacing": "xl",
-        "paddingAll": "20px"
+        "height": "30px"
       },
-      {
-        "type": "separator",
-        "color": "#348255"
-      },
-      {
-        "type": "text",
-        "text": "Action Menu",
-        "align": "center",
-        "size": "sm"
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
       }
-    ],
-    "paddingAll": "0px"
-  }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/7t08Jh6/2.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Sisa Budget",
+              "text": "Sisa Budget"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "• Action Menu •",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/PTBWNbN/5.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Laporan",
+              "text": "Lihat Laporan"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "Action Menu",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://i.ibb.co/VMFkcfY/6.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "spacer",
+            "size": "md"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Ingatkan Saya",
+              "text": "Ingatkan Saya"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#348255"
+          },
+          {
+            "type": "text",
+            "text": "• Action Menu •",
+            "size": "sm",
+            "align": "center"
+          }
+        ],
+        "height": "30px"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    }
+  ]
 }
