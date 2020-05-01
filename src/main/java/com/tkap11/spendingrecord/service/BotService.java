@@ -62,7 +62,7 @@ public class BotService {
         reply(replyToken, flexMessage);
     }
 
-    private void replyUbahAlarm(String replyToken){
+    public void replyFlexUbah(String replyToken){
         FlexMessage flexMessage=botTemplate.createFlexUbah();
         reply(replyToken, flexMessage);
     }
@@ -140,7 +140,7 @@ public class BotService {
         } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")){
             replyFlexAlarm(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("ubah")){
-            replyUbahAlarm(replyToken);
+            replyFlexUbah(replyToken);
         }
         else{
             replyText(replyToken, "Sedang dalam pengembangan");
