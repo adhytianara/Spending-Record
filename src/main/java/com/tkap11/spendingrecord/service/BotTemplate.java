@@ -12,7 +12,21 @@ import java.util.Objects;
 
 @Service
 public class BotTemplate {
-
+    public FlexMessage createFlex(String altText, String resourcePath) {
+        FlexMessage flexMessage=new FlexMessage(altText, null);
+        try {
+            ClassLoader classLoader=getClass().getClassLoader();
+            String encoding=StandardCharsets.UTF_8.name();
+            String flexTemplate=IOUtils.toString(Objects.requireNonNull(
+                    classLoader.getResourceAsStream(resourcePath)), encoding);
+            ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
+            FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
+            flexMessage=new FlexMessage(altText, flexContainer);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return flexMessage;
+    }
 
     public FlexMessage createFlexMenu() {
         FlexMessage flexMessage=new FlexMessage("Action Menu", null);
