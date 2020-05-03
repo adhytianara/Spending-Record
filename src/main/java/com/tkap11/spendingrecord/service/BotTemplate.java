@@ -77,4 +77,39 @@ public class BotTemplate {
         }
         return flexMessage;
     }
+
+    public FlexMessage createFlexAlarm(){
+        FlexMessage flexMessage=new FlexMessage("Ingatkan Saya", null);
+        try {
+            ClassLoader classLoader=getClass().getClassLoader();
+            String encoding=StandardCharsets.UTF_8.name();
+            String flexTemplate=IOUtils.toString(Objects.requireNonNull(
+                    classLoader.getResourceAsStream("ingatkanSaya.json")), encoding);
+
+            ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
+            FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
+            flexMessage=new FlexMessage("Ingatkan Saya", flexContainer);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return flexMessage;
+    }
+
+    public FlexMessage createFlexUbah(){
+        FlexMessage flexMessage=new FlexMessage("Waktu Alarm", null);
+        try {
+            ClassLoader classLoader=getClass().getClassLoader();
+            String encoding=StandardCharsets.UTF_8.name();
+            String flexTemplate=IOUtils.toString(Objects.requireNonNull(
+                    classLoader.getResourceAsStream("waktuAlarm.json")), encoding);
+
+            ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
+            FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
+            flexMessage=new FlexMessage("Waktu Alarm", flexContainer);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return flexMessage;
+    }
+
 }
