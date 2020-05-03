@@ -6,14 +6,10 @@ import com.linecorp.bot.client.LineSignatureValidator;
 import com.linecorp.bot.model.event.FollowEvent;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.ReplyEvent;
-import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.Multicast;
-import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.linecorp.bot.spring.boot.annotation.EventMapping;
-import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import com.tkap11.spendingrecord.model.EventsModel;
 import com.tkap11.spendingrecord.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.HashSet;
 
-@LineMessageHandler
 @RestController
 public class Controller {
 
@@ -49,15 +43,32 @@ public class Controller {
     @Qualifier("lineSignatureValidator")
     private LineSignatureValidator lineSignatureValidator;
 
-    @EventMapping
-    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-        botService.handleMessageEvent(event);
-    }
+    @RequestMapping(value="/webhook", method=RequestMethod.POST)
+    public ResponseEntity<String> callback(
+            @RequestHeader("X-Line-Signature") String xLineSignature,
+            @RequestBody String eventsPayload)
+    {
+        try {
+            if (!lineSignatureValidator.validateSignature(eventsPayload.getBytes(), xLineSignature)) {
+                throw new RuntimeException("Invalid Signature Validation");
+            }
 
-    @EventMapping
-    public void handleFollowEvent(FollowEvent event) {
-        String replyToken=((ReplyEvent) event).getReplyToken();
-        botService.source = event.getSource();
-        botService.greetingMessage(replyToken);
+            ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
+            EventsModel eventsModel=objectMapper.readValue(eventsPayload, EventsModel.class);
+
+            eventsModel.getEvents().forEach(event->{
+                if (event instanceof FollowEvent) {
+                    String replyToken=((ReplyEvent) event).getReplyToken();
+                    botService.source = event.getSource();
+                    botService.greetingMessage(replyToken);
+                } else if(event instanceof MessageEvent){
+                    botService.handleMessageEvent((MessageEvent) event);
+                }
+            });
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
