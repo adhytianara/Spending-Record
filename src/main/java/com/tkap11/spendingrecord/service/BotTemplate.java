@@ -82,7 +82,7 @@ public class BotTemplate {
     }
 
     public FlexMessage createFlexUbah(){
-        FlexMessage flexMessage=new FlexMessage("Ubah Waktu", null);
+        FlexMessage flexMessage=new FlexMessage("Waktu Alarm", null);
         try {
             ClassLoader classLoader=getClass().getClassLoader();
             String encoding=StandardCharsets.UTF_8.name();
@@ -91,7 +91,7 @@ public class BotTemplate {
 
             ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
             FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
-            flexMessage=new FlexMessage("Ubah Waktu", flexContainer);
+            flexMessage=new FlexMessage("Waktu Alarm", flexContainer);
         } catch (IOException e){
             e.printStackTrace();
         }

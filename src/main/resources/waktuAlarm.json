@@ -5,39 +5,25 @@
     "url": "https://www.picturepaste.ca/images/2020/04/27/ingatkan-saya-2.png",
     "size": "full",
     "aspectRatio": "3:1",
-    "aspectMode": "cover",
-    "action": {
-      "type": "message",
-      "text": "ingatkan"
-    }
+    "backgroundColor": "#348255"
   },
   "body": {
     "type": "box",
-    "layout": "vertical"
+    "layout": "vertical",
     "contents": [
       {
         "type": "text",
-        "text": "Tambahkan Alarm",
-        "size": "xl",
-        "weight": "bold"
+        "text": "Ubah Waktu Notifikasi"
       },
       {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "button",
-            "action": {
-              "type": "datetimepicker",
-              "label": "pilih waktu",
-              "data": "hello",
-              "mode": "time",
-              "max": "23:59",
-              "min": "00:00",
-              "initial": "00:00"
-            }
-          }
-        ]
+        "type": "button",
+        "action": {
+          "type": "datetimepicker",
+          "label": "pilih waktu",
+          "data": "waktu",
+          "mode": "time",
+          "initial": "00:00"
+        }
       }
     ]
   }

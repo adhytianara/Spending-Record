@@ -1,0 +1,134 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://www.picturepaste.ca/images/2020/04/24/Spending-Record-1.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "message",
+      "text": "menu"
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Sisa Budget",
+            "size": "xl",
+            "color": "#348255",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "XXX",
+            "size": "xl",
+            "weight": "bold",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Periode  :",
+            "size": "sm",
+            "margin": "none"
+          },
+          {
+            "type": "text",
+            "text": "xxx",
+            "size": "sm",
+            "position": "relative",
+            "align": "start"
+          },
+          {
+            "type": "filler",
+            "flex": 2
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "sm"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Budget",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "Rp xxx"
+          }
+        ],
+        "spacing": "none",
+        "paddingTop": "7px"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Sisa",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "Rp xxx"
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      }
+    ],
+    "spacing": "xs"
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "label": "Atur Ulang Budget",
+          "text": "Atur Budget"
+        },
+        "color": "#348255"
+      },
+      {
+        "type": "spacer",
+        "size": "sm"
+      }
+    ],
+    "flex": 0
+  },
+  "styles": {
+    "body": {
+      "separator": false
+    }
+  }
+}

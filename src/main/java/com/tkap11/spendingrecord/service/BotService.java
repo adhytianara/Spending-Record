@@ -6,9 +6,11 @@ import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.Multicast;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.profile.UserProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
@@ -24,8 +26,20 @@ public class BotService {
     @Autowired
     private BotTemplate botTemplate;
 
+    @Autowired
+    private DatabaseService dbService;
+
+    public Source source;
+
     public void greetingMessage(String replyToken) {
+        registerUser(source);
         replyFlexMenu(replyToken);
+    }
+
+    private void registerUser(Source source) {
+        String senderId = source.getSenderId();
+        UserProfileResponse sender = getProfile(senderId);
+        dbService.registerUser(sender.getUserId(), sender.getDisplayName());
     }
 
     public void replyFlexMenu(String replyToken){
@@ -48,7 +62,7 @@ public class BotService {
         reply(replyToken, flexMessage);
     }
 
-    private void replyUbahAlarm(String replyToken){
+    public void replyFlexUbah(String replyToken){
         FlexMessage flexMessage=botTemplate.createFlexUbah();
         reply(replyToken, flexMessage);
     }
@@ -66,6 +80,14 @@ public class BotService {
     private void reply(ReplyMessage replyMessage) {
         try {
             lineMessagingClient.replyMessage(replyMessage).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public UserProfileResponse getProfile(String userId){
+        try {
+            return lineMessagingClient.getProfile(userId).get();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -118,7 +140,7 @@ public class BotService {
         } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")){
             replyFlexAlarm(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("ubah")){
-            replyUbahAlarm(replyToken);
+            replyFlexUbah(replyToken);
         }
         else{
             replyText(replyToken, "Sedang dalam pengembangan");
