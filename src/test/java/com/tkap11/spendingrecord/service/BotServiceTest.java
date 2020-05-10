@@ -34,7 +34,7 @@ class BotServiceTest {
     private Source source;
 
     @Mock
-    private DatabaseService dbService;
+    private UserDatabaseService dbService;
 
     @Mock
     private LineMessagingClient lineMessagingClient;

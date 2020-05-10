@@ -27,7 +27,7 @@ public class BotService {
     private BotTemplate botTemplate;
 
     @Autowired
-    private DatabaseService dbService;
+    private UserDatabaseService userService;
 
     public Source source;
 
@@ -39,7 +39,7 @@ public class BotService {
     private void registerUser(Source source) {
         String senderId = source.getSenderId();
         UserProfileResponse sender = getProfile(senderId);
-        dbService.registerUser(sender.getUserId(), sender.getDisplayName());
+        userService.registerUser(sender.getUserId(), sender.getDisplayName());
     }
 
     public void replyFlexMenu(String replyToken){

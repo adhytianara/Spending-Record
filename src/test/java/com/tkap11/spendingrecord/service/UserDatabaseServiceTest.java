@@ -16,13 +16,13 @@ import static org.mockito.Mockito.times;
 
 
 @ExtendWith(MockitoExtension.class)
-class DatabaseServiceTest {
+class UserDatabaseServiceTest {
 
     @Mock
     private UserDao mUserDao;
 
     @InjectMocks
-    private DatabaseService dbService;
+    private UserDatabaseService dbService;
 
     @Test
     void registerUser() {
