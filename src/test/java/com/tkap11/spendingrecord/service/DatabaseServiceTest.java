@@ -1,6 +1,6 @@
 package com.tkap11.spendingrecord.service;
 
-import com.tkap11.spendingrecord.database.Dao;
+import com.tkap11.spendingrecord.database.UserDao;
 import com.tkap11.spendingrecord.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,26 +19,26 @@ import static org.mockito.Mockito.times;
 class DatabaseServiceTest {
 
     @Mock
-    private Dao mDao;
+    private UserDao mUserDao;
 
     @InjectMocks
     private DatabaseService dbService;
 
     @Test
     void registerUser() {
-        when(mDao.registerUser("userId", "adhytia"))
+        when(mUserDao.registerUser("userId", "adhytia"))
                 .thenReturn(1);
         dbService.registerUser("userId", "adhytia");
-        verify(mDao, times(1)).registerUser("userId", "adhytia");
+        verify(mUserDao, times(1)).registerUser("userId", "adhytia");
     }
 
     @Test
     void findUserById() {
         List<User> users = new ArrayList<>();
         users.add(new User(Long.parseLong("1"), "userId", "adhytia"));
-        when(mDao.getByUserId("%userId%"))
+        when(mUserDao.getByUserId("%userId%"))
                 .thenReturn(users);
         dbService.findUserById("userId");
-        verify(mDao, times(1)).getByUserId("%userId%");
+        verify(mUserDao, times(1)).getByUserId("%userId%");
     }
 }
