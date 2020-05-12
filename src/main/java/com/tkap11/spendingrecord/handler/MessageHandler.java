@@ -2,30 +2,26 @@ package com.tkap11.spendingrecord.handler;
 
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.*;
-import com.linecorp.bot.model.message.Message;
-
-import java.util.Collections;
-import java.util.List;
 
 public abstract class MessageHandler {
-    List<Message> handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-        return Collections.emptyList();
+    void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+
     }
 
-    List<Message> handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
-        return Collections.emptyList();
+    void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
+        
     }
 
-    List<Message> handleAudioMessageEvent(MessageEvent<AudioMessageContent> event) {
-        return Collections.emptyList();
+    void handleAudioMessageEvent(MessageEvent<AudioMessageContent> event) {
+
     }
 
-    List<Message> handleStickerMessageEvent(MessageEvent<StickerMessageContent> event) {
-        return Collections.emptyList();
+    void handleStickerMessageEvent(MessageEvent<StickerMessageContent> event) {
+        
     }
 
-    List<Message> handleLocationMessageEvent(MessageEvent<LocationMessageContent> event) {
-        return Collections.emptyList();
+    void handleLocationMessageEvent(MessageEvent<LocationMessageContent> event) {
+        
     }
 
     boolean canHandleTextMessageEvent(MessageEvent<TextMessageContent> event) {
