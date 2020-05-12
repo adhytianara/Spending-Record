@@ -13,4 +13,16 @@ class BotTemplateTest {
         FlexMessage flexMessage = botTemplate.createFlexMenu();
         assertTrue(flexMessage instanceof FlexMessage);
     }
+
+    @Test
+    void createFlexChooseCategory() {
+        FlexMessage flexMessage = botTemplate.createFlexChooseCategory();
+        assertTrue(flexMessage instanceof FlexMessage);
+    }
+
+    @Test
+    void createFlexSisa() {
+        FlexMessage flexMessage = botTemplate.createFlexSisa();
+        assertTrue(flexMessage instanceof FlexMessage);
+    }
 }

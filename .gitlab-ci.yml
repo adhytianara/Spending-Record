@@ -35,6 +35,8 @@ TestMain:
     - cat build/reports/jacoco/test/html/index.html
 
 Deployment:
+    only:
+        - master
     image: ruby:2.4
     stage: deploy
     before_script:
@@ -49,3 +51,5 @@ Deployment:
     environment:
         name: production
         url: $HEROKU_APP_HOST
+    only:
+        - master
