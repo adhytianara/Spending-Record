@@ -1,7 +1,8 @@
-package com.tkap11.spendingrecord.service;
+package com.tkap11.spendingrecord.repository;
 
 import com.tkap11.spendingrecord.database.UserDao;
 import com.tkap11.spendingrecord.model.User;
+import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,13 +17,13 @@ import static org.mockito.Mockito.times;
 
 
 @ExtendWith(MockitoExtension.class)
-class UserDatabaseServiceTest {
+class UserDatabaseTest {
 
     @Mock
     private UserDao mUserDao;
 
     @InjectMocks
-    private UserDatabaseService dbService;
+    private UserDatabase dbService;
 
     @Test
     void registerUser() {

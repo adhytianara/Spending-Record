@@ -1,4 +1,4 @@
-package com.tkap11.spendingrecord.service;
+package com.tkap11.spendingrecord.repository;
 
 
 import com.tkap11.spendingrecord.database.SpendingDao;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class SpendingDatabaseService {
+public class SpendingDatabase {
 
     @Autowired
     private SpendingDao spendingDao;

@@ -8,6 +8,7 @@ import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
+import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,7 +35,7 @@ class BotServiceTest {
     private Source source;
 
     @Mock
-    private UserDatabaseService dbService;
+    private UserDatabase dbService;
 
     @Mock
     private LineMessagingClient lineMessagingClient;

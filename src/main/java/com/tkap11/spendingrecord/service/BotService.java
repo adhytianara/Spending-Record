@@ -11,6 +11,7 @@ import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
+import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
@@ -27,7 +28,7 @@ public class BotService {
     private BotTemplate botTemplate;
 
     @Autowired
-    private UserDatabaseService userService;
+    private UserDatabase userService;
 
     public Source source;
 
