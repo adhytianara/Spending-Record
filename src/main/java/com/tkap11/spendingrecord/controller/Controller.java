@@ -62,6 +62,7 @@ public class Controller {
                     botService.source = event.getSource();
                     botService.greetingMessage(replyToken);
                 } else if(event instanceof MessageEvent){
+                    botService.source = event.getSource();
                     botService.handleMessageEvent((MessageEvent) event);
                 }
             });

@@ -11,9 +11,14 @@ import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
+import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranHandler;
+import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryHandler;
+import com.tkap11.spendingrecord.repository.SpendingDatabase;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import java.util.Set;
@@ -30,7 +35,12 @@ public class BotService {
     @Autowired
     private UserDatabase userService;
 
+    @Autowired
+    private SpendingDatabase spendingService;
+
     public Source source;
+
+    private HashMap<String, CatatPengeluaranHandler> currentHandler =new HashMap<>();
 
     public void greetingMessage(String replyToken) {
         registerUser(source);
@@ -131,10 +141,21 @@ public class BotService {
         TextMessageContent textMessageContent=(TextMessageContent) messageEvent.getMessage();
         String replyToken=messageEvent.getReplyToken();
         String userMessage=textMessageContent.getText();
-        boolean userMessageIsEqualsToMenu=userMessage.equalsIgnoreCase("menu");
-        if (userMessageIsEqualsToMenu){
+        String senderId = source.getSenderId();
+        CatatPengeluaranHandler oldHandler = currentHandler.get(senderId);
+        if (oldHandler instanceof CatatPengeluaranHandler){
+            CatatPengeluaranHandler newHandler = oldHandler.handleUserRequest(userMessage.toLowerCase());
+            currentHandler.put(senderId, newHandler);
+            if (oldHandler.getMessageToUser().contains("berhasil dicatat")){
+                spendingService.saveRecord(oldHandler.getDescription());
+            }
+            replyText(replyToken, oldHandler.getMessageToUser());
+        } else if (userMessage.toLowerCase().contains("menu")){
             replyFlexMenu(replyToken);
         } else if (userMessage.toLowerCase().contains("catat")) {
+            UserProfileResponse sender = getProfile(senderId);
+            CatatPengeluaranHandler categoryHandler = new ChooseCategoryHandler(senderId, sender.getDisplayName());
+            currentHandler.put(senderId, categoryHandler);
             relpyFlexChooseCategory(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("sisa")){
             relpyFlexSisa(replyToken);
