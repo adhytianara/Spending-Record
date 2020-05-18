@@ -10,6 +10,7 @@ import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.Multicast;
+import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.tkap11.spendingrecord.model.EventsModel;
 import com.tkap11.spendingrecord.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.xml.transform.Source;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.Set;
@@ -61,6 +63,7 @@ public class Controller {
                     String replyToken=((ReplyEvent) event).getReplyToken();
                     botService.greetingMessage(replyToken);
                 } else if(event instanceof MessageEvent){
+                    botService.source = event.getSource();
                     botService.handleMessageEvent((MessageEvent) event);
                 }
             });

@@ -4,11 +4,16 @@ import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.profile.UserProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -20,13 +25,33 @@ public class BotService {
     @Autowired
     private BotTemplate botTemplate;
 
+    private UserProfileResponse sender = null;
+
+    public Source source;
+
     public void greetingMessage(String replyToken) {
         replyFlexMenu(replyToken);
     }
 
+    public UserProfileResponse getProfile(String userId){
+        try {
+            return lineMessagingClient.getProfile(userId).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void replyFlexMenu(String replyToken){
+        if(sender == null){
+            String senderId = source.getSenderId();
+            sender = getProfile(senderId);
+        }
+
         FlexMessage flexMessage=botTemplate.createFlexMenu();
-        reply(replyToken, flexMessage);
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
+        messageList.add(flexMessage);
+        reply(replyToken, messageList);
     }
 
     public void relpyFlexSisa(String replyToken){
@@ -41,6 +66,11 @@ public class BotService {
 
     public void reply(String replyToken, Message message) {
         ReplyMessage replyMessage=new ReplyMessage(replyToken, message);
+        reply(replyMessage);
+    }
+
+    public void reply(String replyToken, List<Message> message) {
+        ReplyMessage replyMessage = new ReplyMessage(replyToken, message);
         reply(replyMessage);
     }
 
