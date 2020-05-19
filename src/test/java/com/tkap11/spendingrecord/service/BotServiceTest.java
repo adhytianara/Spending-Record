@@ -4,6 +4,7 @@ import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
@@ -34,105 +35,102 @@ class BotServiceTest {
     private BotService botService;
 
     @Mock
+    private Source source;
+
+    @Mock
+    private DatabaseService dbService;
+
+    @Mock
     private LineMessagingClient lineMessagingClient;
 
-    @Test
-    void greetingMessageTest() {
-        // mock line bot api client response
-        FlexMessage flexMessage=botTemplate.createFlexMenu();
-        List<Message> messageList = new ArrayList<>();
-        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
-        messageList.add(flexMessage);
-
-        when(lineMessagingClient.replyMessage(new ReplyMessage(
-                "replyToken", messageList
-        ))).thenReturn(CompletableFuture.completedFuture(
-                new BotApiResponse("ok", Collections.emptyList())
-        ));
-
-        botService.greetingMessage("replyToken");
-
-        // confirm createFlexMenu is called
-        verify(lineMessagingClient).replyMessage(new ReplyMessage(
-                "replyToken", messageList
-        ));
-    }
+//    @Test
+//    void greetingMessageTest() {
+//        FlexMessage flexMessage=botTemplate.createFlexMenu();
+//        List<Message> messageList = new ArrayList<>();
+//        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
+//        messageList.add(flexMessage);
+//        when(lineMessagingClient.replyMessage(new ReplyMessage(
+//                "replyToken", messageList
+//        ))).thenReturn(CompletableFuture.completedFuture(
+//                new BotApiResponse("ok", Collections.emptyList())
+//        ));
+//        botService.greetingMessage("replyToken");
+//        verify(lineMessagingClient).replyMessage(new ReplyMessage(
+//                "replyToken", messageList));
+//    }
 
     @Test
     void handleMessageEventWhenUserSendMenuMessage() {
-        // if user send "menu" as text message
         final MessageEvent request = new MessageEvent<>(
                 "replyToken",
                 new UserSource("userId"),
                 new TextMessageContent("id", "menu"),
                 Instant.now()
         );
-
-        // mock line bot api client response
         FlexMessage flexMessage=botTemplate.createFlexMenu();
         List<Message> messageList = new ArrayList<>();
         messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
         messageList.add(flexMessage);
-
         when(lineMessagingClient.replyMessage(new ReplyMessage(
                 "replyToken", messageList
         ))).thenReturn(CompletableFuture.completedFuture(
                 new BotApiResponse("ok", Collections.emptyList())
         ));
-
         botService.handleMessageEvent(request);
-
-        // confirm createFlexMenu is called
         verify(lineMessagingClient).replyMessage(new ReplyMessage(
-                "replyToken", messageList
-        ));
+                "replyToken", messageList));
     }
 
     @Test
-    void handleMessageEventWhenUserSendOtherThanMenuMessage() {
+    void handleMessageEventWhenUserSendCatatMessage() {
         final MessageEvent request = new MessageEvent<>(
                 "replyToken",
                 new UserSource("userId"),
-                new TextMessageContent("id", "text"),
+                new TextMessageContent("id", "catat"),
                 Instant.now()
         );
-
-        // mock line bot api client response
         when(lineMessagingClient.replyMessage(new ReplyMessage(
-                "replyToken", singletonList(new TextMessage("Sedang dalam pengembangan"))
+                "replyToken", singletonList(null)
         ))).thenReturn(CompletableFuture.completedFuture(
                 new BotApiResponse("ok", Collections.emptyList())
         ));
-
         botService.handleMessageEvent(request);
-
-        verify(lineMessagingClient).replyMessage(new ReplyMessage(
-                "replyToken", singletonList(new TextMessage("Sedang dalam pengembangan"))
-        ));
+        verify(botTemplate, times(1)).createFlexChooseCategory();
     }
 
     @Test
-    void handleMessageEventWhenUserSendSisaMessage(){
-        // if the user text message contains "sisa"
+    void handleMessageEventWhenUserSendSisaMessage() {
         final MessageEvent request = new MessageEvent<>(
                 "replyToken",
                 new UserSource("userId"),
                 new TextMessageContent("id", "sisa"),
                 Instant.now()
         );
-
-        // mock line bot api client response
         when(lineMessagingClient.replyMessage(new ReplyMessage(
                 "replyToken", singletonList(null)
         ))).thenReturn(CompletableFuture.completedFuture(
                 new BotApiResponse("ok", Collections.emptyList())
         ));
-
         botService.handleMessageEvent(request);
-
-        // confirm createFlexSisa is called
         verify(botTemplate, times(1)).createFlexSisa();
     }
 
-
+    @Test
+    void handleMessageEventWhenUserSendRandomMessage() {
+        final MessageEvent request = new MessageEvent<>(
+                "replyToken",
+                new UserSource("userId"),
+                new TextMessageContent("id", "ds"),
+                Instant.now()
+        );
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(new TextMessage("Sedang dalam pengembangan"))
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.handleMessageEvent(request);
+        verify(lineMessagingClient).replyMessage(new ReplyMessage(
+                "replyToken", singletonList(new TextMessage("Sedang dalam pengembangan"))
+        ));
+    }
 }

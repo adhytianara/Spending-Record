@@ -2,6 +2,8 @@ package com.tkap11.spendingrecord.service;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.PushMessage;
+import com.linecorp.bot.model.Multicast;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.Source;
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import java.util.Set;
+
 @Service
 public class BotService {
 
@@ -25,27 +29,27 @@ public class BotService {
     @Autowired
     private BotTemplate botTemplate;
 
-    private UserProfileResponse sender = null;
+    @Autowired
+    private DatabaseService dbService;
 
     public Source source;
 
     public void greetingMessage(String replyToken) {
+        registerUser(source);
         replyFlexMenu(replyToken);
     }
 
-    public UserProfileResponse getProfile(String userId){
-        try {
-            return lineMessagingClient.getProfile(userId).get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+    private void registerUser(Source source) {
+        String senderId = source.getSenderId();
+        UserProfileResponse sender = getProfile(senderId);
+        dbService.registerUser(sender.getUserId(), sender.getDisplayName());
     }
 
     public void replyFlexMenu(String replyToken){
-        if(sender == null){
-            String senderId = source.getSenderId();
-            sender = getProfile(senderId);
-        }
+//        if(sender == null){
+//            String senderId = source.getSenderId();
+//            sender = getProfile(senderId);
+//        }
 
         FlexMessage flexMessage=botTemplate.createFlexMenu();
         List<Message> messageList = new ArrayList<>();
@@ -54,8 +58,23 @@ public class BotService {
         reply(replyToken, messageList);
     }
 
+    public void relpyFlexChooseCategory(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexChooseCategory();
+        reply(replyToken, flexMessage);
+    }
+    
     public void relpyFlexSisa(String replyToken){
         FlexMessage flexMessage=botTemplate.createFlexSisa();
+        reply(replyToken, flexMessage);
+    }
+
+    public void replyFlexAlarm(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexAlarm();
+        reply(replyToken, flexMessage);
+    }
+
+    public void replyFlexUbah(String replyToken){
+        FlexMessage flexMessage=botTemplate.createFlexUbah();
         reply(replyToken, flexMessage);
     }
 
@@ -82,6 +101,47 @@ public class BotService {
         }
     }
 
+    public UserProfileResponse getProfile(String userId){
+        try {
+            return lineMessagingClient.getProfile(userId).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void push(PushMessage pushMessage){
+        try {
+            lineMessagingClient.pushMessage(pushMessage).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void pushAlarm(String to, Message message){
+        PushMessage pushMessage = new PushMessage(to, message);
+        push(pushMessage);
+    }
+
+    public void multicast(Set<String> to, Message message) {
+        try {
+            Multicast multicast = new Multicast(to, message);
+            lineMessagingClient.multicast(multicast).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendMulticast(Set<String> sourceUsers, String txtMessage){
+        TextMessage message = new TextMessage(txtMessage);
+        Multicast multicast = new Multicast(sourceUsers, message);
+
+        try {
+            lineMessagingClient.multicast(multicast).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void handleMessageEvent(MessageEvent messageEvent){
         TextMessageContent textMessageContent=(TextMessageContent) messageEvent.getMessage();
         String replyToken=messageEvent.getReplyToken();
@@ -89,8 +149,14 @@ public class BotService {
         boolean userMessageIsEqualsToMenu=userMessage.equalsIgnoreCase("menu");
         if (userMessageIsEqualsToMenu){
             replyFlexMenu(replyToken);
+        } else if (userMessage.toLowerCase().contains("catat")) {
+            relpyFlexChooseCategory(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("sisa")){
             relpyFlexSisa(replyToken);
+        } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")){
+            replyFlexAlarm(replyToken);
+        } else if (textMessageContent.getText().toLowerCase().contains("ubah")){
+            replyFlexUbah(replyToken);
         }
         else{
             replyText(replyToken, "Sedang dalam pengembangan");
