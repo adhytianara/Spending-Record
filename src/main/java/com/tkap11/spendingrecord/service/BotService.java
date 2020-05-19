@@ -11,8 +11,8 @@ import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
-import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranHandler;
-import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryHandler;
+import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
+import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class BotService {
 
     public Source source;
 
-    private HashMap<String, CatatPengeluaranHandler> currentHandler =new HashMap<>();
+    private HashMap<String, CatatPengeluaranState> currentHandler =new HashMap<>();
 
     public void greetingMessage(String replyToken) {
         registerUser(source);
@@ -142,9 +142,9 @@ public class BotService {
         String replyToken=messageEvent.getReplyToken();
         String userMessage=textMessageContent.getText();
         String senderId = source.getSenderId();
-        CatatPengeluaranHandler oldHandler = currentHandler.get(senderId);
-        if (oldHandler instanceof CatatPengeluaranHandler){
-            CatatPengeluaranHandler newHandler = oldHandler.handleUserRequest(userMessage.toLowerCase());
+        CatatPengeluaranState oldHandler = currentHandler.get(senderId);
+        if (oldHandler instanceof CatatPengeluaranState){
+            CatatPengeluaranState newHandler = oldHandler.handleUserRequest(userMessage.toLowerCase());
             currentHandler.put(senderId, newHandler);
             if (oldHandler.getMessageToUser().contains("berhasil dicatat")){
                 spendingService.saveRecord(oldHandler.getDescription());
@@ -154,7 +154,7 @@ public class BotService {
             replyFlexMenu(replyToken);
         } else if (userMessage.toLowerCase().contains("catat")) {
             UserProfileResponse sender = getProfile(senderId);
-            CatatPengeluaranHandler categoryHandler = new ChooseCategoryHandler(senderId, sender.getDisplayName());
+            CatatPengeluaranState categoryHandler = new ChooseCategoryState(senderId, sender.getDisplayName());
             currentHandler.put(senderId, categoryHandler);
             relpyFlexChooseCategory(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("sisa")){
