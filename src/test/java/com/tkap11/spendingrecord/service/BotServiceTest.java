@@ -6,6 +6,8 @@ import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.event.source.UserSource;
+import com.linecorp.bot.model.message.FlexMessage;
+import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
@@ -17,7 +19,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static java.util.Collections.singletonList;
@@ -43,8 +47,12 @@ class BotServiceTest {
 
     @Test
     void greetingMessageTest() {
+        FlexMessage flexMessage=botTemplate.createFlexMenu();
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
+        messageList.add(flexMessage);
         when(lineMessagingClient.replyMessage(new ReplyMessage(
-                "replyToken", singletonList(null)
+                "replyToken", messageList
         ))).thenReturn(CompletableFuture.completedFuture(
                 new BotApiResponse("ok", Collections.emptyList())
         ));
@@ -55,7 +63,8 @@ class BotServiceTest {
         when(userDatabase.registerUser("userId", "displayName"))
                 .thenReturn(2);
         botService.greetingMessage("replyToken");
-        verify(botTemplate, times(1)).createFlexMenu();
+        verify(lineMessagingClient).replyMessage(new ReplyMessage(
+                "replyToken", messageList));
     }
 
     @Test
@@ -66,13 +75,18 @@ class BotServiceTest {
                 new TextMessageContent("id", "menu"),
                 Instant.now()
         );
+        FlexMessage flexMessage=botTemplate.createFlexMenu();
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
+        messageList.add(flexMessage);
         when(lineMessagingClient.replyMessage(new ReplyMessage(
-                "replyToken", singletonList(null)
+                "replyToken", messageList
         ))).thenReturn(CompletableFuture.completedFuture(
                 new BotApiResponse("ok", Collections.emptyList())
         ));
         botService.handleMessageEvent(request);
-        verify(botTemplate, times(1)).createFlexMenu();
+        verify(lineMessagingClient).replyMessage(new ReplyMessage(
+                "replyToken", messageList));
     }
 
     @Test

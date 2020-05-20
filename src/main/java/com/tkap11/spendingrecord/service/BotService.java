@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import java.util.Set;
@@ -54,8 +56,16 @@ public class BotService {
     }
 
     public void replyFlexMenu(String replyToken){
+//        if(sender == null){
+//            String senderId = source.getSenderId();
+//            sender = getProfile(senderId);
+//        }
+
         FlexMessage flexMessage=botTemplate.createFlexMenu();
-        reply(replyToken, flexMessage);
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
+        messageList.add(flexMessage);
+        reply(replyToken, messageList);
     }
 
     public void relpyFlexChooseCategory(String replyToken){
@@ -73,7 +83,7 @@ public class BotService {
         reply(replyToken, flexMessage);
     }
 
-    private void replyUbahAlarm(String replyToken){
+    public void replyFlexUbah(String replyToken){
         FlexMessage flexMessage=botTemplate.createFlexUbah();
         reply(replyToken, flexMessage);
     }
@@ -85,6 +95,11 @@ public class BotService {
 
     public void reply(String replyToken, Message message) {
         ReplyMessage replyMessage=new ReplyMessage(replyToken, message);
+        reply(replyMessage);
+    }
+
+    public void reply(String replyToken, List<Message> message) {
+        ReplyMessage replyMessage = new ReplyMessage(replyToken, message);
         reply(replyMessage);
     }
 
@@ -162,7 +177,7 @@ public class BotService {
         } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")){
             replyFlexAlarm(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("ubah")){
-            replyUbahAlarm(replyToken);
+            replyFlexUbah(replyToken);
         }
         else{
             replyText(replyToken, "Sedang dalam pengembangan");
