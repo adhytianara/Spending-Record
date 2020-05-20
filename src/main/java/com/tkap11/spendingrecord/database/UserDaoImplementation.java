@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
 
-public class DaoImplementation implements Dao {
+public class UserDaoImplementation implements UserDao {
 
     private JdbcTemplate mJdbc;
 
@@ -39,7 +39,7 @@ public class DaoImplementation implements Dao {
         }
     };
 
-    public DaoImplementation(DataSource dataSource) {
+    public UserDaoImplementation(DataSource dataSource) {
         mJdbc=new JdbcTemplate(dataSource);
     }
 

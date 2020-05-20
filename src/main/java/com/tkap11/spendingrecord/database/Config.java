@@ -66,8 +66,13 @@ public class Config
     }
 
     @Bean
-    public Dao getPersonDao()
+    public UserDao getUserDao() {
+        return new UserDaoImplementation(getDataSource());
+    }
+
+    @Bean
+    public SpendingDao getSpendingDao()
     {
-        return new DaoImplementation(getDataSource());
+        return new SpendingDaoImplementation(getDataSource());
     }
 }
