@@ -9,7 +9,9 @@ import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
+import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,29 +37,35 @@ class BotServiceTest {
     private BotService botService;
 
     @Mock
-    private Source source;
+    UserDatabase userDatabase;
 
     @Mock
-    private DatabaseService dbService;
+    private Source source;
 
     @Mock
     private LineMessagingClient lineMessagingClient;
 
-//    @Test
-//    void greetingMessageTest() {
-//        FlexMessage flexMessage=botTemplate.createFlexMenu();
-//        List<Message> messageList = new ArrayList<>();
-//        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
-//        messageList.add(flexMessage);
-//        when(lineMessagingClient.replyMessage(new ReplyMessage(
-//                "replyToken", messageList
-//        ))).thenReturn(CompletableFuture.completedFuture(
-//                new BotApiResponse("ok", Collections.emptyList())
-//        ));
-//        botService.greetingMessage("replyToken");
-//        verify(lineMessagingClient).replyMessage(new ReplyMessage(
-//                "replyToken", messageList));
-//    }
+    @Test
+    void greetingMessageTest() {
+        FlexMessage flexMessage=botTemplate.createFlexMenu();
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
+        messageList.add(flexMessage);
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", messageList
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        when(lineMessagingClient.getProfile(null))
+                .thenReturn(CompletableFuture.completedFuture(
+                        new UserProfileResponse("displayName", "userId", "", "")
+                ));
+        when(userDatabase.registerUser("userId", "displayName"))
+                .thenReturn(2);
+        botService.greetingMessage("replyToken");
+        verify(lineMessagingClient).replyMessage(new ReplyMessage(
+                "replyToken", messageList));
+    }
 
 //    @Test
 //    void handleMessageEventWhenUserSendMenuMessage() {
@@ -90,10 +98,14 @@ class BotServiceTest {
                 Instant.now()
         );
         when(lineMessagingClient.replyMessage(new ReplyMessage(
-                "replyToken", singletonList(null)
-        ))).thenReturn(CompletableFuture.completedFuture(
-                new BotApiResponse("ok", Collections.emptyList())
-        ));
+        "replyToken", singletonList(null))))
+                .thenReturn(CompletableFuture.completedFuture(
+                        new BotApiResponse("ok", Collections.emptyList())
+                ));
+        when(lineMessagingClient.getProfile(null))
+                .thenReturn(CompletableFuture.completedFuture(
+                        new UserProfileResponse("name", "id", "", "")
+                ));
         botService.handleMessageEvent(request);
         verify(botTemplate, times(1)).createFlexChooseCategory();
     }
@@ -119,6 +131,40 @@ class BotServiceTest {
         botService.handleMessageEvent(request);
         verify(lineMessagingClient).replyMessage(new ReplyMessage(
                 "replyToken", messageList));
+    }
+
+    @Test
+    void handleMessageEventWhenUserSendIngatkanMessage() {
+        final MessageEvent request = new MessageEvent<>(
+                "replyToken",
+                new UserSource("userId"),
+                new TextMessageContent("id", "ingatkan"),
+                Instant.now()
+        );
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(null)
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.handleMessageEvent(request);
+        verify(botTemplate, times(1)).createFlexAlarm();
+    }
+
+    @Test
+    void handleMessageEventWhenUserSendUbahMessage() {
+        final MessageEvent request = new MessageEvent<>(
+                "replyToken",
+                new UserSource("userId"),
+                new TextMessageContent("id", "ubah"),
+                Instant.now()
+        );
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(null)
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.handleMessageEvent(request);
+        verify(botTemplate, times(1)).createFlexUbah();
     }
 
     @Test

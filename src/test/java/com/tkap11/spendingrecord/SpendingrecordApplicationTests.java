@@ -9,5 +9,4 @@ class SpendingrecordApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

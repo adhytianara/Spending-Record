@@ -11,9 +11,14 @@ import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
+import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
+import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
+import com.tkap11.spendingrecord.repository.SpendingDatabase;
+import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -30,11 +35,16 @@ public class BotService {
     private BotTemplate botTemplate;
 
     @Autowired
-    private DatabaseService dbService;
+    private UserDatabase userService;
+
+    @Autowired
+    private SpendingDatabase spendingService;
 
     public Source source;
 
     private UserProfileResponse sender = null;
+    
+    private HashMap<String, CatatPengeluaranState> currentHandler =new HashMap<>();
 
     public void greetingMessage(String replyToken) {
         registerUser(source);
@@ -44,7 +54,7 @@ public class BotService {
     private void registerUser(Source source) {
         String senderId = source.getSenderId();
         UserProfileResponse sender = getProfile(senderId);
-        dbService.registerUser(sender.getUserId(), sender.getDisplayName());
+        userService.registerUser(sender.getUserId(), sender.getDisplayName());
     }
 
     public void replyFlexMenu(String replyToken){
@@ -152,10 +162,21 @@ public class BotService {
         TextMessageContent textMessageContent=(TextMessageContent) messageEvent.getMessage();
         String replyToken=messageEvent.getReplyToken();
         String userMessage=textMessageContent.getText();
-        boolean userMessageIsEqualsToMenu=userMessage.equalsIgnoreCase("menu");
-        if (userMessageIsEqualsToMenu){
+        String senderId = source.getSenderId();
+        CatatPengeluaranState oldHandler = currentHandler.get(senderId);
+        if (oldHandler instanceof CatatPengeluaranState){
+            CatatPengeluaranState newHandler = oldHandler.handleUserRequest(userMessage.toLowerCase());
+            currentHandler.put(senderId, newHandler);
+            if (oldHandler.getMessageToUser().contains("berhasil dicatat")){
+                spendingService.saveRecord(oldHandler.getDescription());
+            }
+            replyText(replyToken, oldHandler.getMessageToUser());
+        } else if (userMessage.toLowerCase().contains("menu")){
             replyFlexMenu(replyToken);
         } else if (userMessage.toLowerCase().contains("catat")) {
+            UserProfileResponse sender = getProfile(senderId);
+            CatatPengeluaranState categoryHandler = new ChooseCategoryState(senderId, sender.getDisplayName());
+            currentHandler.put(senderId, categoryHandler);
             relpyFlexChooseCategory(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("sisa")){
             relpyFlexSisa(replyToken);
