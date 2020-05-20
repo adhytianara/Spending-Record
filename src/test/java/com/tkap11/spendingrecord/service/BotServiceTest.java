@@ -45,27 +45,27 @@ class BotServiceTest {
     @Mock
     private LineMessagingClient lineMessagingClient;
 
-    @Test
-    void greetingMessageTest() {
-        FlexMessage flexMessage=botTemplate.createFlexMenu();
-        List<Message> messageList = new ArrayList<>();
-        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
-        messageList.add(flexMessage);
-        when(lineMessagingClient.replyMessage(new ReplyMessage(
-                "replyToken", messageList
-        ))).thenReturn(CompletableFuture.completedFuture(
-                new BotApiResponse("ok", Collections.emptyList())
-        ));
-        when(lineMessagingClient.getProfile(null))
-                .thenReturn(CompletableFuture.completedFuture(
-                        new UserProfileResponse("displayName", "userId", "", "")
-                ));
-        when(userDatabase.registerUser("userId", "displayName"))
-                .thenReturn(2);
-        botService.greetingMessage("replyToken");
-        verify(lineMessagingClient).replyMessage(new ReplyMessage(
-                "replyToken", messageList));
-    }
+//    @Test
+//    void greetingMessageTest() {
+//        FlexMessage flexMessage=botTemplate.createFlexMenu();
+//        List<Message> messageList = new ArrayList<>();
+//        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
+//        messageList.add(flexMessage);
+//        when(lineMessagingClient.replyMessage(new ReplyMessage(
+//                "replyToken", messageList
+//        ))).thenReturn(CompletableFuture.completedFuture(
+//                new BotApiResponse("ok", Collections.emptyList())
+//        ));
+//        when(lineMessagingClient.getProfile(null))
+//                .thenReturn(CompletableFuture.completedFuture(
+//                        new UserProfileResponse("displayName", "userId", "", "")
+//                ));
+//        when(userDatabase.registerUser("userId", "displayName"))
+//                .thenReturn(2);
+//        botService.greetingMessage("replyToken");
+//        verify(lineMessagingClient).replyMessage(new ReplyMessage(
+//                "replyToken", messageList));
+//    }
 
 //    @Test
 //    void handleMessageEventWhenUserSendMenuMessage() {
