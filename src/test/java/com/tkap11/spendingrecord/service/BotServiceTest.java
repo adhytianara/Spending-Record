@@ -128,6 +128,40 @@ class BotServiceTest {
     }
 
     @Test
+    void handleMessageEventWhenUserSendIngatkanMessage() {
+        final MessageEvent request = new MessageEvent<>(
+                "replyToken",
+                new UserSource("userId"),
+                new TextMessageContent("id", "ingatkan"),
+                Instant.now()
+        );
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(null)
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.handleMessageEvent(request);
+        verify(botTemplate, times(1)).createFlexAlarm();
+    }
+
+    @Test
+    void handleMessageEventWhenUserSendUbahMessage() {
+        final MessageEvent request = new MessageEvent<>(
+                "replyToken",
+                new UserSource("userId"),
+                new TextMessageContent("id", "ubah"),
+                Instant.now()
+        );
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(null)
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.handleMessageEvent(request);
+        verify(botTemplate, times(1)).createFlexUbah();
+    }
+
+    @Test
     void handleMessageEventWhenUserSendRandomMessage() {
         final MessageEvent request = new MessageEvent<>(
                 "replyToken",

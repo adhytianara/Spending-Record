@@ -25,4 +25,16 @@ class BotTemplateTest {
         FlexMessage flexMessage = botTemplate.createFlexSisa();
         assertTrue(flexMessage instanceof FlexMessage);
     }
+
+    @Test
+    void createFlexAlarm() {
+        FlexMessage flexMessage = botTemplate.createFlexAlarm();
+        assertTrue(flexMessage instanceof FlexMessage);
+    }
+
+    @Test
+    void createFlexUbah() {
+        FlexMessage flexMessage = botTemplate.createFlexUbah();
+        assertTrue(flexMessage instanceof FlexMessage);
+    }
 }
