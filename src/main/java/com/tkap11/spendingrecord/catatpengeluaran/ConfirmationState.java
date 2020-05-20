@@ -8,16 +8,12 @@ public class ConfirmationState extends CatatPengeluaranState {
 
 	@Override
 	public CatatPengeluaranState userChooseCategory(String userMessage) {
-		messageToUser = "Konfirmasi pencatatan dengan menjawab 'Ya' " +
-				"atau ketik 'Batal' untuk membatalkan tindakan";
-		return this;
+		return unknownMessage();
 	}
 
 	@Override
 	public CatatPengeluaranState userInsertMoney(String userMessage) {
-		messageToUser = "Konfirmasi pencatatan dengan menjawab 'Ya' " +
-				"atau ketik 'Batal' untuk membatalkan tindakan";
-		return this;
+		return unknownMessage();
 	}
 
 	@Override

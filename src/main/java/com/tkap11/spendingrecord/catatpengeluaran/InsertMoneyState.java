@@ -9,9 +9,7 @@ public class InsertMoneyState extends CatatPengeluaranState {
 
 	@Override
 	public CatatPengeluaranState userChooseCategory(String userMessage) {
-		messageToUser = "Nominal uang tidak sesuai. Pastikan kamu hanya memasukkan angka, contoh: 10000. " +
-				"Jika ingin membatalkan tindakan, ketik 'Batal'";
-		return this;
+		return unknownMessage();
 	}
 
 	@Override
@@ -25,9 +23,7 @@ public class InsertMoneyState extends CatatPengeluaranState {
 
 	@Override
 	public CatatPengeluaranState userConfirmation(String userMessage) {
-		messageToUser = "Nominal uang tidak sesuai. Pastikan kamu hanya memasukkan angka, contoh: 10000. " +
-				"Jika ingin membatalkan tindakan, ketik 'Batal'";
-		return this;
+		return unknownMessage();
 	}
 
 	@Override

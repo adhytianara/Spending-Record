@@ -7,6 +7,7 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.junit.jupiter.api.Test;
@@ -32,26 +33,30 @@ class BotServiceTest {
     private BotService botService;
 
     @Mock
-    private Source source;
+    UserDatabase userDatabase;
 
     @Mock
-    private UserDatabase dbService;
+    private Source source;
 
     @Mock
     private LineMessagingClient lineMessagingClient;
 
-//    @Test
-//    void greetingMessageTest() {
-//        when(lineMessagingClient.replyMessage(new ReplyMessage(
-//                "replyToken", singletonList(null)
-//        ))).thenReturn(CompletableFuture.completedFuture(
-//                new BotApiResponse("ok", Collections.emptyList())
-//        ));
-//        when(source.getSenderId()).thenReturn("dummyId");
-//        when(dbService.registerUser("dummyId", "dummyName")).thenReturn(2);
-//        botService.greetingMessage("replyToken");
-//        verify(botTemplate, times(1)).createFlexMenu();
-//    }
+    @Test
+    void greetingMessageTest() {
+        when(lineMessagingClient.replyMessage(new ReplyMessage(
+                "replyToken", singletonList(null)
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        when(lineMessagingClient.getProfile(null))
+                .thenReturn(CompletableFuture.completedFuture(
+                        new UserProfileResponse("displayName", "userId", "", "")
+                ));
+        when(userDatabase.registerUser("userId", "displayName"))
+                .thenReturn(2);
+        botService.greetingMessage("replyToken");
+        verify(botTemplate, times(1)).createFlexMenu();
+    }
 
     @Test
     void handleMessageEventWhenUserSendMenuMessage() {
@@ -79,10 +84,14 @@ class BotServiceTest {
                 Instant.now()
         );
         when(lineMessagingClient.replyMessage(new ReplyMessage(
-                "replyToken", singletonList(null)
-        ))).thenReturn(CompletableFuture.completedFuture(
-                new BotApiResponse("ok", Collections.emptyList())
-        ));
+        "replyToken", singletonList(null))))
+                .thenReturn(CompletableFuture.completedFuture(
+                        new BotApiResponse("ok", Collections.emptyList())
+                ));
+        when(lineMessagingClient.getProfile(null))
+                .thenReturn(CompletableFuture.completedFuture(
+                        new UserProfileResponse("name", "id", "", "")
+                ));
         botService.handleMessageEvent(request);
         verify(botTemplate, times(1)).createFlexChooseCategory();
     }

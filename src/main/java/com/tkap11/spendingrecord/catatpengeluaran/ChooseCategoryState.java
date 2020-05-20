@@ -19,16 +19,12 @@ public class ChooseCategoryState extends CatatPengeluaranState {
 
 	@Override
 	public CatatPengeluaranState userInsertMoney(String userMessage) {
-		messageToUser = "Kategori tidak sesuai! Pilih salah satu dari lima kategori yang tersedia. " +
-				"Jika ingin membatalkan tindakan, ketik 'Batal'";
-		return this;
+		return unknownMessage();
 	}
 
 	@Override
 	public CatatPengeluaranState userConfirmation(String userMessage) {
-		messageToUser = "Kategori tidak sesuai! Pilih salah satu dari lima kategori yang tersedia. " +
-				"Jika ingin membatalkan tindakan, ketik 'Batal'";
-		return this;
+		return unknownMessage();
 	}
 
 	@Override
