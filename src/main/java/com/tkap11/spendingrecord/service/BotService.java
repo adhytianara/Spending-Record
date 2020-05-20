@@ -42,6 +42,8 @@ public class BotService {
 
     public Source source;
 
+    private UserProfileResponse sender = null;
+    
     private HashMap<String, CatatPengeluaranState> currentHandler =new HashMap<>();
 
     public void greetingMessage(String replyToken) {
@@ -56,14 +58,14 @@ public class BotService {
     }
 
     public void replyFlexMenu(String replyToken){
-//        if(sender == null){
-//            String senderId = source.getSenderId();
-//            sender = getProfile(senderId);
-//        }
+        if(sender == null){
+            String senderId = source.getSenderId();
+            sender = getProfile(senderId);
+        }
 
         FlexMessage flexMessage=botTemplate.createFlexMenu();
         List<Message> messageList = new ArrayList<>();
-        messageList.add(new TextMessage("Hi apa yang ingin kamu lakukan ?"));
+        messageList.add(new TextMessage("Hi" + sender.getDisplayName() + " yang ingin kamu lakukan ?"));
         messageList.add(flexMessage);
         reply(replyToken, messageList);
     }
@@ -75,7 +77,11 @@ public class BotService {
     
     public void relpyFlexSisa(String replyToken){
         FlexMessage flexMessage=botTemplate.createFlexSisa();
-        reply(replyToken, flexMessage);
+        FlexMessage flexMessage2 = botTemplate.createFlexSisaKategori();
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(flexMessage);
+        messageList.add(flexMessage2);
+        reply(replyToken, messageList);
     }
 
     public void replyFlexAlarm(String replyToken){
