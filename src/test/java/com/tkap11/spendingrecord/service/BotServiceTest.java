@@ -1,8 +1,11 @@
 package com.tkap11.spendingrecord.service;
 
 import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.model.Multicast;
+import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.MessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.event.source.UserSource;
@@ -11,17 +14,18 @@ import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
+import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
+import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 import static java.util.Collections.singletonList;
@@ -44,6 +48,9 @@ class BotServiceTest {
 
     @Mock
     private LineMessagingClient lineMessagingClient;
+
+    @Spy
+    private HashMap<String, CatatPengeluaranState> currentHandler =new HashMap<>();
 
     @Test
     void greetingMessageTest() {
@@ -177,6 +184,36 @@ class BotServiceTest {
         botService.handleMessageEvent(request);
         verify(lineMessagingClient).replyMessage(new ReplyMessage(
                 "replyToken", singletonList(new TextMessage("Sedang dalam pengembangan"))
+        ));
+    }
+
+    @Test
+    void pushAlarm(){
+        TextMessage textMessage = new TextMessage("halo");
+        when(lineMessagingClient.pushMessage(new PushMessage(
+                "user", textMessage
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.pushAlarm("user", textMessage);
+        verify(lineMessagingClient).pushMessage(new PushMessage(
+                "user", textMessage
+        ));
+    }
+
+    @Test
+    void multiCast(){
+        TextMessage textMessage = new TextMessage("halo");
+        Set<String> users = new HashSet<>();
+        users.add("user");
+        when(lineMessagingClient.multicast(new Multicast(
+                users, textMessage
+        ))).thenReturn(CompletableFuture.completedFuture(
+                new BotApiResponse("ok", Collections.emptyList())
+        ));
+        botService.multicast(users, textMessage);
+        verify(lineMessagingClient).multicast(new Multicast(
+                users, textMessage
         ));
     }
 }
