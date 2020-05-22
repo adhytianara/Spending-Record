@@ -49,12 +49,12 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
-    public List<User> getByUserId(String aUserId) {
-        return mJdbc.query(SQL_GET_BY_USER_ID, new Object[]{"%"+aUserId+"%"}, MULTIPLE_RS_EXTRACTOR);
+    public List<User> getByUserId(String userId) {
+        return mJdbc.query(SQL_GET_BY_USER_ID, new Object[]{"%"+ userId +"%"}, MULTIPLE_RS_EXTRACTOR);
     }
 
     @Override
-    public int registerUser(String aUserId, String aDisplayName) {
-        return mJdbc.update(SQL_REGISTER, new Object[]{aUserId, aDisplayName});
+    public int registerUser(String userId, String displayName) {
+        return mJdbc.update(SQL_REGISTER, new Object[]{userId, displayName});
     }
 }
