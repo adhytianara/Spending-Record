@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpendingrecordApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpendingrecordApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(SpendingrecordApplication.class, args);
+  }
 
 }
