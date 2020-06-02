@@ -1,0 +1,376 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Persentase",
+            "size": "xxl",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ffffff"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectMode": "cover",
+        "url": "https://files.catbox.moe/0lk6xo.png",
+        "margin": "none",
+        "align": "center",
+        "aspectRatio": "30:13"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Detail",
+              "text": "Lihat Detail Makanan"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255",
+        "spacing": "none",
+        "margin": "none"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Makanan",
+            "size": "xxl",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ffffff"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectMode": "cover",
+        "url": "https://files.catbox.moe/lifsw7.png",
+        "margin": "none",
+        "align": "center",
+        "aspectRatio": "30:13"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Detail",
+              "text": "Lihat Detail Makanan"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255",
+        "spacing": "none",
+        "margin": "none"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Transportasi",
+            "size": "xxl",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ffffff"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectMode": "cover",
+        "url": "https://files.catbox.moe/v255tf.png",
+        "margin": "none",
+        "align": "center",
+        "aspectRatio": "30:13"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Detail",
+              "text": "Lihat Detail Transportasi"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255",
+        "spacing": "none",
+        "margin": "none"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Tagihan",
+            "size": "xxl",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ffffff"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectMode": "cover",
+        "url": "https://files.catbox.moe/xnma7n.png",
+        "margin": "none",
+        "align": "center",
+        "aspectRatio": "30:13"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Detail",
+              "text": "Lihat Detail Tagihan"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255",
+        "spacing": "none",
+        "margin": "none"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Belanja",
+            "size": "xxl",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ffffff"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectMode": "cover",
+        "url": "https://files.catbox.moe/9pgl8j.png",
+        "margin": "none",
+        "align": "center",
+        "aspectRatio": "30:13"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Detail",
+              "text": "Lihat Detail Belanja"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255",
+        "spacing": "none",
+        "margin": "none"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Lainnya",
+            "size": "xxl",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ffffff"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectMode": "cover",
+        "url": "https://files.catbox.moe/hcje2q.png",
+        "margin": "none",
+        "align": "center",
+        "aspectRatio": "30:13"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Detail",
+              "text": "Lihat Detail Lainnya"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255",
+        "spacing": "none",
+        "margin": "none"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "mega",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Semua Kategori",
+            "size": "xxl",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "backgroundColor": "#ffffff"
+      },
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectMode": "cover",
+        "url": "https://files.catbox.moe/049jh0.png",
+        "margin": "none",
+        "align": "center",
+        "aspectRatio": "30:13"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "Lihat Detail",
+              "text": "Lihat Detail Lainnya"
+            },
+            "style": "primary",
+            "color": "#348255",
+            "height": "sm"
+          }
+        ],
+        "borderColor": "#348255",
+        "spacing": "none",
+        "margin": "none"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#348255"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "position": "relative",
+    "url": "https://files.catbox.moe/o6wnt2.png"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Detail Pengeluaran",
+            "size": "xl",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "paddingBottom": "10px"
+      },
+      {
+        "type": "separator",
+        "margin": "sm"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Hari ini",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "Rp %2$s",
+            "align": "end"
+          }
+        ],
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Minggu ini",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "Rp %3$s",
+            "align": "end"
+          }
+        ],
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Bulan ini",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "Rp %4$s",
+            "align": "end"
+          }
+        ],
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      }
+    ],
+    "spacing": "xs",
+    "paddingTop": "0px"
+  },
+  "styles": {
+    "body": {
+      "separator": false
+    }
+  }
+}
