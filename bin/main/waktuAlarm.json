@@ -1,0 +1,30 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://www.picturepaste.ca/images/2020/04/27/ingatkan-saya-2.png",
+    "size": "full",
+    "aspectRatio": "3:1",
+    "backgroundColor": "#348255"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Ubah Waktu Notifikasi"
+      },
+      {
+        "type": "button",
+        "action": {
+          "type": "datetimepicker",
+          "label": "pilih waktu",
+          "data": "waktu",
+          "mode": "time",
+          "initial": "00:00"
+        }
+      }
+    ]
+  }
+}
