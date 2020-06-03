@@ -13,17 +13,17 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
 import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
+import com.tkap11.spendingrecord.model.Spending;
+import com.tkap11.spendingrecord.repository.SisaDatabase;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
 import com.tkap11.spendingrecord.repository.UserDatabase;
+import com.tkap11.spendingrecord.sisaBudget.CategorySisa;
+import com.tkap11.spendingrecord.sisaBudget.SisaBudgetState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
-
-import java.util.Set;
 
 @Service
 public class BotService {
@@ -40,11 +40,15 @@ public class BotService {
     @Autowired
     private SpendingDatabase spendingService;
 
+    @Autowired
+    private SisaDatabase sisaDatabase;
+
     public Source source;
 
-    private UserProfileResponse sender = null;
-    
+//    private UserProfileResponse sender = null;
+
     private HashMap<String, CatatPengeluaranState> currentHandler =new HashMap<>();
+    private HashMap<String, SisaBudgetState> currentHandlerSisa =new HashMap<>();
 
     public void greetingMessage(String replyToken) {
         registerUser(source);
@@ -58,14 +62,12 @@ public class BotService {
     }
 
     public void replyFlexMenu(String replyToken){
-        if(sender == null){
-            String senderId = source.getSenderId();
-            sender = getProfile(senderId);
-        }
+        String senderId = source.getSenderId();
+        UserProfileResponse sender = getProfile(senderId);
 
         FlexMessage flexMessage=botTemplate.createFlexMenu();
         List<Message> messageList = new ArrayList<>();
-        messageList.add(new TextMessage("Hi" + sender.getDisplayName() + " yang ingin kamu lakukan ?"));
+        messageList.add(new TextMessage("Hi " + sender.getDisplayName() + ", apa yang ingin kamu lakukan ?"));
         messageList.add(flexMessage);
         reply(replyToken, messageList);
     }
@@ -74,13 +76,17 @@ public class BotService {
         FlexMessage flexMessage=botTemplate.createFlexChooseCategory();
         reply(replyToken, flexMessage);
     }
-    
-    public void relpyFlexSisa(String replyToken){
-        FlexMessage flexMessage=botTemplate.createFlexSisa();
-        FlexMessage flexMessage2 = botTemplate.createFlexSisaKategori();
+
+    public void relpyFlexSisaCategory(String replyToken){
+        FlexMessage flexMessage = botTemplate.createFlexSisaCategory();
+        reply(replyToken, flexMessage);
+    }
+
+    public void relpyFlexSisa(String replyToken, String category, String nominal){
+        FlexMessage flexMessage = botTemplate.createFlexSisa(category, nominal);
         List<Message> messageList = new ArrayList<>();
+        messageList.add(new TextMessage("Berikut adalah Sisa Budget-mu pada kategori : " + category));
         messageList.add(flexMessage);
-        messageList.add(flexMessage2);
         reply(replyToken, messageList);
     }
 
@@ -164,6 +170,9 @@ public class BotService {
         String userMessage=textMessageContent.getText();
         String senderId = source.getSenderId();
         CatatPengeluaranState oldHandler = currentHandler.get(senderId);
+        SisaBudgetState oldHandlerSisa = currentHandlerSisa.get(senderId);
+        List<String> categories = Arrays.asList("makanan", "transportasi", "tagihan", "belanja", "lainnya");
+
         if (oldHandler instanceof CatatPengeluaranState){
             CatatPengeluaranState newHandler = oldHandler.handleUserRequest(userMessage.toLowerCase());
             currentHandler.put(senderId, newHandler);
@@ -171,6 +180,19 @@ public class BotService {
                 spendingService.saveRecord(oldHandler.getDescription());
             }
             replyText(replyToken, oldHandler.getMessageToUser());
+        } else if (oldHandlerSisa instanceof SisaBudgetState){
+            SisaBudgetState newHandlerSisa = oldHandlerSisa.handleUserRequest(userMessage.toLowerCase());
+            currentHandlerSisa.put(senderId, newHandlerSisa);
+            if(categories.contains(userMessage.toLowerCase())) {
+                List<Spending> sisaResult = sisaDatabase.getSisa(oldHandlerSisa.getDescription());
+                String category = sisaResult.get(0).getCategory();
+                String nominal = sisaResult.get(0).getNominal();
+                relpyFlexSisa(replyToken, category, nominal);
+            }
+            else {
+                replyText(replyToken, oldHandlerSisa.getMessageToUser());
+            }
+
         } else if (userMessage.toLowerCase().contains("menu")){
             replyFlexMenu(replyToken);
         } else if (userMessage.toLowerCase().contains("catat")) {
@@ -178,8 +200,10 @@ public class BotService {
             CatatPengeluaranState categoryHandler = new ChooseCategoryState(senderId, sender.getDisplayName());
             currentHandler.put(senderId, categoryHandler);
             relpyFlexChooseCategory(replyToken);
-        } else if (textMessageContent.getText().toLowerCase().contains("sisa")){
-            relpyFlexSisa(replyToken);
+        } else if (userMessage.toLowerCase().contains("sisa")){
+            SisaBudgetState categoryHandlerSisa = new CategorySisa(senderId);
+            currentHandlerSisa.put(senderId, categoryHandlerSisa);
+            relpyFlexSisaCategory(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")){
             replyFlexAlarm(replyToken);
         } else if (textMessageContent.getText().toLowerCase().contains("ubah")){

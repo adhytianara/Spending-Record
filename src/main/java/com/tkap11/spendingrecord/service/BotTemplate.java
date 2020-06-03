@@ -12,10 +12,14 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import org.apache.commons.text.StringEscapeUtils;
 
 @Service
 public class BotTemplate {
 
+    public String escape(String text) {
+        return  StringEscapeUtils.escapeJson(text.trim());
+    }
 
     public FlexMessage createFlexMenu() {
         FlexMessage flexMessage=new FlexMessage("Action Menu", null);
@@ -33,13 +37,15 @@ public class BotTemplate {
         return flexMessage;
     }
 
-    public FlexMessage createFlexSisa() {
+    public FlexMessage createFlexSisa(String category, String nominal) {
         FlexMessage flexMessage=new FlexMessage("Sisa Pengeluaran", null);
         try {
             ClassLoader classLoader=getClass().getClassLoader();
             String encoding=StandardCharsets.UTF_8.name();
             String flexTemplate=IOUtils.toString(Objects.requireNonNull(
                     classLoader.getResourceAsStream("sisaBudget.json")), encoding);
+
+            flexTemplate = String.format(flexTemplate, escape(category), escape(nominal), escape(nominal));
 
             ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
             FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
@@ -50,7 +56,7 @@ public class BotTemplate {
         return flexMessage;
     }
 
-    public FlexMessage createFlexSisaKategori() {
+    public FlexMessage createFlexSisaCategory() {
         FlexMessage flexMessage=new FlexMessage("Kategori Sisa Pengeluaran", null);
         try {
             ClassLoader classLoader=getClass().getClassLoader();

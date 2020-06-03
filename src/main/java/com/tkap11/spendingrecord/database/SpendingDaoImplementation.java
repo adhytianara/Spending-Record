@@ -16,33 +16,34 @@ public class SpendingDaoImplementation implements SpendingDao {
     private JdbcTemplate mJdbc;
 
     private final static String SPENDING_RECORD_TABLE="tbl_spending";
+    private final static String SQL_SELECT_NOMINAL= "SELECT * FROM " + SPENDING_RECORD_TABLE + " WHERE LOWER(user_id) LIKE LOWER(?) AND LOWER(category) = LOWER(?);";
     private final static String SQL_SELECT_ALL="SELECT * FROM "+SPENDING_RECORD_TABLE;
     private final static String SQL_GET_BY_USER_ID=SQL_SELECT_ALL + " WHERE LOWER(user_id) LIKE LOWER(?);";
     private final static String SQL_REGISTER="INSERT INTO "+SPENDING_RECORD_TABLE+
-                                " (user_id, display_name, category, timestamp, nominal) VALUES (?, ?, ?, ?, ?);";
+            " (user_id, display_name, category, timestamp, nominal) VALUES (?, ?, ?, ?, ?);";
 
     private final static ResultSetExtractor<List<Spending>> MULTIPLE_RS_EXTRACTOR=
-                        new ResultSetExtractor<List<Spending>>()
-    {
-        @Override
-        public List<Spending> extractData(ResultSet aRs)
-                throws SQLException, DataAccessException
-        {
-            List<Spending> list=new Vector<Spending>();
-            while(aRs.next())
+            new ResultSetExtractor<List<Spending>>()
             {
-                Spending sp=new Spending(
-                        aRs.getLong("id"),
-                        aRs.getString("user_id"),
-                        aRs.getString("display_name"),
-                        aRs.getString("category"),
-                        aRs.getString("timestamp"),
-                        aRs.getString("nominal"));
-                list.add(sp);
-            }
-            return list;
-        }
-    };
+                @Override
+                public List<Spending> extractData(ResultSet aRs)
+                        throws SQLException, DataAccessException
+                {
+                    List<Spending> list=new Vector<Spending>();
+                    while(aRs.next())
+                    {
+                        Spending sp=new Spending(
+                                aRs.getLong("id"),
+                                aRs.getString("user_id"),
+                                aRs.getString("display_name"),
+                                aRs.getString("category"),
+                                aRs.getString("timestamp"),
+                                aRs.getString("nominal"));
+                        list.add(sp);
+                    }
+                    return list;
+                }
+            };
 
     public SpendingDaoImplementation(DataSource dataSource) {
         mJdbc=new JdbcTemplate(dataSource);
@@ -56,6 +57,11 @@ public class SpendingDaoImplementation implements SpendingDao {
     @Override
     public List<Spending> getByUserId(String aUserId) {
         return mJdbc.query(SQL_GET_BY_USER_ID, new Object[]{"%"+aUserId+"%"}, MULTIPLE_RS_EXTRACTOR);
+    }
+
+    @Override
+    public List<Spending> getNominal(String aUserId, String aCategory){
+        return mJdbc.query(SQL_SELECT_NOMINAL, new Object[]{"%"+aUserId+"%", aCategory}, MULTIPLE_RS_EXTRACTOR);
     }
 
     @Override

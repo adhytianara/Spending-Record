@@ -28,33 +28,10 @@
           },
           {
             "type": "text",
-            "text": "XXX",
+            "text": "%1$s",
             "size": "xl",
             "weight": "bold",
             "align": "center"
-          }
-        ]
-      },
-      {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "text",
-            "text": "Periode  :",
-            "size": "sm",
-            "margin": "none"
-          },
-          {
-            "type": "text",
-            "text": "xxx",
-            "size": "sm",
-            "position": "relative",
-            "align": "start"
-          },
-          {
-            "type": "filler",
-            "flex": 2
           }
         ]
       },
@@ -74,7 +51,7 @@
           },
           {
             "type": "text",
-            "text": "Rp xxx"
+            "text": "Rp %2$s"
           }
         ],
         "spacing": "none",
@@ -92,7 +69,7 @@
           },
           {
             "type": "text",
-            "text": "Rp xxx"
+            "text": "Rp %3$s"
           }
         ]
       },
@@ -114,8 +91,8 @@
         "height": "sm",
         "action": {
           "type": "message",
-          "label": "Atur Ulang Budget",
-          "text": "Atur Budget"
+          "label": "Selesai Sisa Budget",
+          "text": "Selesai"
         },
         "color": "#348255"
       },
