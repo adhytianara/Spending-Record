@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class BotTemplateTest {
     private final BotTemplate botTemplate = new BotTemplate();
 
-    @Test
-    void createFlexMenu() {
-        FlexMessage flexMessage = botTemplate.createFlexMenu();
-        assertTrue(flexMessage instanceof FlexMessage);
-    }
+//    @Test
+//    void createFlexMenu() {
+//        FlexMessage flexMessage = botTemplate.createFlexMenu();
+//        assertTrue(flexMessage instanceof FlexMessage);
+//    }
 
     @Test
     void createFlexChooseCategory() {
@@ -20,17 +20,11 @@ class BotTemplateTest {
         assertTrue(flexMessage instanceof FlexMessage);
     }
 
-    @Test
-    void createFlexSisaKategori() {
-        FlexMessage flexMessage = botTemplate.createFlexSisaKategori();
-        assertTrue(flexMessage instanceof FlexMessage);
-    }
-
-    @Test
-    void createFlexSisa() {
-        FlexMessage flexMessage = botTemplate.createFlexSisa();
-        assertTrue(flexMessage instanceof FlexMessage);
-    }
+//    @Test
+//    void createFlexSisa() {
+//        FlexMessage flexMessage = botTemplate.createFlexSisa();
+//        assertTrue(flexMessage instanceof FlexMessage);
+//    }
 
     @Test
     void createFlexAlarm() {
