@@ -11,8 +11,11 @@ import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
-import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
-import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
+import com.tkap11.spendingrecord.repository.BudgetDatabase;
+import com.tkap11.spendingrecord.state.State;
+import com.tkap11.spendingrecord.state.aturbudget.AturState;
+import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
+import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import java.util.ArrayList;
@@ -35,9 +38,11 @@ public class BotService {
   private UserDatabase userService;
   @Autowired
   private SpendingDatabase spendingService;
+  @Autowired
+  private BudgetDatabase budgetDatabase;
   private UserProfileResponse sender = null;
 
-  private HashMap<String, CatatPengeluaranState> currentHandler = new HashMap<>();
+  private HashMap<String, State> currentHandler = new HashMap<>();
 
   public void greetingMessage(String replyToken) {
     registerUser(source);
@@ -171,14 +176,22 @@ public class BotService {
     String replyToken = messageEvent.getReplyToken();
     String userMessage = textMessageContent.getText();
     String senderId = source.getSenderId();
-    CatatPengeluaranState oldHandler = currentHandler.get(senderId);
+    State oldHandler = currentHandler.get(senderId);
     if (oldHandler instanceof CatatPengeluaranState) {
-      CatatPengeluaranState newHandler = oldHandler.handleUserRequest(userMessage.toLowerCase());
+      CatatPengeluaranState handler = (CatatPengeluaranState) oldHandler;
+      CatatPengeluaranState newHandler = handler.handleUserRequest(userMessage.toLowerCase());
       currentHandler.put(senderId, newHandler);
-      if (oldHandler.getMessageToUser().contains("berhasil dicatat")) {
-        spendingService.saveRecord(oldHandler.getDescription());
+      if (handler.getMessageToUser().contains("berhasil dicatat")) {
+        spendingService.saveRecord(handler.getDescription());
       }
-      replyText(replyToken, oldHandler.getMessageToUser());
+      replyText(replyToken, handler.getMessageToUser());
+    } else if (oldHandler instanceof AturState) {
+      AturState handler = (AturState)oldHandler;
+      currentHandler.put(senderId, handler.handleUserRequest(userMessage.toLowerCase(), senderId));
+      replyText(replyToken, handler.messageToUser);
+      if(handler.messageToUser.contains("berhasil")) {
+        budgetDatabase.setBudget(senderId, handler.category, handler.amount);
+      }
     } else if (userMessage.toLowerCase().contains("menu")) {
       replyFlexMenu(replyToken);
     } else if (userMessage.toLowerCase().contains("catat")) {
