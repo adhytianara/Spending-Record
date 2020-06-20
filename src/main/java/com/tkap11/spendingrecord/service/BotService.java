@@ -13,17 +13,23 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
 import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
-import com.tkap11.spendingrecord.model.Spending;
-import com.tkap11.spendingrecord.repository.SisaDatabase;
+import com.tkap11.spendingrecord.sisabudget.SisaBudgetState;
+import com.tkap11.spendingrecord.sisabudget.SisaCategoryState;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
+import com.tkap11.spendingrecord.repository.SisaDatabase;
 import com.tkap11.spendingrecord.repository.UserDatabase;
+import com.tkap11.spendingrecord.model.Spending;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class BotService {
@@ -37,9 +43,12 @@ public class BotService {
   private UserDatabase userService;
   @Autowired
   private SpendingDatabase spendingService;
-  private UserProfileResponse sender = null;
+  @Autowired
+  private SisaDatabase sisaService;
 
   private HashMap<String, CatatPengeluaranState> currentHandler = new HashMap<>();
+  private HashMap<String, SisaBudgetState> currentHandlerSisa =new HashMap<>();
+
 
   public void greetingMessage(String replyToken) {
     registerUser(source);
@@ -56,14 +65,12 @@ public class BotService {
    * Reply menu flex.
    */
   public void replyFlexMenu(String replyToken) {
-    if (sender == null) {
-      String senderId = source.getSenderId();
-      sender = getProfile(senderId);
-    }
+    String senderId = source.getSenderId();
+    UserProfileResponse sender = getProfile(senderId);
 
-    FlexMessage flexMessage = botTemplate.createFlexMenu();
+    FlexMessage flexMessage=botTemplate.createFlexMenu();
     List<Message> messageList = new ArrayList<>();
-    messageList.add(new TextMessage("Hi" + sender.getDisplayName() + " yang ingin kamu lakukan ?"));
+    messageList.add(new TextMessage("Hi " + sender.getDisplayName() + ", apa yang ingin kamu lakukan ?"));
     messageList.add(flexMessage);
     reply(replyToken, messageList);
   }
@@ -76,13 +83,25 @@ public class BotService {
   /**
    * Reply sisa kategori flex.
    */
-  public void relpyFlexSisa(String replyToken) {
-    FlexMessage flexMessage = botTemplate.createFlexSisa();
-    FlexMessage flexMessage2 = botTemplate.createFlexSisaKategori();
+  public void relpyFlexSisaCategory(String replyToken) {
+    FlexMessage flexMessage = botTemplate.createFlexSisaCategory();
+    reply(replyToken, flexMessage);
+  }
+
+  /**
+   * Reply sisa flex.
+   */
+  public void relpyFlexSisa(String replyToken, String category, String nominal) {
+    FlexMessage flexMessage = botTemplate.createFlexSisa(category.toUpperCase(), nominal);
     List<Message> messageList = new ArrayList<>();
+    messageList.add(new TextMessage("Berikut adalah Sisa Budget-mu pada kategori : " + category));
     messageList.add(flexMessage);
-    messageList.add(flexMessage2);
     reply(replyToken, messageList);
+  }
+
+  public void relpyFlexSisaBackup(String replyToken, String category) {
+    FlexMessage flexMessage = botTemplate.createFlexSisaBackup(category.toUpperCase());
+    reply(replyToken, flexMessage);
   }
 
   public void replyFlexAlarm(String replyToken) {
@@ -165,6 +184,19 @@ public class BotService {
     }
   }
 
+  private void executeSisa(String replyToken, List<Spending> sisaResult, String[] sisaBackup) {
+    try {
+      String category = sisaResult.get(0).getCategory();
+      String nominal = sisaResult.get(0).getNominal();
+      NumberFormat formatter = new DecimalFormat("#,###");
+      String nominalFormatted = formatter.format(Double.parseDouble(nominal));
+      relpyFlexSisa(replyToken, category, nominalFormatted);
+    } catch (Exception e){
+      String category = sisaBackup[1];
+      relpyFlexSisaBackup(replyToken, category);
+    }
+  }
+
   /**
    * Handle user request.
    */
@@ -174,6 +206,8 @@ public class BotService {
     String userMessage = textMessageContent.getText();
     String senderId = source.getSenderId();
     CatatPengeluaranState oldHandler = currentHandler.get(senderId);
+    SisaBudgetState oldHandlerSisa = currentHandlerSisa.get(senderId);
+    List<String> categories = Arrays.asList("makanan", "transportasi", "tagihan", "belanja", "lainnya");
     if (oldHandler instanceof CatatPengeluaranState) {
       CatatPengeluaranState newHandler = oldHandler.handleUserRequest(userMessage.toLowerCase());
       currentHandler.put(senderId, newHandler);
@@ -181,6 +215,14 @@ public class BotService {
         spendingService.saveRecord(oldHandler.getDescription());
       }
       replyText(replyToken, oldHandler.getMessageToUser());
+    } else if (oldHandlerSisa instanceof SisaBudgetState) {
+      SisaBudgetState newHandlerSisa = oldHandlerSisa.handleUserRequest(userMessage.toLowerCase());
+      currentHandlerSisa.put(senderId, newHandlerSisa);
+      if (categories.contains(userMessage.toLowerCase())) {
+        executeSisa(replyToken, sisaService.sisaBudget(oldHandlerSisa.getDescription()), oldHandlerSisa.getDescription().split(";"));
+      } else {
+        replyText(replyToken, oldHandlerSisa.getMessageToUser());
+      }
     } else if (userMessage.toLowerCase().contains("menu")) {
       replyFlexMenu(replyToken);
     } else if (userMessage.toLowerCase().contains("catat")) {
@@ -190,7 +232,9 @@ public class BotService {
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("sisa")) {
-      relpyFlexSisa(replyToken);
+      SisaBudgetState categoryHandlerSisa = new SisaCategoryState(senderId);
+      currentHandlerSisa.put(senderId, categoryHandlerSisa);
+      relpyFlexSisaCategory(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")) {
       replyFlexAlarm(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("ubah")) {

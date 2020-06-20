@@ -13,8 +13,11 @@ public class SisaDatabase {
     @Autowired
     private SpendingDao spendingDao;
 
-    public List<Spending> getSisa(String description){
+    /**
+     * Save user record to database.
+     */
+    public List<Spending> sisaBudget(String description) {
         String[] userData = description.split(";");
-        return spendingDao.getNominal(userData[0], userData[1]);
+        return spendingDao.getSisa(userData[0], userData[1]);
     }
 }

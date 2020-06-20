@@ -1,8 +1,8 @@
-package com.tkap11.spendingrecord.sisaBudget;
+package com.tkap11.spendingrecord.sisabudget;
 
-public class CategorySisa extends SisaBudgetState{
+public class SisaCategoryState extends SisaBudgetState{
 
-    public CategorySisa(String senderId) {
+    public SisaCategoryState(String senderId) {
         this.description = senderId;
     }
 
@@ -26,7 +26,7 @@ public class CategorySisa extends SisaBudgetState{
     }
 
     @Override
-    public SisaBudgetState otherServiceMessage(){
+    public SisaBudgetState otherServiceMessage() {
         messageToUser = "Untuk beralih ke fitur lain, klik tombol 'Batal' terlebih dahulu";
         return this;
     }
