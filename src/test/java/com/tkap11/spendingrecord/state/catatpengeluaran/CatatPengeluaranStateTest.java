@@ -1,4 +1,4 @@
-package com.tkap11.spendingrecord.catatpengeluaran;
+package com.tkap11.spendingrecord.state.catatpengeluaran;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

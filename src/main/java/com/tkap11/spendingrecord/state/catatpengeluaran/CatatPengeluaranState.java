@@ -1,9 +1,11 @@
-package com.tkap11.spendingrecord.catatpengeluaran;
+package com.tkap11.spendingrecord.state.catatpengeluaran;
+
+import com.tkap11.spendingrecord.state.State;
 
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class CatatPengeluaranState {
+public abstract class CatatPengeluaranState implements State {
   private final List<String> categories = Arrays.asList(
       "makanan", "transportasi", "tagihan", "belanja", "lainnya");
   protected CatatPengeluaranState state;

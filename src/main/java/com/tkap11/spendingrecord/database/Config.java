@@ -70,4 +70,9 @@ public class Config {
   public SpendingDao getSpendingDao() {
     return new SpendingDaoImplementation(getDataSource());
   }
+
+  @Bean
+  public BudgetDao getBudgetDao() {
+    return new BudgetDaoImplementation(getDataSource());
+  }
 }

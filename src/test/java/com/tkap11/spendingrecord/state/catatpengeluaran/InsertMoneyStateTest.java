@@ -1,18 +1,18 @@
-package com.tkap11.spendingrecord.catatpengeluaran;
+package com.tkap11.spendingrecord.state.catatpengeluaran;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-class ConfirmationStateTest {
-  CatatPengeluaranState currentState = new ConfirmationState(new InsertMoneyState(
-          new ChooseCategoryState("senderId", "displayName")));
+class InsertMoneyStateTest {
+  CatatPengeluaranState currentState = new InsertMoneyState(
+        new ChooseCategoryState("senderId", "displayName"));
 
   @Test
   void userChooseCategory() {
     CatatPengeluaranState nextState = this.currentState.userChooseCategory("makanan");
-    assertTrue(nextState instanceof ConfirmationState);
+    assertTrue(nextState instanceof InsertMoneyState);
   }
 
   @Test
@@ -24,7 +24,7 @@ class ConfirmationStateTest {
   @Test
   void userConfirmation() {
     CatatPengeluaranState nextState = this.currentState.userConfirmation("ya");
-    assertEquals(nextState, null);
+    assertTrue(nextState instanceof InsertMoneyState);
   }
 
   @Test
@@ -36,12 +36,12 @@ class ConfirmationStateTest {
   @Test
   void unknownMessage() {
     CatatPengeluaranState nextState = this.currentState.unknownMessage();
-    assertTrue(nextState instanceof ConfirmationState);
+    assertTrue(nextState instanceof InsertMoneyState);
   }
 
   @Test
   void getDescription() {
     String description = currentState.getDescription();
-    assertEquals("senderId;displayName;null;null", description);
+    assertEquals("senderId;displayName;null", description);
   }
 }
