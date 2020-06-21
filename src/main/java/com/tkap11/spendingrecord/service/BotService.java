@@ -13,6 +13,7 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.tkap11.spendingrecord.repository.BudgetDatabase;
 import com.tkap11.spendingrecord.state.State;
+import com.tkap11.spendingrecord.state.aturbudget.AturCategoryState;
 import com.tkap11.spendingrecord.state.aturbudget.AturState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
@@ -197,7 +198,12 @@ public class BotService {
     } else if (userMessage.toLowerCase().contains("catat")) {
       UserProfileResponse sender = getProfile(senderId);
       CatatPengeluaranState categoryHandler =
-          new ChooseCategoryState(senderId, sender.getDisplayName());
+              new ChooseCategoryState(senderId, sender.getDisplayName());
+      currentHandler.put(senderId, categoryHandler);
+      relpyFlexChooseCategory(replyToken);
+    }  else if (userMessage.toLowerCase().contains("atur")) {
+      UserProfileResponse sender = getProfile(senderId);
+      AturState categoryHandler = new AturCategoryState();
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("sisa")) {
