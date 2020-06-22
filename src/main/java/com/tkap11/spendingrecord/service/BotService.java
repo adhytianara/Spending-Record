@@ -11,14 +11,18 @@ import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
-import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
-import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
 import com.tkap11.spendingrecord.model.Spending;
+import com.tkap11.spendingrecord.repository.BudgetDatabase;
 import com.tkap11.spendingrecord.repository.SisaDatabase;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import com.tkap11.spendingrecord.sisabudget.SisaBudgetState;
 import com.tkap11.spendingrecord.sisabudget.SisaCategoryState;
+import com.tkap11.spendingrecord.state.State;
+import com.tkap11.spendingrecord.state.aturbudget.AturCategoryState;
+import com.tkap11.spendingrecord.state.aturbudget.AturState;
+import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
+import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -45,9 +49,13 @@ public class BotService {
   @Autowired
   private SisaDatabase sisaService;
 
-  private final HashMap<String, CatatPengeluaranState> currentHandler = new HashMap<>();
   private final HashMap<String, SisaBudgetState> currentHandlerSisa = new HashMap<>();
 
+  @Autowired
+  private BudgetDatabase budgetDatabase;
+  private UserProfileResponse sender = null;
+
+  private HashMap<String, State> currentHandler = new HashMap<>();
 
   public void greetingMessage(String replyToken) {
     registerUser(source);
@@ -205,15 +213,24 @@ public class BotService {
     String replyToken = messageEvent.getReplyToken();
     String userMessage = textMessageContent.getText();
     String senderId = source.getSenderId();
-    CatatPengeluaranState oldHandler = currentHandler.get(senderId);
     SisaBudgetState oldHandlerSisa = currentHandlerSisa.get(senderId);
     List<String> categories = Arrays.asList("makanan", "transportasi",
         "tagihan", "belanja", "lainnya");
+    State oldHandler = currentHandler.get(senderId);
     if (oldHandler instanceof CatatPengeluaranState) {
-      CatatPengeluaranState newHandler = oldHandler.handleUserRequest(userMessage.toLowerCase());
+      CatatPengeluaranState handler = (CatatPengeluaranState) oldHandler;
+      CatatPengeluaranState newHandler = handler.handleUserRequest(userMessage.toLowerCase());
       currentHandler.put(senderId, newHandler);
-      if (oldHandler.getMessageToUser().contains("berhasil dicatat")) {
-        spendingService.saveRecord(oldHandler.getDescription());
+      if (handler.getMessageToUser().contains("berhasil dicatat")) {
+        spendingService.saveRecord(handler.getDescription());
+      }
+      replyText(replyToken, handler.getMessageToUser());
+    } else if (oldHandler instanceof AturState) {
+      AturState handler = (AturState) oldHandler;
+      currentHandler.put(senderId, handler.handleUserRequest(userMessage.toLowerCase(), senderId));
+      replyText(replyToken, handler.messageToUser);
+      if (handler.messageToUser.contains("berhasil")) {
+        budgetDatabase.setBudget(senderId, handler.category, handler.amount);
       }
       replyText(replyToken, oldHandler.getMessageToUser());
     } else if (oldHandlerSisa instanceof SisaBudgetState) {
@@ -231,6 +248,11 @@ public class BotService {
       UserProfileResponse sender = getProfile(senderId);
       CatatPengeluaranState categoryHandler =
           new ChooseCategoryState(senderId, sender.getDisplayName());
+      currentHandler.put(senderId, categoryHandler);
+      relpyFlexChooseCategory(replyToken);
+    } else if (userMessage.toLowerCase().contains("atur")) {
+      UserProfileResponse sender = getProfile(senderId);
+      AturState categoryHandler = new AturCategoryState();
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("sisa")) {
