@@ -1,7 +1,6 @@
 package com.tkap11.spendingrecord.state.catatpengeluaran;
 
 import com.tkap11.spendingrecord.state.State;
-
 import java.util.Arrays;
 import java.util.List;
 

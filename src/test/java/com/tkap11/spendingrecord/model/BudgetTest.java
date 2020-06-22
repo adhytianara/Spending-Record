@@ -10,30 +10,30 @@ class BudgetTest {
 
     @BeforeEach
     void setUp() {
-        budget = new Budget("a123", "makanan", (long) 50000);
-        budget.setSisabudget((long) 25000);
+        budget = new Budget("a123", "makanan", (int) 50000);
+        budget.setSisabudget((int) 25000);
     }
 
     @Test
     void getBudget() {
-        assertEquals((long)50000, budget.getBudget());
+        assertEquals((int)50000, budget.getBudget());
     }
 
     @Test
     void setBudget() {
-        budget.setBudget((long) 25000);
-        assertEquals((long)25000, budget.getBudget());
+        budget.setBudget((int) 25000);
+        assertEquals((int)25000, budget.getBudget());
     }
 
     @Test
     void getSisabudget() {
-        assertEquals((long)25000, budget.getSisabudget());
+        assertEquals((int)25000, budget.getSisabudget());
     }
 
     @Test
     void setSisabudget() {
-        budget.setSisabudget((long) 5000);
-        assertEquals((long)5000, budget.getSisabudget());
+        budget.setSisabudget((int) 5000);
+        assertEquals((int)5000, budget.getSisabudget());
     }
 
     @Test
