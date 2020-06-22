@@ -16,13 +16,13 @@ import com.tkap11.spendingrecord.repository.BudgetDatabase;
 import com.tkap11.spendingrecord.repository.SisaDatabase;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
 import com.tkap11.spendingrecord.repository.UserDatabase;
-import com.tkap11.spendingrecord.sisabudget.SisaBudgetState;
-import com.tkap11.spendingrecord.sisabudget.SisaCategoryState;
 import com.tkap11.spendingrecord.state.State;
 import com.tkap11.spendingrecord.state.aturbudget.AturCategoryState;
 import com.tkap11.spendingrecord.state.aturbudget.AturState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
+import com.tkap11.spendingrecord.state.sisabudget.SisaBudgetState;
+import com.tkap11.spendingrecord.state.sisabudget.SisaCategoryState;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -48,11 +48,11 @@ public class BotService {
   private SpendingDatabase spendingService;
   @Autowired
   private SisaDatabase sisaService;
+  @Autowired
+  private BudgetDatabase budgetDatabase;
 
   private final HashMap<String, SisaBudgetState> currentHandlerSisa = new HashMap<>();
 
-  @Autowired
-  private BudgetDatabase budgetDatabase;
   private UserProfileResponse sender = null;
 
   private HashMap<String, State> currentHandler = new HashMap<>();
@@ -213,7 +213,6 @@ public class BotService {
     String replyToken = messageEvent.getReplyToken();
     String userMessage = textMessageContent.getText();
     String senderId = source.getSenderId();
-    SisaBudgetState oldHandlerSisa = currentHandlerSisa.get(senderId);
     List<String> categories = Arrays.asList("makanan", "transportasi",
         "tagihan", "belanja", "lainnya");
     State oldHandler = currentHandler.get(senderId);
@@ -232,14 +231,15 @@ public class BotService {
       if (handler.messageToUser.contains("berhasil")) {
         budgetDatabase.setBudget(senderId, handler.category, handler.amount);
       }
-    } else if (oldHandlerSisa instanceof SisaBudgetState) {
-      SisaBudgetState newHandlerSisa = oldHandlerSisa.handleUserRequest(userMessage.toLowerCase());
-      currentHandlerSisa.put(senderId, newHandlerSisa);
+    } else if (oldHandler instanceof SisaBudgetState) {
+      SisaBudgetState handler = (SisaBudgetState) oldHandler;
+      SisaBudgetState newHandler = handler.handleUserRequest(userMessage.toLowerCase());
+      currentHandler.put(senderId, newHandler);
       if (categories.contains(userMessage.toLowerCase())) {
         executeSisa(replyToken, sisaService.sisaBudget(
-            oldHandlerSisa.getDescription()), oldHandlerSisa.getDescription().split(";"));
+            handler.getDescription()), handler.getDescription().split(";"));
       } else {
-        replyText(replyToken, oldHandlerSisa.getMessageToUser());
+        replyText(replyToken, handler.getMessageToUser());
       }
     } else if (userMessage.toLowerCase().contains("menu")) {
       replyFlexMenu(replyToken);
@@ -256,7 +256,7 @@ public class BotService {
       relpyFlexChooseCategory(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("sisa")) {
       SisaBudgetState categoryHandlerSisa = new SisaCategoryState(senderId);
-      currentHandlerSisa.put(senderId, categoryHandlerSisa);
+      currentHandler.put(senderId, categoryHandlerSisa);
       relpyFlexSisaCategory(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")) {
       replyFlexAlarm(replyToken);

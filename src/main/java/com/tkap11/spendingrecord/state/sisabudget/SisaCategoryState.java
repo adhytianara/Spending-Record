@@ -1,4 +1,4 @@
-package com.tkap11.spendingrecord.sisabudget;
+package com.tkap11.spendingrecord.state.sisabudget;
 
 public class SisaCategoryState extends SisaBudgetState {
 

@@ -1,4 +1,4 @@
-package com.tkap11.spendingrecord.sisabudget;
+package com.tkap11.spendingrecord.state.sisabudget;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

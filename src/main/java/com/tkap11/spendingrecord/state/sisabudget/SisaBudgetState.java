@@ -1,9 +1,10 @@
-package com.tkap11.spendingrecord.sisabudget;
+package com.tkap11.spendingrecord.state.sisabudget;
 
+import com.tkap11.spendingrecord.state.State;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class SisaBudgetState {
+public abstract class SisaBudgetState implements State {
   private final List<String> categories = Arrays.asList(
       "makanan", "transportasi", "tagihan", "belanja", "lainnya");
   protected SisaBudgetState state;
