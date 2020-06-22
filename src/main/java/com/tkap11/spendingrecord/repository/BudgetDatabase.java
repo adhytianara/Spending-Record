@@ -12,7 +12,7 @@ public class BudgetDatabase {
   @Autowired
   private BudgetDao budgetDao;
 
-  public int setBudget(String userId, String category, Long budget) {
+  public int setBudget(String userId, String category, int budget) {
     return budgetDao.setBudget(userId, category, budget);
   }
 
