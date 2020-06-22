@@ -19,7 +19,7 @@ public class BudgetDaoImplementation implements BudgetDao {
   private static final String SQL_GET_BY_USER_ID = SQL_SELECT_ALL
           + " WHERE LOWER(user_id) LIKE LOWER(?);";
   private static final String SQL_UPSERT = "INSERT INTO " + BUDGET_TABLE
-          + "(user_id, category, nominal) VALUES (?, ?, ?);";
+          + "(user_id, category, budget) VALUES (?, ?, ?);";
 
   private JdbcTemplate mjdbc;
 
