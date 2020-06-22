@@ -47,6 +47,58 @@ class BotServiceTest {
   private LineMessagingClient lineMessagingClient;
 
   @Test
+  void greetingMessageTest() {
+    when(lineMessagingClient.getProfile(null))
+            .thenReturn(CompletableFuture.completedFuture(
+                    new UserProfileResponse("displayName", "userId", "", "")
+            ));
+    when(userDatabase.registerUser("userId", "displayName"))
+            .thenReturn(2);
+    String senderId = source.getSenderId();
+    UserProfileResponse sender = botService.getProfile(senderId);
+    FlexMessage flexMessage=botTemplate.createFlexMenu();
+    List<Message> messageList = new ArrayList<>();
+    messageList.add(new TextMessage("Hi " + sender.getDisplayName() + ", apa yang ingin kamu lakukan ?"));
+    messageList.add(flexMessage);
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+            "replyToken", messageList
+    ))).thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+    ));
+    botService.greetingMessage("replyToken");
+    verify(lineMessagingClient).replyMessage(new ReplyMessage(
+            "replyToken", messageList));
+  }
+
+  @Test
+  void handleMessageEventWhenUserSendMenuMessage() {
+    final MessageEvent request = new MessageEvent<>(
+            "replyToken",
+            new UserSource("userId"),
+            new TextMessageContent("id", "menu"),
+            Instant.now()
+    );
+    when(lineMessagingClient.getProfile(null))
+            .thenReturn(CompletableFuture.completedFuture(
+                    new UserProfileResponse("displayName", "userId", "", "")
+            ));
+    String senderId = source.getSenderId();
+    UserProfileResponse sender = botService.getProfile(senderId);
+    FlexMessage flexMessage=botTemplate.createFlexMenu();
+    List<Message> messageList = new ArrayList<>();
+    messageList.add(new TextMessage("Hi " + sender.getDisplayName() + ", apa yang ingin kamu lakukan ?"));
+    messageList.add(flexMessage);
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+            "replyToken", messageList
+    ))).thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+    ));
+    botService.handleMessageEvent(request);
+    verify(lineMessagingClient).replyMessage(new ReplyMessage(
+            "replyToken", messageList));
+  }
+
+  @Test
   void handleMessageEventWhenUserSendCatatMessage() {
     final MessageEvent request = new MessageEvent<>(
             "replyToken",
@@ -75,19 +127,13 @@ class BotServiceTest {
             new TextMessageContent("id", "sisa"),
             Instant.now()
     );
-    FlexMessage flexMessage = botTemplate.createFlexSisa();
-    FlexMessage flexMessage2 = botTemplate.createFlexSisaKategori();
-    List<Message> messageList = new ArrayList<>();
-    messageList.add(flexMessage);
-    messageList.add(flexMessage2);
     when(lineMessagingClient.replyMessage(new ReplyMessage(
-            "replyToken", messageList
-    ))).thenReturn(CompletableFuture.completedFuture(
-            new BotApiResponse("ok", Collections.emptyList())
-    ));
+            "replyToken", singletonList(null))))
+            .thenReturn(CompletableFuture.completedFuture(
+                    new BotApiResponse("ok", Collections.emptyList())
+            ));
     botService.handleMessageEvent(request);
-    verify(lineMessagingClient).replyMessage(new ReplyMessage(
-            "replyToken", messageList));
+    verify(botTemplate, times(1)).createFlexSisaCategory();
   }
 
   @Test

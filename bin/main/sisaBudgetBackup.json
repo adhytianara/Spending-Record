@@ -38,65 +38,26 @@
         ]
       },
       {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "text",
-            "text": "Periode  :",
-            "size": "sm"
-          },
-          {
-            "type": "text",
-            "text": "XXX",
-            "size": "sm",
-            "align": "start"
-          },
-          {
-            "type": "filler",
-            "flex": 2
-          }
-        ],
-        "margin": "sm"
-      },
-      {
         "type": "separator",
         "margin": "md"
       },
       {
         "type": "box",
-        "layout": "horizontal",
+        "layout": "vertical",
         "contents": [
           {
             "type": "text",
-            "text": "Budget",
-            "size": "md",
-            "weight": "bold"
+            "text": "Sisa budget 𝗧𝗜𝗗𝗔𝗞 𝗧𝗘𝗥𝗦𝗘𝗗𝗜𝗔,",
+            "size": "md"
           },
           {
             "type": "text",
-            "text": "Rp %2$s"
+            "text": "silahkan atur budget terlebih dahulu",
+            "style": "italic"
           }
         ],
-        "paddingTop": "7px",
-        "margin": "sm"
-      },
-      {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "text",
-            "text": "Sisa",
-            "size": "md",
-            "weight": "bold"
-          },
-          {
-            "type": "text",
-            "text": "Rp %3$s"
-          }
-        ],
-        "margin": "sm"
+        "margin": "sm",
+        "spacing": "sm"
       },
       {
         "type": "separator",
