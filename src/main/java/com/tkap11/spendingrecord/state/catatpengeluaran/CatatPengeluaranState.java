@@ -46,8 +46,7 @@ public abstract class CatatPengeluaranState implements State {
 
   private boolean isNominal(String userMessage) {
     try {
-      Integer.parseInt(userMessage);
-      return true;
+      return Integer.parseInt(userMessage) > 0;
     } catch (NumberFormatException e) {
       return false;
     }
