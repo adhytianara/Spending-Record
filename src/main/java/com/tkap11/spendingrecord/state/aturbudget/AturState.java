@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 @Service
 public abstract class AturState implements State {
   private final List<String> categories = Arrays.asList(
-      "makanan", "transportasi", "tagihan", "belanja", "lainnya");
+          "makanan", "transportasi", "tagihan", "belanja", "lainnya");
   public String category;
-  public long amount;
+  public int amount;
   public String messageToUser;
 
   public abstract AturState userChooseCategory(String userMessage, String senderId);
 
-  public abstract AturState userInsertMoney(long userMessage);
+  public abstract AturState userInsertMoney(int userMessage);
 
   public abstract AturState userConfirmation(String senderId);
 
@@ -27,13 +27,16 @@ public abstract class AturState implements State {
   }
 
   /**
-   * Check user state.
+   * handle user message.
+   * @param userMessage message content from user
+   * @param senderId user sender id
+   * @return new state
    */
   public AturState handleUserRequest(String userMessage, String senderId) {
     if (categories.contains(userMessage)) {
       return userChooseCategory(userMessage, senderId);
     } else if (isNominal(userMessage)) {
-      return userInsertMoney(Long.parseLong(userMessage));
+      return userInsertMoney(Integer.parseInt(userMessage));
     } else if (userMessage.contains("ya")) {
       return userConfirmation(senderId);
     } else if (userMessage.contains("batal")) {

@@ -2,33 +2,36 @@ package com.tkap11.spendingrecord.model;
 
 public class Budget {
 
-  private Long budget;
-  private Long sisabudget;
+  private int budget;
+  private int sisabudget;
   private String userId;
   private String category;
 
   /**
-   * User budget.
+   * Budget constructor.
+   * @param userId user id
+   * @param category budget category
+   * @param budget budget nominal
    */
-  public Budget(String userId, String category, Long budget) {
+  public Budget(String userId, String category, int budget) {
     this.userId = userId;
     this.category = category;
     this.budget = budget;
   }
 
-  public Long getBudget() {
+  public int getBudget() {
     return budget;
   }
 
-  public void setBudget(Long budget) {
+  public void setBudget(int budget) {
     this.budget = budget;
   }
 
-  public Long getSisabudget() {
+  public int getSisabudget() {
     return sisabudget;
   }
 
-  public void setSisabudget(Long sisabudget) {
+  public void setSisabudget(int sisabudget) {
     this.sisabudget = sisabudget;
   }
 

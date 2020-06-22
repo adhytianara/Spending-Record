@@ -2,7 +2,7 @@ package com.tkap11.spendingrecord.state.aturbudget;
 
 public class AturConfirmationState extends AturState {
 
-  public AturConfirmationState(String category, long amount) {
+  public AturConfirmationState(String category, int amount) {
     this.category = category;
     this.amount = amount;
   }
@@ -13,7 +13,7 @@ public class AturConfirmationState extends AturState {
   }
 
   @Override
-  public AturState userInsertMoney(long userMessage) {
+  public AturState userInsertMoney(int userMessage) {
     return unknownMessage();
   }
 
@@ -27,7 +27,7 @@ public class AturConfirmationState extends AturState {
   @Override
   public AturState unknownMessage() {
     this.messageToUser = "Konfirmasi perubahan budget dengan menjawab 'Ya' "
-        + "atau ketik 'Batal' untuk membatalkan tindakan";
+            + "atau ketik 'Batal' untuk membatalkan tindakan";
     return this;
   }
 

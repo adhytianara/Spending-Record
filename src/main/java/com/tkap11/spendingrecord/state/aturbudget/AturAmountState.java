@@ -12,10 +12,10 @@ public class AturAmountState extends AturState {
   }
 
   @Override
-  public AturState userInsertMoney(long userMessage) {
+  public AturState userInsertMoney(int userMessage) {
     this.messageToUser = "Oke, budget yang disediakan sebesar Rp" + userMessage
-        + ". Konfirmasi perubahan dengan menjawab 'Ya' atau ketik "
-        + "'Batal' untuk membatalkan tindakan";
+            + ". Konfirmasi perubahan dengan menjawab 'Ya'"
+            + " atau ketik 'Batal' untuk membatalkan tindakan";
     return new AturConfirmationState(this.category, userMessage);
   }
 
@@ -26,9 +26,9 @@ public class AturAmountState extends AturState {
 
   @Override
   public AturState unknownMessage() {
-    this.messageToUser = "Nominal uang tidak sesuai. Pastikan kamu "
-        + "hanya memasukkan angka, contoh: 10000. "
-        + "Jika ingin membatalkan tindakan, ketik 'Batal'";
+    this.messageToUser =
+            "Nominal uang tidak sesuai. Pastikan kamu hanya memasukkan angka, contoh: 10000. "
+             + "Jika ingin membatalkan tindakan, ketik 'Batal'";
     return this;
   }
 }
