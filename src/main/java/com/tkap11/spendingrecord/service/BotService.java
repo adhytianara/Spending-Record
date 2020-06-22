@@ -198,10 +198,10 @@ public class BotService {
     } else if (userMessage.toLowerCase().contains("catat")) {
       UserProfileResponse sender = getProfile(senderId);
       CatatPengeluaranState categoryHandler =
-              new ChooseCategoryState(senderId, sender.getDisplayName());
+          new ChooseCategoryState(senderId, sender.getDisplayName());
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
-    }  else if (userMessage.toLowerCase().contains("atur")) {
+    } else if (userMessage.toLowerCase().contains("atur")) {
       UserProfileResponse sender = getProfile(senderId);
       AturState categoryHandler = new AturCategoryState();
       currentHandler.put(senderId, categoryHandler);

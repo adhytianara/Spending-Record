@@ -20,23 +20,23 @@ public class SpendingDaoImplementation implements SpendingDao {
       + " (user_id, display_name, category, timestamp, nominal) VALUES (?, ?, ?, ?, ?);";
   private static final ResultSetExtractor<List<Spending>> MULTIPLE_RS_EXTRACTOR =
       new ResultSetExtractor<List<Spending>>() {
-    @Override
-    public List<Spending> extractData(ResultSet resultSet)
-        throws SQLException, DataAccessException {
-      List<Spending> list = new Vector<Spending>();
-      while (resultSet.next()) {
-        Spending sp = new Spending(
-            resultSet.getLong("id"),
-            resultSet.getString("user_id"),
-            resultSet.getString("display_name"),
-            resultSet.getString("category"),
-            resultSet.getString("timestamp"),
-            resultSet.getString("nominal"));
+        @Override
+        public List<Spending> extractData(ResultSet resultSet)
+            throws SQLException, DataAccessException {
+          List<Spending> list = new Vector<Spending>();
+          while (resultSet.next()) {
+            Spending sp = new Spending(
+                resultSet.getLong("id"),
+                resultSet.getString("user_id"),
+                resultSet.getString("display_name"),
+                resultSet.getString("category"),
+                resultSet.getString("timestamp"),
+                resultSet.getString("nominal"));
             list.add(sp);
-      }
-      return list;
-    }
-  };
+          }
+          return list;
+        }
+      };
   private JdbcTemplate jdbcTemplate;
 
   public SpendingDaoImplementation(DataSource dataSource) {
@@ -51,7 +51,7 @@ public class SpendingDaoImplementation implements SpendingDao {
   @Override
   public List<Spending> getByUserId(String userId) {
     return jdbcTemplate.query(SQL_GET_BY_USER_ID, new Object[]{"%" + userId + "%"},
-      MULTIPLE_RS_EXTRACTOR);
+        MULTIPLE_RS_EXTRACTOR);
   }
 
   @Override

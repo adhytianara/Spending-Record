@@ -1,9 +1,9 @@
 package com.tkap11.spendingrecord.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class BudgetTest {
     Budget budget;

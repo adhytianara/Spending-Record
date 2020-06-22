@@ -16,25 +16,25 @@ public class UserDaoImplementation implements UserDao {
   private static final String USER_TABLE = "tbl_user";
   private static final String SQL_SELECT_ALL = "SELECT * FROM " + USER_TABLE;
   private static final String SQL_GET_BY_USER_ID = SQL_SELECT_ALL
-        + " WHERE LOWER(user_id) LIKE LOWER(?);";
+      + " WHERE LOWER(user_id) LIKE LOWER(?);";
   private static final String SQL_REGISTER = "INSERT INTO "
       + USER_TABLE + " (user_id, display_name) VALUES (?, ?);";
   private static final ResultSetExtractor<List<User>> MULTIPLE_RS_EXTRACTOR =
       new ResultSetExtractor<List<User>>() {
-    @Override
-    public List<User> extractData(ResultSet resultSet)
-        throws SQLException, DataAccessException {
-      List<User> list = new Vector<User>();
-      while (resultSet.next()) {
-        User p = new User(
-            resultSet.getLong("id"),
-            resultSet.getString("user_id"),
-            resultSet.getString("display_name"));
+        @Override
+        public List<User> extractData(ResultSet resultSet)
+            throws SQLException, DataAccessException {
+          List<User> list = new Vector<User>();
+          while (resultSet.next()) {
+            User p = new User(
+                resultSet.getLong("id"),
+                resultSet.getString("user_id"),
+                resultSet.getString("display_name"));
             list.add(p);
-      }
-      return list;
-    }
-  };
+          }
+          return list;
+        }
+      };
   private JdbcTemplate jdbcTemplate;
 
   public UserDaoImplementation(DataSource dataSource) {

@@ -33,12 +33,12 @@ public class Config {
   @Bean(name = "lineMessagingClient")
   public LineMessagingClient getMessagingClient() {
     return LineMessagingClient
-      .builder(getChannelAccessToken())
-      .apiEndPoint(LineMessagingClientBuilder.DEFAULT_API_END_POINT)
-      .connectTimeout(LineMessagingClientBuilder.DEFAULT_CONNECT_TIMEOUT)
-      .readTimeout(LineMessagingClientBuilder.DEFAULT_READ_TIMEOUT)
-      .writeTimeout(LineMessagingClientBuilder.DEFAULT_WRITE_TIMEOUT)
-      .build();
+        .builder(getChannelAccessToken())
+        .apiEndPoint(LineMessagingClientBuilder.DEFAULT_API_END_POINT)
+        .connectTimeout(LineMessagingClientBuilder.DEFAULT_CONNECT_TIMEOUT)
+        .readTimeout(LineMessagingClientBuilder.DEFAULT_READ_TIMEOUT)
+        .writeTimeout(LineMessagingClientBuilder.DEFAULT_WRITE_TIMEOUT)
+        .build();
   }
 
   @Bean(name = "lineSignatureValidator")

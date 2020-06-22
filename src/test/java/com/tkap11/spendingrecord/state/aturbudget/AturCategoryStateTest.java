@@ -1,30 +1,28 @@
 package com.tkap11.spendingrecord.state.aturbudget;
 
-import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
-import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
-import com.tkap11.spendingrecord.state.catatpengeluaran.InsertMoneyState;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class AturCategoryStateTest {
-    AturCategoryState state = new AturCategoryState();
+  AturCategoryState state = new AturCategoryState();
 
-    @Test
-    void handleUserRequest() {
-        AturState nextState = state.handleUserRequest("makanan", "bla");
-        assertTrue(nextState instanceof AturAmountState);
+  @Test
+  void handleUserRequest() {
+    AturState nextState = state.handleUserRequest("makanan", "bla");
+    assertTrue(nextState instanceof AturAmountState);
 
-        nextState = state.handleUserRequest("1000", "bla");
-        assertTrue(nextState instanceof AturCategoryState);
+    nextState = state.handleUserRequest("1000", "bla");
+    assertTrue(nextState instanceof AturCategoryState);
 
-        nextState = state.handleUserRequest("ya", "bla");
-        assertTrue(nextState instanceof AturCategoryState);
+    nextState = state.handleUserRequest("ya", "bla");
+    assertTrue(nextState instanceof AturCategoryState);
 
-        nextState = state.handleUserRequest("adasd", "bla");
-        assertTrue(nextState instanceof AturCategoryState);
+    nextState = state.handleUserRequest("adasd", "bla");
+    assertTrue(nextState instanceof AturCategoryState);
 
-        nextState = state.handleUserRequest("batal", "bla");
-        assertEquals(nextState, null);
-    }
+    nextState = state.handleUserRequest("batal", "bla");
+    assertEquals(nextState, null);
+  }
 }
