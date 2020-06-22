@@ -1,0 +1,51 @@
+{
+  "type": "bubble",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Ingatkan Saya",
+        "weight": "bold"
+      }
+    ]
+  },
+  "hero": {
+    "type": "image",
+    "url": "https://www.picturepaste.ca/images/2020/04/27/ingatkan-saya-2.png",
+    "size": "full",
+    "aspectRatio": "3:1",
+    "aspectMode": "cover"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Notifikasi Pengingat akan dikirimkan pada jam 09:00, 13:00, 17:00 dan 21:00",
+        "size": "sm",
+        "wrap": true,
+        "margin": "lg"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "horizontal",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "secondary",
+        "action": {
+          "type": "postback",
+          "label": "Ubah Waktu",
+          "displayText": "Ubah Waktu",
+          "data": "Ubah"
+        }
+      }
+    ]
+  }
+}

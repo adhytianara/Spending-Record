@@ -12,13 +12,13 @@ import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.tkap11.spendingrecord.repository.BudgetDatabase;
+import com.tkap11.spendingrecord.repository.SpendingDatabase;
+import com.tkap11.spendingrecord.repository.UserDatabase;
 import com.tkap11.spendingrecord.state.State;
 import com.tkap11.spendingrecord.state.aturbudget.AturCategoryState;
 import com.tkap11.spendingrecord.state.aturbudget.AturState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
-import com.tkap11.spendingrecord.repository.SpendingDatabase;
-import com.tkap11.spendingrecord.repository.UserDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -187,10 +187,10 @@ public class BotService {
       }
       replyText(replyToken, handler.getMessageToUser());
     } else if (oldHandler instanceof AturState) {
-      AturState handler = (AturState)oldHandler;
+      AturState handler = (AturState) oldHandler;
       currentHandler.put(senderId, handler.handleUserRequest(userMessage.toLowerCase(), senderId));
       replyText(replyToken, handler.messageToUser);
-      if(handler.messageToUser.contains("berhasil")) {
+      if (handler.messageToUser.contains("berhasil")) {
         budgetDatabase.setBudget(senderId, handler.category, handler.amount);
       }
     } else if (userMessage.toLowerCase().contains("menu")) {
@@ -198,10 +198,10 @@ public class BotService {
     } else if (userMessage.toLowerCase().contains("catat")) {
       UserProfileResponse sender = getProfile(senderId);
       CatatPengeluaranState categoryHandler =
-              new ChooseCategoryState(senderId, sender.getDisplayName());
+          new ChooseCategoryState(senderId, sender.getDisplayName());
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
-    }  else if (userMessage.toLowerCase().contains("atur")) {
+    } else if (userMessage.toLowerCase().contains("atur")) {
       UserProfileResponse sender = getProfile(senderId);
       AturState categoryHandler = new AturCategoryState();
       currentHandler.put(senderId, categoryHandler);
