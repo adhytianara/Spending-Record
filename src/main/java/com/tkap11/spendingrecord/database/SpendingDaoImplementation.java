@@ -14,7 +14,7 @@ public class SpendingDaoImplementation implements SpendingDao {
 
   private static final String SPENDING_RECORD_TABLE = "tbl_spending";
   private static final String SQL_SELECT_ALL = "SELECT * FROM " + SPENDING_RECORD_TABLE;
-  private static final String SQL_SELECT_SISA= "SELECT * FROM " + SPENDING_RECORD_TABLE
+  private static final String SQL_SELECT_SISA = "SELECT * FROM " + SPENDING_RECORD_TABLE
       + " " + "WHERE LOWER(user_id) LIKE LOWER(?) AND LOWER(category) = LOWER(?);";
   private static final String SQL_GET_BY_USER_ID = SQL_SELECT_ALL
       + " WHERE LOWER(user_id) LIKE LOWER(?);";
@@ -57,8 +57,9 @@ public class SpendingDaoImplementation implements SpendingDao {
   }
 
   @Override
-  public List<Spending> getSisa(String aUserId, String aCategory) {
-    return jdbcTemplate.query(SQL_SELECT_SISA, new Object[]{"%"+aUserId+"%", aCategory}, MULTIPLE_RS_EXTRACTOR);
+  public List<Spending> getSisa(String userId, String category) {
+    return jdbcTemplate.query(SQL_SELECT_SISA,
+        new Object[]{"%" + userId + "%", category}, MULTIPLE_RS_EXTRACTOR);
   }
 
   @Override

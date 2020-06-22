@@ -7,7 +7,6 @@ import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class BotTemplate {
 
   public String escape(String text) {
-    return  StringEscapeUtils.escapeJson(text.trim());
+    return StringEscapeUtils.escapeJson(text.trim());
   }
 
   /**
@@ -28,7 +27,7 @@ public class BotTemplate {
       ClassLoader classLoader = getClass().getClassLoader();
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
-            classLoader.getResourceAsStream("menu.json")), encoding);
+          classLoader.getResourceAsStream("menu.json")), encoding);
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Action Menu", flexContainer);
@@ -42,19 +41,20 @@ public class BotTemplate {
    * Create sisa budget flex.
    */
   public FlexMessage createFlexSisa(String category, String nominal) {
-    FlexMessage flexMessage=new FlexMessage("Sisa Pengeluaran", null);
+    FlexMessage flexMessage = new FlexMessage("Sisa Pengeluaran", null);
     try {
-      ClassLoader classLoader=getClass().getClassLoader();
-      String encoding=StandardCharsets.UTF_8.name();
-      String flexTemplate=IOUtils.toString(Objects.requireNonNull(
-              classLoader.getResourceAsStream("sisaBudget.json")), encoding);
+      ClassLoader classLoader = getClass().getClassLoader();
+      String encoding = StandardCharsets.UTF_8.name();
+      String flexTemplate = IOUtils.toString(Objects.requireNonNull(
+          classLoader.getResourceAsStream("sisaBudget.json")), encoding);
 
-      flexTemplate = String.format(flexTemplate, escape(category), escape(nominal), escape(nominal));
+      flexTemplate = String.format(flexTemplate, escape(category),
+          escape(nominal), escape(nominal));
 
-      ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
-      FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
-      flexMessage=new FlexMessage("Sisa Pengeluaran", flexContainer);
-    } catch (IOException e){
+      ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
+      flexMessage = new FlexMessage("Sisa Pengeluaran", flexContainer);
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -64,19 +64,19 @@ public class BotTemplate {
    * Create sisa pengeluaran backup flex.
    */
   public FlexMessage createFlexSisaBackup(String category) {
-    FlexMessage flexMessage=new FlexMessage("Sisa Pengeluaran [NOT FOUND]", null);
+    FlexMessage flexMessage = new FlexMessage("Sisa Pengeluaran [NOT FOUND]", null);
     try {
-      ClassLoader classLoader=getClass().getClassLoader();
-      String encoding=StandardCharsets.UTF_8.name();
-      String flexTemplate=IOUtils.toString(Objects.requireNonNull(
-              classLoader.getResourceAsStream("sisaBudgetBackup.json")), encoding);
+      ClassLoader classLoader = getClass().getClassLoader();
+      String encoding = StandardCharsets.UTF_8.name();
+      String flexTemplate = IOUtils.toString(Objects.requireNonNull(
+          classLoader.getResourceAsStream("sisaBudgetBackup.json")), encoding);
 
       flexTemplate = String.format(flexTemplate, escape(category));
 
-      ObjectMapper objectMapper=ModelObjectMapper.createNewObjectMapper();
-      FlexContainer flexContainer=objectMapper.readValue(flexTemplate, FlexContainer.class);
-      flexMessage=new FlexMessage("Sisa Pengeluaran [NOT FOUND]", flexContainer);
-    } catch (IOException e){
+      ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
+      flexMessage = new FlexMessage("Sisa Pengeluaran [NOT FOUND]", flexContainer);
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -91,7 +91,7 @@ public class BotTemplate {
       ClassLoader classLoader = getClass().getClassLoader();
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
-            classLoader.getResourceAsStream("sisaCategory.json")), encoding);
+          classLoader.getResourceAsStream("sisaCategory.json")), encoding);
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
@@ -111,7 +111,7 @@ public class BotTemplate {
       ClassLoader classLoader = getClass().getClassLoader();
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
-            classLoader.getResourceAsStream("ChooseCategory.json")), encoding);
+          classLoader.getResourceAsStream("ChooseCategory.json")), encoding);
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
@@ -131,7 +131,7 @@ public class BotTemplate {
       ClassLoader classLoader = getClass().getClassLoader();
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
-            classLoader.getResourceAsStream("ingatkanSaya.json")), encoding);
+          classLoader.getResourceAsStream("ingatkanSaya.json")), encoding);
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
@@ -151,7 +151,7 @@ public class BotTemplate {
       ClassLoader classLoader = getClass().getClassLoader();
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
-            classLoader.getResourceAsStream("waktuAlarm.json")), encoding);
+          classLoader.getResourceAsStream("waktuAlarm.json")), encoding);
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
