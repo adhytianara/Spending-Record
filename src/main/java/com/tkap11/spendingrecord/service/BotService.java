@@ -11,7 +11,7 @@ import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
-import com.tkap11.spendingrecord.model.Spending;
+import com.tkap11.spendingrecord.model.Budget;
 import com.tkap11.spendingrecord.repository.BudgetDatabase;
 import com.tkap11.spendingrecord.repository.SisaDatabase;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
@@ -99,8 +99,8 @@ public class BotService {
   /**
    * Reply sisa flex.
    */
-  public void relpyFlexSisa(String replyToken, String category, String nominal) {
-    FlexMessage flexMessage = botTemplate.createFlexSisa(category.toUpperCase(), nominal);
+  public void relpyFlexSisa(String replyToken, String category, String budget, String sisa) {
+    FlexMessage flexMessage = botTemplate.createFlexSisa(category.toUpperCase(), budget, sisa);
     List<Message> messageList = new ArrayList<>();
     messageList.add(new TextMessage("Berikut adalah Sisa Budget-mu pada kategori : " + category));
     messageList.add(flexMessage);
@@ -192,13 +192,15 @@ public class BotService {
     }
   }
 
-  private void executeSisa(String replyToken, List<Spending> sisaResult, String[] sisaBackup) {
+  private void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
     try {
       String category = sisaResult.get(0).getCategory();
-      String nominal = sisaResult.get(0).getNominal();
+      String budget = Integer.toString(sisaResult.get(0).getBudget());
+      String sisa = Integer.toString(sisaResult.get(0).getSisabudget());
       NumberFormat formatter = new DecimalFormat("#,###");
-      String nominalFormatted = formatter.format(Double.parseDouble(nominal));
-      relpyFlexSisa(replyToken, category, nominalFormatted);
+      String budgetFormatted = formatter.format(Double.parseDouble(budget));
+      String sisaFormatted = formatter.format(Double.parseDouble(sisa));
+      relpyFlexSisa(replyToken, category, budgetFormatted, sisaFormatted);
     } catch (Exception e) {
       String category = sisaBackup[1];
       relpyFlexSisaBackup(replyToken, category);

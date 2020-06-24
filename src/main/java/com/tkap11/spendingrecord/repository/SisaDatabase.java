@@ -1,7 +1,7 @@
 package com.tkap11.spendingrecord.repository;
 
-import com.tkap11.spendingrecord.database.SpendingDao;
-import com.tkap11.spendingrecord.model.Spending;
+import com.tkap11.spendingrecord.database.BudgetDao;
+import com.tkap11.spendingrecord.model.Budget;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 public class SisaDatabase {
 
   @Autowired
-  private SpendingDao spendingDao;
+  private BudgetDao budgetDao;
 
   /**
    * Save user record to database.
    */
-  public List<Spending> sisaBudget(String description) {
+  public List<Budget> sisaBudget(String description) {
     String[] userData = description.split(";");
-    return spendingDao.getSisa(userData[0], userData[1]);
+    return budgetDao.getSisa(userData[0], userData[1]);
   }
 }

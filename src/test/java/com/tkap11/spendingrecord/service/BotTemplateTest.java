@@ -28,7 +28,7 @@ class BotTemplateTest {
 
   @Test
   void createFlexSisa() {
-    FlexMessage flexMessage = botTemplate.createFlexSisa("category", "nominal");
+    FlexMessage flexMessage = botTemplate.createFlexSisa("category", "nominal", "sisa");
     assertTrue(flexMessage instanceof FlexMessage);
   }
 

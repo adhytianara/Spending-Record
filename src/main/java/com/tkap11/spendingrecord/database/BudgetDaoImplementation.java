@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
 import javax.sql.DataSource;
+
+import com.tkap11.spendingrecord.model.Spending;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -16,6 +18,8 @@ public class BudgetDaoImplementation implements BudgetDao {
   private static final String SQL_SELECT_ALL = "SELECT * FROM " + BUDGET_TABLE;
   private static final String SQL_SELECT_NOMINAL = "SELECT * FROM" + BUDGET_TABLE
           + " WHERE LOWER(user_id) LIKE LOWER(?), LOWER(category) = LOWER(?);";
+  private static final String SQL_SELECT_SISA = "SELECT * FROM " + BUDGET_TABLE
+      + " " + "WHERE LOWER(user_id) LIKE LOWER(?) AND LOWER(category) = LOWER(?);";
   private static final String SQL_GET_BY_USER_ID = SQL_SELECT_ALL
           + " WHERE LOWER(user_id) LIKE LOWER(?);";
   private static final String SQL_UPSERT = "INSERT INTO tbl_budget "
@@ -55,6 +59,12 @@ public class BudgetDaoImplementation implements BudgetDao {
   @Override
   public List<Budget> getByUserId(String userId) {
     return mjdbc.query(SQL_GET_BY_USER_ID, new Object[]{"%" + userId + "%"}, MULTIPLE_RS_EXTRACTOR);
+  }
+
+  @Override
+  public List<Budget> getSisa(String userId, String category) {
+    return mjdbc.query(SQL_SELECT_SISA,
+        new Object[]{"%" + userId + "%", category}, MULTIPLE_RS_EXTRACTOR);
   }
 
   @Override
