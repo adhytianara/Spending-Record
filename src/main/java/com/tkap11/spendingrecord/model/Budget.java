@@ -19,6 +19,13 @@ public class Budget {
     this.budget = budget;
   }
 
+  /**
+   * Budget constructor.
+   * @param userId user id
+   * @param category category
+   * @param budget allocated budget
+   * @param sisaBudget budget left
+   */
   public Budget(String userId, String category, int budget, int sisaBudget) {
     this.userId = userId;
     this.category = category;
