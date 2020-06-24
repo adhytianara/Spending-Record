@@ -18,8 +18,10 @@ public class BudgetDaoImplementation implements BudgetDao {
           + " WHERE LOWER(user_id) LIKE LOWER(?), LOWER(category) = LOWER(?);";
   private static final String SQL_GET_BY_USER_ID = SQL_SELECT_ALL
           + " WHERE LOWER(user_id) LIKE LOWER(?);";
-  private static final String SQL_UPSERT = "INSERT INTO " + BUDGET_TABLE
-          + "(user_id, category, budget) VALUES (?, ?, ?);";
+  private static final String SQL_UPSERT = "INSERT INTO tbl_budget "
+          + "(user_id, category, budget, sisa_budget) VALUES (?, ?, ?, ?)"
+          + " ON CONFLICT (user_id, category) DO UPDATE "
+          + "SET budget = EXCLUDED.budget, sisa_budget = EXCLUDED.sisa_budget;";
 
   private JdbcTemplate mjdbc;
 
@@ -37,7 +39,8 @@ public class BudgetDaoImplementation implements BudgetDao {
             Budget sp = new Budget(
                     ars.getString("user_id"),
                     ars.getString("category"),
-                    ars.getInt("budget"));
+                    ars.getInt("budget"),
+                    ars.getInt("sisa_budget"));
             list.add(sp);
           }
           return list;
@@ -62,6 +65,6 @@ public class BudgetDaoImplementation implements BudgetDao {
 
   @Override
   public int setBudget(String userId, String category, int nominal) {
-    return mjdbc.update(SQL_UPSERT, new Object[]{userId, category, nominal});
+    return mjdbc.update(SQL_UPSERT, new Object[]{userId, category, nominal, nominal});
   }
 }
