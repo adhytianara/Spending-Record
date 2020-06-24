@@ -3,7 +3,7 @@ package com.tkap11.spendingrecord.model;
 public class Budget {
 
   private int budget;
-  private int sisabudget;
+  private int sisaBudget;
   private String userId;
   private String category;
 
@@ -19,6 +19,13 @@ public class Budget {
     this.budget = budget;
   }
 
+  public Budget(String userId, String category, int budget, int sisaBudget) {
+    this.userId = userId;
+    this.category = category;
+    this.budget = budget;
+    this.sisaBudget = sisaBudget;
+  }
+
   public int getBudget() {
     return budget;
   }
@@ -28,11 +35,11 @@ public class Budget {
   }
 
   public int getSisabudget() {
-    return sisabudget;
+    return this.sisaBudget;
   }
 
   public void setSisabudget(int sisabudget) {
-    this.sisabudget = sisabudget;
+    this.sisaBudget = sisabudget;
   }
 
   public String getUserId() {
