@@ -21,14 +21,20 @@ class BotTemplateTest {
   }
 
   @Test
-  void createFlexSisaKategori() {
-    FlexMessage flexMessage = botTemplate.createFlexSisaKategori();
+  void createFlexSisaCategory() {
+    FlexMessage flexMessage = botTemplate.createFlexSisaCategory();
     assertTrue(flexMessage instanceof FlexMessage);
   }
 
   @Test
   void createFlexSisa() {
-    FlexMessage flexMessage = botTemplate.createFlexSisa();
+    FlexMessage flexMessage = botTemplate.createFlexSisa("category", "nominal");
+    assertTrue(flexMessage instanceof FlexMessage);
+  }
+
+  @Test
+  void createFlexSisaBackup() {
+    FlexMessage flexMessage = botTemplate.createFlexSisaBackup("category");
     assertTrue(flexMessage instanceof FlexMessage);
   }
 

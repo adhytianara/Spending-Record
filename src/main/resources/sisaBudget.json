@@ -21,17 +21,19 @@
         "contents": [
           {
             "type": "text",
-            "text": "Sisa Budget",
-            "size": "xl",
+            "text": "Sisa Budget :",
+            "size": "lg",
             "color": "#348255",
-            "weight": "bold"
+            "weight": "bold",
+            "decoration": "underline"
           },
           {
             "type": "text",
-            "text": "XXX",
-            "size": "xl",
+            "text": "%1$s",
+            "size": "md",
             "weight": "bold",
-            "align": "center"
+            "align": "start",
+            "gravity": "bottom"
           }
         ]
       },
@@ -42,25 +44,24 @@
           {
             "type": "text",
             "text": "Periode  :",
-            "size": "sm",
-            "margin": "none"
+            "size": "sm"
           },
           {
             "type": "text",
-            "text": "xxx",
+            "text": "XXX",
             "size": "sm",
-            "position": "relative",
             "align": "start"
           },
           {
             "type": "filler",
             "flex": 2
           }
-        ]
+        ],
+        "margin": "sm"
       },
       {
         "type": "separator",
-        "margin": "sm"
+        "margin": "md"
       },
       {
         "type": "box",
@@ -74,11 +75,11 @@
           },
           {
             "type": "text",
-            "text": "Rp xxx"
+            "text": "Rp %2$s"
           }
         ],
-        "spacing": "none",
-        "paddingTop": "7px"
+        "paddingTop": "7px",
+        "margin": "sm"
       },
       {
         "type": "box",
@@ -92,13 +93,14 @@
           },
           {
             "type": "text",
-            "text": "Rp xxx"
+            "text": "Rp %3$s"
           }
-        ]
+        ],
+        "margin": "sm"
       },
       {
         "type": "separator",
-        "margin": "md"
+        "margin": "sm"
       }
     ],
     "spacing": "xs"
