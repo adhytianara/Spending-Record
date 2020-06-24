@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
 import javax.sql.DataSource;
-
-import com.tkap11.spendingrecord.model.Spending;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
