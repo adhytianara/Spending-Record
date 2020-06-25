@@ -59,8 +59,6 @@ public class BotService {
   @Autowired
   private LihatCategoryLaporanState lihatCategoryLaporanState;
 
-  private final HashMap<String, SisaBudgetState> currentHandlerSisa = new HashMap<>();
-
   private HashMap<String, State> currentHandler = new HashMap<>();
 
   public void greetingMessage(String replyToken) {
@@ -105,7 +103,7 @@ public class BotService {
   /**
    * Reply sisa flex.
    */
-  public void relpyFlexSisa(String replyToken, String category, String budget, String sisa) {
+  public void replyFlexSisa(String replyToken, String category, String budget, String sisa) {
     FlexMessage flexMessage = botTemplate.createFlexSisa(category.toUpperCase(), budget, sisa);
     List<Message> messageList = new ArrayList<>();
     messageList.add(new TextMessage("Berikut adalah Sisa Budget-mu pada kategori : " + category));
@@ -113,14 +111,21 @@ public class BotService {
     reply(replyToken, messageList);
   }
 
-  public void relpyFlexSisaBackup(String replyToken, String category) {
+  public void replyFlexSisaBackup(String replyToken, String category) {
     FlexMessage flexMessage = botTemplate.createFlexSisaBackup(category.toUpperCase());
     reply(replyToken, flexMessage);
   }
 
+  /**
+   * Reply sisa flex.
+   */
   public void replyFlexAlarm(String replyToken) {
     FlexMessage flexMessage = botTemplate.createFlexAlarm();
-    reply(replyToken, flexMessage);
+    List<Message> messageList = new ArrayList<>();
+    messageList.add(new TextMessage("Fitur ini belum dapat digunakan, "
+        + "masih dalam tahap pengembangan"));
+    messageList.add(flexMessage);
+    reply(replyToken, messageList);
   }
 
   public void replyFlexUbah(String replyToken) {
@@ -128,7 +133,7 @@ public class BotService {
     reply(replyToken, flexMessage);
   }
 
-  public void reflyFlexLihatLaporan(String replyToken) {
+  public void replyFlexLihatLaporan(String replyToken) {
     FlexMessage flexMessage = botTemplate.createFlexLihatLaporan();
     reply(replyToken, flexMessage);
   }
@@ -220,10 +225,10 @@ public class BotService {
       NumberFormat formatter = new DecimalFormat("#,###");
       String budgetFormatted = formatter.format(Double.parseDouble(budget));
       String sisaFormatted = formatter.format(Double.parseDouble(sisa));
-      relpyFlexSisa(replyToken, category, budgetFormatted, sisaFormatted);
+      replyFlexSisa(replyToken, category, budgetFormatted, sisaFormatted);
     } catch (Exception e) {
       String category = sisaBackup[1];
-      relpyFlexSisaBackup(replyToken, category);
+      replyFlexSisaBackup(replyToken, category);
     }
   }
 
@@ -296,7 +301,7 @@ public class BotService {
     } else if (textMessageContent.getText().toLowerCase().equals("lihat laporan")) {
       lihatCategoryLaporanState.setUserId(senderId);
       currentHandler.put(senderId, lihatCategoryLaporanState);
-      reflyFlexLihatLaporan(replyToken);
+      replyFlexLihatLaporan(replyToken);
     } else {
       replyText(replyToken, "Permintaan tidak dikenali. "
           + "Ketik 'menu' untuk melihat daftar tindakan yang bisa dilakukan.");
