@@ -22,6 +22,8 @@ import com.tkap11.spendingrecord.state.aturbudget.AturCategoryState;
 import com.tkap11.spendingrecord.state.aturbudget.AturState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
+import com.tkap11.spendingrecord.state.lihatlaporan.LihatCategoryLaporanState;
+import com.tkap11.spendingrecord.state.lihatlaporan.LihatLaporanState;
 import com.tkap11.spendingrecord.state.sisabudget.SisaBudgetState;
 import com.tkap11.spendingrecord.state.sisabudget.SisaCategoryState;
 import java.text.DecimalFormat;
@@ -54,10 +56,10 @@ public class BotService {
   private SisaDatabase sisaService;
   @Autowired
   private BudgetDatabase budgetDatabase;
+  @Autowired
+  private LihatCategoryLaporanState lihatCategoryLaporanState;
 
   private final HashMap<String, SisaBudgetState> currentHandlerSisa = new HashMap<>();
-
-  private UserProfileResponse sender = null;
 
   private HashMap<String, State> currentHandler = new HashMap<>();
 
@@ -126,6 +128,11 @@ public class BotService {
     reply(replyToken, flexMessage);
   }
 
+  public void reflyFlexLihatLaporan(String replyToken) {
+    FlexMessage flexMessage = botTemplate.createFlexLihatLaporan();
+    reply(replyToken, flexMessage);
+  }
+
   private void replyText(String replyToken, String message) {
     TextMessage textMessage = new TextMessage(message);
     reply(replyToken, textMessage);
@@ -166,11 +173,6 @@ public class BotService {
     } catch (InterruptedException | ExecutionException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  private void pushAlarm(String to, Message message) {
-    PushMessage pushMessage = new PushMessage(to, message);
-    push(pushMessage);
   }
 
   /**
@@ -257,6 +259,11 @@ public class BotService {
       } else {
         replyText(replyToken, handler.getMessageToUser());
       }
+    } else if (oldHandler instanceof LihatLaporanState) {
+      LihatLaporanState handler = (LihatLaporanState) oldHandler;
+      LihatLaporanState newHandler = handler.handleUserRequest(userMessage.toLowerCase());
+      currentHandler.put(senderId, newHandler);
+      reply(replyToken, handler.getMessagetoUser());
     } else if (userMessage.toLowerCase().contains("menu")) {
       replyFlexMenu(replyToken);
     } else if (userMessage.toLowerCase().contains("catat")) {
@@ -266,7 +273,6 @@ public class BotService {
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
     } else if (userMessage.toLowerCase().contains("atur")) {
-      UserProfileResponse sender = getProfile(senderId);
       AturState categoryHandler = new AturCategoryState();
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
@@ -278,9 +284,17 @@ public class BotService {
       replyFlexAlarm(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("ubah")) {
       replyFlexUbah(replyToken);
+    } else if (userMessage.toLowerCase().contains("lihat detail ")) {
+      lihatCategoryLaporanState.setUserId(senderId);
+      lihatCategoryLaporanState.handleUserRequest(userMessage.toLowerCase());
+      reply(replyToken, lihatCategoryLaporanState.getMessagetoUser());
+    } else if (textMessageContent.getText().toLowerCase().equals("lihat laporan")) {
+      lihatCategoryLaporanState.setUserId(senderId);
+      currentHandler.put(senderId, lihatCategoryLaporanState);
+      reflyFlexLihatLaporan(replyToken);
     } else {
-      replyText(replyToken, "Sedang dalam pengembangan");
+      replyText(replyToken, "Permintaan tidak dikenali. "
+          + "Ketik 'menu' untuk melihat daftar tindakan yang bisa dilakukan.");
     }
-
   }
 }

@@ -7,6 +7,9 @@ import java.util.List;
 public abstract class CatatPengeluaranState implements State {
   private final List<String> categories = Arrays.asList(
       "makanan", "transportasi", "tagihan", "belanja", "lainnya");
+  private final List<String> action = Arrays.asList(
+      "menu", "atur budget", "sisa budget", "catat pengeluaran",
+      "lihat laporan", "ingatkan saya", "reset data");
   protected CatatPengeluaranState state;
   protected String description;
   protected String messageToUser;
@@ -20,6 +23,8 @@ public abstract class CatatPengeluaranState implements State {
   public abstract CatatPengeluaranState userCancelOperation();
 
   public abstract CatatPengeluaranState unknownMessage();
+
+  public abstract CatatPengeluaranState otherServiceMessage();
 
   public abstract String getDescription();
 
@@ -39,6 +44,8 @@ public abstract class CatatPengeluaranState implements State {
       return userConfirmation(userMessage);
     } else if (userMessage.contains("batal")) {
       return userCancelOperation();
+    } else if (action.contains(userMessage)) {
+      return otherServiceMessage();
     } else {
       return unknownMessage();
     }
@@ -46,8 +53,7 @@ public abstract class CatatPengeluaranState implements State {
 
   private boolean isNominal(String userMessage) {
     try {
-      Integer.parseInt(userMessage);
-      return true;
+      return Integer.parseInt(userMessage) > 0;
     } catch (NumberFormatException e) {
       return false;
     }

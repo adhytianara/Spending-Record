@@ -37,6 +37,12 @@ public class ConfirmationState extends CatatPengeluaranState {
   }
 
   @Override
+  public CatatPengeluaranState otherServiceMessage() {
+    messageToUser = "Untuk beralih ke fitur lain, klik tombol 'Batal' terlebih dahulu";
+    return this;
+  }
+
+  @Override
   public String getDescription() {
     return state.getDescription() + ";" + description;
   }

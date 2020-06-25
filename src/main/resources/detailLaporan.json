@@ -2,14 +2,11 @@
   "type": "bubble",
   "hero": {
     "type": "image",
-    "url": "https://i.ibb.co/HH32hbg/Spending-Record-1.png",
+    "url": "%1$s",
     "size": "full",
     "aspectRatio": "20:13",
     "aspectMode": "cover",
-    "action": {
-      "type": "message",
-      "text": "menu"
-    }
+    "position": "relative"
   },
   "body": {
     "type": "box",
@@ -21,21 +18,36 @@
         "contents": [
           {
             "type": "text",
-            "text": "Sisa Budget :",
-            "size": "lg",
+            "text": "Detail Pengeluaran",
+            "size": "xl",
             "color": "#348255",
             "weight": "bold",
-            "decoration": "underline"
+            "align": "center"
+          }
+        ],
+        "paddingBottom": "10px"
+      },
+      {
+        "type": "separator",
+        "margin": "sm"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Hari ini",
+            "size": "md",
+            "weight": "bold"
           },
           {
             "type": "text",
-            "text": "%1$s",
-            "size": "md",
-            "weight": "bold",
-            "align": "start",
-            "gravity": "bottom"
+            "text": "Rp %2$s",
+            "align": "end"
           }
-        ]
+        ],
+        "paddingTop": "7px"
       },
       {
         "type": "separator",
@@ -47,17 +59,21 @@
         "contents": [
           {
             "type": "text",
-            "text": "Budget",
+            "text": "Minggu ini",
             "size": "md",
             "weight": "bold"
           },
           {
             "type": "text",
-            "text": "Rp %2$s"
+            "text": "Rp %3$s",
+            "align": "end"
           }
         ],
-        "paddingTop": "7px",
-        "margin": "sm"
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
       },
       {
         "type": "box",
@@ -65,46 +81,25 @@
         "contents": [
           {
             "type": "text",
-            "text": "Sisa",
+            "text": "Bulan ini",
             "size": "md",
             "weight": "bold"
           },
           {
             "type": "text",
-            "text": "Rp %3$s"
+            "text": "Rp %4$s",
+            "align": "end"
           }
         ],
-        "margin": "sm"
+        "paddingTop": "7px"
       },
       {
         "type": "separator",
-        "margin": "sm"
+        "margin": "md"
       }
     ],
-    "spacing": "xs"
-  },
-  "footer": {
-    "type": "box",
-    "layout": "vertical",
-    "spacing": "sm",
-    "contents": [
-      {
-        "type": "button",
-        "style": "primary",
-        "height": "sm",
-        "action": {
-          "type": "message",
-          "label": "Atur Ulang Budget",
-          "text": "Atur Budget"
-        },
-        "color": "#348255"
-      },
-      {
-        "type": "spacer",
-        "size": "sm"
-      }
-    ],
-    "flex": 0
+    "spacing": "xs",
+    "paddingTop": "0px"
   },
   "styles": {
     "body": {

@@ -19,28 +19,29 @@ public class SpendingDaoImplementation implements SpendingDao {
   private static final String SQL_REGISTER = "INSERT INTO " + SPENDING_RECORD_TABLE
       + " (user_id, display_name, category, timestamp, nominal) VALUES (?, ?, ?, ?, ?);";
   private static final ResultSetExtractor<List<Spending>> MULTIPLE_RS_EXTRACTOR =
-      new ResultSetExtractor<List<Spending>>() {
-        @Override
-        public List<Spending> extractData(ResultSet resultSet)
-            throws SQLException, DataAccessException {
-          List<Spending> list = new Vector<Spending>();
-          while (resultSet.next()) {
-            Spending sp = new Spending(
-                resultSet.getLong("id"),
-                resultSet.getString("user_id"),
-                resultSet.getString("display_name"),
-                resultSet.getString("category"),
-                resultSet.getString("timestamp"),
-                resultSet.getString("nominal"));
-            list.add(sp);
-          }
-          return list;
-        }
-      };
+      SpendingDaoImplementation::extractData;
   private JdbcTemplate jdbcTemplate;
 
   public SpendingDaoImplementation(DataSource dataSource) {
     jdbcTemplate = new JdbcTemplate(dataSource);
+  }
+
+  /**
+   * Extract data for spending table.
+   */
+  public static List<Spending> extractData(ResultSet resultSet) throws SQLException {
+    List<Spending> list = new Vector<Spending>();
+    while (resultSet.next()) {
+      Spending sp = new Spending(
+          resultSet.getLong("id"),
+          resultSet.getString("user_id"),
+          resultSet.getString("display_name"),
+          resultSet.getString("category"),
+          resultSet.getString("timestamp"),
+          resultSet.getString("nominal"));
+      list.add(sp);
+    }
+    return list;
   }
 
   @Override
