@@ -162,4 +162,76 @@ public class BotTemplate {
     return flexMessage;
   }
 
+  /**
+   * Create lihat laporan flex.
+   */
+  public FlexMessage createFlexLihatLaporan() {
+    FlexMessage flexMessage = new FlexMessage("Lihat Laporan", null);
+    try {
+      ClassLoader classLoader = getClass().getClassLoader();
+      String encoding = StandardCharsets.UTF_8.name();
+      String flexTemplate = IOUtils.toString(Objects.requireNonNull(
+          classLoader.getResourceAsStream("lihatLaporan.json")), encoding);
+      ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
+      flexMessage = new FlexMessage("Lihat Laporan", flexContainer);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return flexMessage;
+  }
+
+  /**
+   * Create detail laporan of each category flex.
+   */
+  public FlexMessage createFlexDetailLaporan(String url, int day, int week, int month) {
+    FlexMessage flexMessage = new FlexMessage("Detail Laporan", null);
+    try {
+      ClassLoader classLoader = getClass().getClassLoader();
+      String encoding = StandardCharsets.UTF_8.name();
+      String flexTemplate = IOUtils.toString(Objects.requireNonNull(
+          classLoader.getResourceAsStream("detailLaporan.json")), encoding);
+
+      flexTemplate = String.format(flexTemplate,
+          escape(url),
+          escape(String.valueOf(day)),
+          escape(String.valueOf(week)),
+          escape(String.valueOf(month)));
+
+      ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
+      flexMessage = new FlexMessage("Detail Laporan", flexContainer);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return flexMessage;
+  }
+
+  /**
+   * Create persentage of laporan flex.
+   */
+  public FlexMessage createFlexDetailPersentase(
+      String makanan, String transportasi, String tagihan, String belanja, String lainnya) {
+    FlexMessage flexMessage = new FlexMessage("Detail Persentase", null);
+    try {
+      ClassLoader classLoader = getClass().getClassLoader();
+      String encoding = StandardCharsets.UTF_8.name();
+      String flexTemplate = IOUtils.toString(Objects.requireNonNull(
+          classLoader.getResourceAsStream("detailPersentase.json")), encoding);
+
+      flexTemplate = String.format(flexTemplate,
+          escape(makanan) + "%",
+          escape(transportasi) + "%",
+          escape(tagihan) + "%",
+          escape(belanja) + "%",
+          escape(lainnya) + "%");
+
+      ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
+      flexMessage = new FlexMessage("Detail Persentase", flexContainer);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return flexMessage;
+  }
 }

@@ -56,6 +56,8 @@ public class SpendingDaoImplementation implements SpendingDao {
         MULTIPLE_RS_EXTRACTOR);
   }
 
+
+
   @Override
   public List<Spending> getSisa(String userId, String category) {
     return jdbcTemplate.query(SQL_SELECT_SISA,
