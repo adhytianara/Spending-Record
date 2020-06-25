@@ -150,8 +150,8 @@ public class BotService {
   private void reply(ReplyMessage replyMessage) {
     try {
       lineMessagingClient.replyMessage(replyMessage).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
     }
   }
 
@@ -161,20 +161,21 @@ public class BotService {
   public UserProfileResponse getProfile(String userId) {
     try {
       return lineMessagingClient.getProfile(userId).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
+      return null;
     }
   }
 
   private void push(PushMessage pushMessage) {
     try {
       lineMessagingClient.pushMessage(pushMessage).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
     }
   }
 
-  private void pushAlarm(String to, Message message) {
+  public void pushAlarm(String to, Message message) {
     PushMessage pushMessage = new PushMessage(to, message);
     push(pushMessage);
   }
@@ -186,19 +187,8 @@ public class BotService {
     try {
       Multicast multicast = new Multicast(to, message);
       lineMessagingClient.multicast(multicast).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private void sendMulticast(Set<String> sourceUsers, String txtMessage) {
-    TextMessage message = new TextMessage(txtMessage);
-    Multicast multicast = new Multicast(sourceUsers, message);
-
-    try {
-      lineMessagingClient.multicast(multicast).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
     }
   }
 

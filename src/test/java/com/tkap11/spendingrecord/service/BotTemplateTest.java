@@ -49,4 +49,26 @@ class BotTemplateTest {
     FlexMessage flexMessage = botTemplate.createFlexUbah();
     assertTrue(flexMessage instanceof FlexMessage);
   }
+
+  @Test
+  void createFlexLihatLaporan() {
+    FlexMessage flexMessage = botTemplate.createFlexLihatLaporan();
+    assertTrue(flexMessage instanceof FlexMessage);
+  }
+
+  @Test
+  void createFlexDetailLaporan() {
+    FlexMessage flexMessage = botTemplate.createFlexDetailLaporan(
+        "url", 1, 2, 3
+    );
+    assertTrue(flexMessage instanceof FlexMessage);
+  }
+
+  @Test
+  void createFlexDetailPersentase() {
+    FlexMessage flexMessage = botTemplate.createFlexDetailPersentase(
+        "a", "b", "c", "d", "e"
+    );
+    assertTrue(flexMessage instanceof FlexMessage);
+  }
 }
