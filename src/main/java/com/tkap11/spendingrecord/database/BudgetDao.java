@@ -8,6 +8,8 @@ public interface BudgetDao {
 
   List<Budget> getByUserId(String userId);
 
+  List<Budget> getSisa(String userId, String category);
+
   List<Budget> getBudget(String userId, String category);
 
   public int setBudget(String userId, String category, String period, int nominal);
