@@ -12,6 +12,7 @@ import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.tkap11.spendingrecord.model.Budget;
+import com.tkap11.spendingrecord.model.User;
 import com.tkap11.spendingrecord.repository.BudgetDatabase;
 import com.tkap11.spendingrecord.repository.SisaDatabase;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
@@ -31,10 +32,12 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -193,6 +196,15 @@ public class BotService {
     } catch (InterruptedException | ExecutionException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Scheduled(cron = "* */5 * * * *")
+  private void monthlyNotification() {
+    Set<String> userIDs = new HashSet<String>();
+    for (User user: userService.getAllUsers()) {
+      userIDs.add(user.getUserId());
+    }
+    sendMulticast(userIDs, "Sudah Awal bulan lho. Jangan lupa atur budgetmu untuk bulan ini ya.");
   }
 
   private void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
