@@ -108,6 +108,9 @@ public class BotService {
     List<Message> messageList = new ArrayList<>();
     messageList.add(new TextMessage("Berikut adalah Sisa Budget-mu pada kategori : " + category));
     messageList.add(flexMessage);
+    if (sisa.equals("HABIS")) {
+      messageList.add(new TextMessage("Semoga kedepannya bisa lebih berhemat yaa..."));
+    }
     reply(replyToken, messageList);
   }
 
@@ -201,17 +204,10 @@ public class BotService {
       String category = sisaResult.get(0).getCategory();
       String budget = Integer.toString(sisaResult.get(0).getBudget());
       String sisa = Integer.toString(sisaResult.get(0).getSisabudget());
-      if (Integer.parseInt(sisa) > 0) {
-        NumberFormat formatter = new DecimalFormat("#,###");
-        String budgetFormatted = formatter.format(Double.parseDouble(budget));
-        String sisaFormatted = formatter.format(Double.parseDouble(sisa));
-        replyFlexSisa(replyToken, category, budgetFormatted, sisaFormatted);
-      } else {
-        NumberFormat formatter = new DecimalFormat("#,###");
-        String budgetFormatted = formatter.format(Double.parseDouble(budget));
-        String sisaFormatted = "HABIS";
-        replyFlexSisa(replyToken, category, budgetFormatted, sisaFormatted);
-      }
+      NumberFormat formatter = new DecimalFormat("#,###");
+      String budgetFormatted = formatter.format(Double.parseDouble(budget));
+      String sisaFormatted = formatter.format(Double.parseDouble(sisa));
+      replyFlexSisa(replyToken, category, budgetFormatted, sisaFormatted);
     } catch (Exception e) {
       String category = sisaBackup[1];
       replyFlexSisaBackup(replyToken, category);
