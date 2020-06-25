@@ -34,4 +34,9 @@ public class UserDatabase {
     }
     return null;
   }
+
+  public List<User> getAllUsers() {
+    List<User> users = userDao.get();
+    return users;
+  }
 }

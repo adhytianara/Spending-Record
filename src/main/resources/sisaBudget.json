@@ -38,28 +38,6 @@
         ]
       },
       {
-        "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "text",
-            "text": "Periode  :",
-            "size": "sm"
-          },
-          {
-            "type": "text",
-            "text": "XXX",
-            "size": "sm",
-            "align": "start"
-          },
-          {
-            "type": "filler",
-            "flex": 2
-          }
-        ],
-        "margin": "sm"
-      },
-      {
         "type": "separator",
         "margin": "md"
       },

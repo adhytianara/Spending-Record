@@ -271,14 +271,16 @@ class BotServiceTest {
     ))).thenReturn(CompletableFuture.completedFuture(
         new BotApiResponse("ok", Collections.emptyList())
     ));
-    botService.pushAlarm("user", textMessage);
+    PushMessage pushMessage = new PushMessage("user", textMessage);
+    botService.push(pushMessage);
     verify(lineMessagingClient).pushMessage(new PushMessage(
         "user", textMessage
     ));
     when(lineMessagingClient.pushMessage(new PushMessage(
         "user", textMessage
     ))).thenThrow(new RuntimeException());
-    botService.pushAlarm("user", textMessage);
+    pushMessage = new PushMessage("user", textMessage);
+    botService.push(pushMessage);
   }
 
   @Test

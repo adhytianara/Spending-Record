@@ -12,6 +12,7 @@ import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.tkap11.spendingrecord.model.Budget;
+import com.tkap11.spendingrecord.model.User;
 import com.tkap11.spendingrecord.repository.BudgetDatabase;
 import com.tkap11.spendingrecord.repository.SisaDatabase;
 import com.tkap11.spendingrecord.repository.SpendingDatabase;
@@ -31,10 +32,12 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -57,8 +60,6 @@ public class BotService {
   private LihatCategoryLaporanState lihatCategoryLaporanState;
 
   private final HashMap<String, SisaBudgetState> currentHandlerSisa = new HashMap<>();
-
-  private UserProfileResponse sender = null;
 
   private HashMap<String, State> currentHandler = new HashMap<>();
 
@@ -167,17 +168,12 @@ public class BotService {
     }
   }
 
-  private void push(PushMessage pushMessage) {
+  public void push(PushMessage pushMessage) {
     try {
       lineMessagingClient.pushMessage(pushMessage).get();
     } catch (InterruptedException | ExecutionException | RuntimeException e) {
       e.printStackTrace();
     }
-  }
-
-  public void pushAlarm(String to, Message message) {
-    PushMessage pushMessage = new PushMessage(to, message);
-    push(pushMessage);
   }
 
   /**
@@ -191,6 +187,27 @@ public class BotService {
       e.printStackTrace();
     }
   }
+
+  @Scheduled(cron = "* */5 * * * *")
+  private void monthlyNotification() {
+    Set<String> userIDs = new HashSet<String>();
+    for (User user: userService.getAllUsers()) {
+      userIDs.add(user.getUserId());
+    }
+    sendMulticast(userIDs, "Sudah Awal bulan lho. Jangan lupa atur budgetmu untuk bulan ini ya.");
+  }
+
+  private void sendMulticast(Set<String> sourceUsers, String txtMessage) {
+    TextMessage message = new TextMessage(txtMessage);
+    Multicast multicast = new Multicast(sourceUsers, message);
+
+    try {
+      lineMessagingClient.multicast(multicast).get();
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 
   private void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
     try {
@@ -258,7 +275,6 @@ public class BotService {
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
     } else if (userMessage.toLowerCase().contains("atur")) {
-      UserProfileResponse sender = getProfile(senderId);
       AturState categoryHandler = new AturCategoryState();
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
