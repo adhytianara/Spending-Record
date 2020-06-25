@@ -34,6 +34,9 @@ public class BudgetDaoImplementation implements BudgetDao {
   private static final ResultSetExtractor<List<Budget>> MULTIPLE_RS_EXTRACTOR =
       BudgetDaoImplementation::extractData;
 
+  /**
+   * Extract data for Budget table.
+   */
   public static List<Budget> extractData(ResultSet ars) throws SQLException {
     List<Budget> list = new Vector<Budget>();
     while (ars.next()) {

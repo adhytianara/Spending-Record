@@ -26,6 +26,9 @@ public class SpendingDaoImplementation implements SpendingDao {
     jdbcTemplate = new JdbcTemplate(dataSource);
   }
 
+  /**
+   * Extract data for spending table.
+   */
   public static List<Spending> extractData(ResultSet resultSet) throws SQLException {
     List<Spending> list = new Vector<Spending>();
     while (resultSet.next()) {

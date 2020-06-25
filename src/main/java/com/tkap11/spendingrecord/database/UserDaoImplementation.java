@@ -27,6 +27,9 @@ public class UserDaoImplementation implements UserDao {
     jdbcTemplate = new JdbcTemplate(dataSource);
   }
 
+  /**
+   * Extract data for user table.
+   */
   public static List<User> extractData(ResultSet resultSet) throws SQLException {
     List<User> list = new Vector<User>();
     while (resultSet.next()) {

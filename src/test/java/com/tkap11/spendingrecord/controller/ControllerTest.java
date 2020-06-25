@@ -47,6 +47,7 @@ class ControllerTest {
 
     doNothing().when(botService).handleMessageEvent((MessageEvent) event);
     controller.handleEvent(eventsPayload, lineSignature);
+    verify(botService).handleMessageEvent((MessageEvent) event);
 
     eventsPayload = "{\"events\":[{\"type\":\"follow\",\"replyToken\""
         + ":\"408f3a41d18e4ccdbcf61dde3708187c\",\"source\":{\"userId\""
@@ -60,9 +61,7 @@ class ControllerTest {
     String replyToken = ((ReplyEvent) event).getReplyToken();
     doNothing().when(botService).greetingMessage(replyToken);
     controller.handleEvent(eventsPayload, lineSignature);
-
     verify(botService).greetingMessage(replyToken);
-    verify(botService).handleMessageEvent((MessageEvent) event);
   }
 
   @Test
