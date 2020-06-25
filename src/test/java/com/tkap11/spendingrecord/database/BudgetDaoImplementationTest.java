@@ -1,6 +1,7 @@
 package com.tkap11.spendingrecord.database;
 
-import com.tkap11.spendingrecord.model.User;
+import com.tkap11.spendingrecord.model.Budget;
+import com.tkap11.spendingrecord.model.Spending;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,10 +14,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserDaoImplementationTest {
+class BudgetDaoImplementationTest {
   @Mock
   private JdbcTemplate jdbcTemplate;
 
@@ -24,7 +26,7 @@ class UserDaoImplementationTest {
   private ResultSet resultSet;
 
   @InjectMocks
-  UserDaoImplementation userDaoImplementation = new UserDaoImplementation(getDataSource());
+  BudgetDaoImplementation dao = new BudgetDaoImplementation(getDataSource());
 
   DataSource getDataSource() {
     String dbUrl = System.getenv("JDBC_DATABASE_URL");
@@ -41,27 +43,40 @@ class UserDaoImplementationTest {
   }
 
   @Test
-  void get() {
-    List<User> users = userDaoImplementation.get();
-    Assert.assertNull(users);
+  void getAll() {
+    List<Budget> budgets = dao.getAll();
+    Assert.assertNull(budgets);
   }
 
   @Test
   void getByUserId() {
-    List<User> users = userDaoImplementation.getByUserId("userId");
-    Assert.assertNull(users);
+    List<Budget> budgets = dao.getByUserId("userId");
+    Assert.assertNull(budgets);
   }
 
   @Test
-  void registerUser() {
-    int register = userDaoImplementation.registerUser("userId", "displayName");
-    Assert.assertEquals(register, 0);
+  void getSisa() {
+    List<Budget> budgets = dao.getSisa("userId", "category");
+    Assert.assertNull(budgets);
+  }
+
+  @Test
+  void getBudget() {
+    List<Budget> budgets = dao.getBudget("userId", "category");
+    Assert.assertNull(budgets);
+  }
+
+  @Test
+  void setBudget() {
+    int setBudget = dao.setBudget("userId", "displayName", "juni",
+        10000);
+    Assert.assertEquals(setBudget, 0);
   }
 
   @Test
   void extractData() throws SQLException {
     when(resultSet.next()).thenReturn(true).thenReturn(false);
-    List<User> users = userDaoImplementation.extractData(resultSet);
-    Assert.assertNotNull(users);
+    List<Budget> budgets = dao.extractData(resultSet);
+    Assert.assertNotNull(budgets);
   }
 }

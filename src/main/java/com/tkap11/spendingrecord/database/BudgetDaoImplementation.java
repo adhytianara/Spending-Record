@@ -32,23 +32,21 @@ public class BudgetDaoImplementation implements BudgetDao {
   }
 
   private static final ResultSetExtractor<List<Budget>> MULTIPLE_RS_EXTRACTOR =
-          new ResultSetExtractor<List<Budget>>() {
-        @Override
-        public List<Budget> extractData(ResultSet ars)
-                throws SQLException, DataAccessException {
-          List<Budget> list = new Vector<Budget>();
-          while (ars.next()) {
-            Budget sp = new Budget(
-                    ars.getString("user_id"),
-                    ars.getString("category"),
-                    ars.getInt("budget"),
-                    ars.getInt("sisa_budget"),
-                    ars.getString("period"));
-            list.add(sp);
-          }
-          return list;
-        }
-  };
+      BudgetDaoImplementation::extractData;
+
+  public static List<Budget> extractData(ResultSet ars) throws SQLException {
+    List<Budget> list = new Vector<Budget>();
+    while (ars.next()) {
+      Budget sp = new Budget(
+          ars.getString("user_id"),
+          ars.getString("category"),
+          ars.getInt("budget"),
+          ars.getInt("sisa_budget"),
+          ars.getString("period"));
+      list.add(sp);
+    }
+    return list;
+  }
 
   @Override
   public List<Budget> getAll() {
