@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 public abstract class AturState implements State {
   private final List<String> categories = Arrays.asList(
           "makanan", "transportasi", "tagihan", "belanja", "lainnya");
+  private final List<String> action = Arrays.asList(
+      "menu", "atur budget", "sisa budget", "catat pengeluaran",
+      "lihat laporan", "ingatkan saya", "reset data");
   public String category;
   public int amount;
   public String messageToUser;
@@ -20,6 +23,8 @@ public abstract class AturState implements State {
   public abstract AturState userConfirmation(String senderId);
 
   public abstract AturState unknownMessage();
+
+  public abstract AturState otherServiceMessage();
 
   public AturState userCancelOperation() {
     this.messageToUser = "Proses pengaturan budget dibatalkan";
@@ -41,6 +46,8 @@ public abstract class AturState implements State {
       return userConfirmation(senderId);
     } else if (userMessage.contains("batal")) {
       return userCancelOperation();
+    } else if (action.contains(userMessage)) {
+      return otherServiceMessage();
     } else {
       return unknownMessage();
     }

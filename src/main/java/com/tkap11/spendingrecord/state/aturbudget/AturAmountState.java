@@ -25,6 +25,12 @@ public class AturAmountState extends AturState {
   }
 
   @Override
+  public AturState otherServiceMessage() {
+    messageToUser = "Untuk beralih ke fitur lain, klik tombol 'Batal' terlebih dahulu";
+    return this;
+  }
+
+  @Override
   public AturState unknownMessage() {
     this.messageToUser =
             "Nominal uang tidak sesuai. Pastikan kamu hanya memasukkan angka, contoh: 10000. "

@@ -19,6 +19,12 @@ public class AturCategoryState extends AturState {
   }
 
   @Override
+  public AturState otherServiceMessage() {
+    messageToUser = "Untuk beralih ke fitur lain, klik tombol 'Batal' terlebih dahulu";
+    return this;
+  }
+
+  @Override
   public AturState unknownMessage() {
     this.messageToUser =
             "Kategori tidak sesuai! Pilih salah satu dari lima kategori yang tersedia. "
