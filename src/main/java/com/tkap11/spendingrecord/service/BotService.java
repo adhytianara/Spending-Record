@@ -108,7 +108,7 @@ public class BotService {
     List<Message> messageList = new ArrayList<>();
     messageList.add(new TextMessage("Berikut adalah Sisa Budget-mu pada kategori : " + category));
     messageList.add(flexMessage);
-    if (sisa.equals("HABIS")){
+    if (sisa.equals("HABIS")) {
       messageList.add(new TextMessage("Semoga kedepannya bisa lebih berhemat yaa..."));
     }
     reply(replyToken, messageList);
