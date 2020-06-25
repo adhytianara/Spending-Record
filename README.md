@@ -10,9 +10,3 @@ Anggota Kelompok : <br>
 1506737666 - Ismail Shalih Abdul Kholiq - Atur Budget [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/AturBudget-Ismail/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/AturBudget-Ismail)<br>
 1806186774 - Muhammad Ihsan Azizi - Sisa Budget - [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/SisaPengeluaran-Ihsan/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/SisaPengeluaran-Ihsan)<br>
 1706979386 - Nabilah Adani Nurulizzah - Ingatkan Saya [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/IngatkanSaya-NabilahAdani/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/IngatkanSaya-NabilahAdani)<br>
-
-
-<br>
- *Link logo Spending Record : https://i.ibb.co/HH32hbg/Spending-Record-1.png <br>
- *Warna dasar : #348255
- 
