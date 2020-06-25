@@ -54,6 +54,8 @@ public class SpendingDaoImplementation implements SpendingDao {
         MULTIPLE_RS_EXTRACTOR);
   }
 
+
+
   @Override
   public int saveRecord(String userId, String displayName, String category,
                         String timestamp, String nominal) {
