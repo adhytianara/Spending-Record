@@ -10,5 +10,5 @@ public interface BudgetDao {
 
   public List<Budget> getBudget(String userId, String category);
 
-  public int setBudget(String userId, String category, int nominal);
+  public int setBudget(String userId, String category, String period, int nominal);
 }
