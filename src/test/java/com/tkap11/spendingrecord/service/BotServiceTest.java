@@ -122,7 +122,7 @@ class BotServiceTest {
   }
 
   @Test
-  void handleMessageEventWhenUserSendSisaMessage() {
+  void handleMessageEventWhenUserSendSisaCategoryMessage() {
     final MessageEvent request = new MessageEvent<>(
         "replyToken",
         new UserSource("userId"),
@@ -139,6 +139,47 @@ class BotServiceTest {
   }
 
   @Test
+  void handleMessageEventWhenUserSendSisaMessage() {
+    final MessageEvent request = new MessageEvent<>(
+        "replyToken",
+        new UserSource("userId"),
+        new TextMessageContent("id", "makanan"),
+        Instant.now()
+    );
+    FlexMessage flexMessage = botTemplate.createFlexSisa("category", "budget", "sisa");
+    List<Message> messageList = new ArrayList<>();
+    messageList.add(new TextMessage("Berikut adalah Sisa Budget-mu pada kategori : category"));
+    messageList.add(flexMessage);
+
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+        "replyToken", messageList)))
+        .thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+        ));
+    botService.replyFlexSisa("replyToken","category", "budget", "sisa");
+    verify(lineMessagingClient).replyMessage(new ReplyMessage(
+        "replyToken", messageList));
+  }
+
+  @Test
+  void handleMessageEventWhenUserSendSisaBackupMessage() {
+    final MessageEvent request = new MessageEvent<>(
+        "replyToken",
+        new UserSource("userId"),
+        new TextMessageContent("id", "makanan"),
+        Instant.now()
+    );
+
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+        "replyToken", singletonList(null))))
+        .thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+        ));
+    botService.replyFlexSisaBackup("replyToken","category");
+    verify(botTemplate, times(1)).createFlexSisaBackup("CATEGORY");
+  }
+
+  @Test
   void handleMessageEventWhenUserSendIngatkanMessage() {
     final MessageEvent request = new MessageEvent<>(
         "replyToken",
@@ -146,13 +187,19 @@ class BotServiceTest {
         new TextMessageContent("id", "ingatkan"),
         Instant.now()
     );
+    FlexMessage flexMessage = botTemplate.createFlexAlarm();
+    List<Message> messageList = new ArrayList<>();
+    messageList.add(new TextMessage("Fitur ini belum dapat digunakan, masih dalam tahap pengembangan"));
+    messageList.add(flexMessage);
+
     when(lineMessagingClient.replyMessage(new ReplyMessage(
-        "replyToken", singletonList(null)
-    ))).thenReturn(CompletableFuture.completedFuture(
-        new BotApiResponse("ok", Collections.emptyList())
-    ));
+        "replyToken", messageList)))
+        .thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+        ));
     botService.handleMessageEvent(request);
-    verify(botTemplate, times(1)).createFlexAlarm();
+    verify(lineMessagingClient).replyMessage(new ReplyMessage(
+        "replyToken", messageList));
   }
 
   @Test
