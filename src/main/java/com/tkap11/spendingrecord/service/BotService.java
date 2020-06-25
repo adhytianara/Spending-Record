@@ -53,8 +53,6 @@ public class BotService {
 
   private final HashMap<String, SisaBudgetState> currentHandlerSisa = new HashMap<>();
 
-  private UserProfileResponse sender = null;
-
   private HashMap<String, State> currentHandler = new HashMap<>();
 
   public void greetingMessage(String replyToken) {
@@ -164,11 +162,6 @@ public class BotService {
     }
   }
 
-  private void pushAlarm(String to, Message message) {
-    PushMessage pushMessage = new PushMessage(to, message);
-    push(pushMessage);
-  }
-
   /**
    * Send message to multiple user.
    */
@@ -252,7 +245,6 @@ public class BotService {
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
     } else if (userMessage.toLowerCase().contains("atur")) {
-      UserProfileResponse sender = getProfile(senderId);
       AturState categoryHandler = new AturCategoryState();
       currentHandler.put(senderId, categoryHandler);
       relpyFlexChooseCategory(replyToken);
