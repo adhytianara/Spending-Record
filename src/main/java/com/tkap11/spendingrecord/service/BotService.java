@@ -25,6 +25,7 @@ import com.tkap11.spendingrecord.state.sisabudget.SisaBudgetState;
 import com.tkap11.spendingrecord.state.sisabudget.SisaCategoryState;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -231,7 +232,8 @@ public class BotService {
       currentHandler.put(senderId, handler.handleUserRequest(userMessage.toLowerCase(), senderId));
       replyText(replyToken, handler.messageToUser);
       if (handler.messageToUser.contains("berhasil")) {
-        budgetDatabase.setBudget(senderId, handler.category, handler.amount);
+        budgetDatabase.setBudget(senderId, handler.category,
+                YearMonth.now().toString(), handler.amount);
       }
     } else if (oldHandler instanceof SisaBudgetState) {
       SisaBudgetState handler = (SisaBudgetState) oldHandler;
