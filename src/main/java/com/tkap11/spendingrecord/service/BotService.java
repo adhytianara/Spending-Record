@@ -196,32 +196,14 @@ public class BotService {
     }
   }
 
-  @Scheduled(cron = "* */5 * * * *")
-  private void monthlyNotification() {
-    Set<String> userIDs = new HashSet<String>();
-    for (User user: userService.getAllUsers()) {
-      userIDs.add(user.getUserId());
-    }
-    sendMulticast(userIDs, "Sudah Awal bulan lho. Jangan lupa atur budgetmu untuk bulan ini ya.");
-  }
-
-  private void sendMulticast(Set<String> sourceUsers, String txtMessage) {
-    TextMessage message = new TextMessage(txtMessage);
-    Multicast multicast = new Multicast(sourceUsers, message);
-
-    try {
-      lineMessagingClient.multicast(multicast).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-
   private void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
     try {
       String category = sisaResult.get(0).getCategory();
       String budget = Integer.toString(sisaResult.get(0).getBudget());
       String sisa = Integer.toString(sisaResult.get(0).getSisabudget());
+      if (Integer.parseInt(sisa) <= 0) {
+        sisa = "HABIS";
+      }
       NumberFormat formatter = new DecimalFormat("#,###");
       String budgetFormatted = formatter.format(Double.parseDouble(budget));
       String sisaFormatted = formatter.format(Double.parseDouble(sisa));
