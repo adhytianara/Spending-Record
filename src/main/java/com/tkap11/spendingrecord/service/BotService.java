@@ -198,7 +198,7 @@ public class BotService {
     }
   }
 
-  @Scheduled(cron = "* */5 * * * *")
+  @Scheduled(cron = "0 0 1 * *")
   private void monthlyNotification() {
     Set<String> userIDs = new HashSet<String>();
     for (User user: userService.getAllUsers()) {
