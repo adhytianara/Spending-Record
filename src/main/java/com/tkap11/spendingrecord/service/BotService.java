@@ -184,6 +184,18 @@ public class BotService {
     }
   }
 
+  /**
+   * Send message to multiple user.
+   */
+  public void multicast(Set<String> to, Message message) {
+    try {
+      Multicast multicast = new Multicast(to, message);
+      lineMessagingClient.multicast(multicast).get();
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
+    }
+  }
+
   private void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
     try {
       String category = sisaResult.get(0).getCategory();
