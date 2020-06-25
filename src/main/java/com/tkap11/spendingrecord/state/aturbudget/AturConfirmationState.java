@@ -25,6 +25,12 @@ public class AturConfirmationState extends AturState {
   }
 
   @Override
+  public AturState otherServiceMessage() {
+    messageToUser = "Untuk beralih ke fitur lain, klik tombol 'Batal' terlebih dahulu";
+    return this;
+  }
+
+  @Override
   public AturState unknownMessage() {
     this.messageToUser = "Konfirmasi perubahan budget dengan menjawab 'Ya' "
             + "atau ketik 'Batal' untuk membatalkan tindakan";
