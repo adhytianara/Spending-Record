@@ -1,0 +1,153 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://files.catbox.moe/tz06jj.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "position": "relative"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Detail Persentase (Bulan ini)",
+            "size": "lg",
+            "color": "#348255",
+            "weight": "bold",
+            "align": "center"
+          }
+        ],
+        "paddingBottom": "10px"
+      },
+      {
+        "type": "separator",
+        "margin": "sm"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Makanan",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "%1$s",
+            "align": "end"
+          }
+        ],
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Transportasi",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "%2$s",
+            "align": "end"
+          }
+        ],
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Tagihan",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "%3$s",
+            "align": "end"
+          }
+        ],
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Belanja",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "%4$s",
+            "align": "end"
+          }
+        ],
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Lainnya",
+            "size": "md",
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "%5$s",
+            "align": "end"
+          }
+        ],
+        "paddingTop": "7px"
+      },
+      {
+        "type": "separator",
+        "margin": "md"
+      }
+    ],
+    "spacing": "xs",
+    "paddingTop": "0px"
+  },
+  "styles": {
+    "body": {
+      "separator": false
+    }
+  }
+}
