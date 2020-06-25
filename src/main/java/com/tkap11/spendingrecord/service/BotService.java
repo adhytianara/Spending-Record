@@ -289,8 +289,8 @@ public class BotService {
       currentHandler.put(senderId, lihatCategoryLaporanState);
       reflyFlexLihatLaporan(replyToken);
     } else {
-      replyText(replyToken, "Sedang dalam pengembangan");
+      replyText(replyToken, "Permintaan tidak dikenali. "
+          + "Ketik 'menu' untuk melihat daftar tindakan yang bisa dilakukan.");
     }
-
   }
 }
