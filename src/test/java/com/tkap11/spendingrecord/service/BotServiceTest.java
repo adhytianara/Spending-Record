@@ -216,7 +216,7 @@ class BotServiceTest {
   }
 
   @Test
-  void CatatPengeluaranState() {
+  void catatPengeluaranState() {
     MessageEvent request = new MessageEvent<>(
         "replyToken",
         new UserSource("userId"),
@@ -235,12 +235,6 @@ class BotServiceTest {
 
   @Test
   void lihatLaporan() {
-    MessageEvent request = new MessageEvent<>(
-        "replyToken",
-        new UserSource("userId"),
-        new TextMessageContent("id", "lihat detail makanan"),
-        Instant.now()
-    );
     FlexMessage flexMessage = botTemplate.createFlexDetailLaporan("url", 1, 2, 3);
     doNothing().when(lihatCategoryLaporanState).setUserId(null);
     when(lihatCategoryLaporanState.handleUserRequest("lihat detail makanan"))
@@ -252,6 +246,12 @@ class BotServiceTest {
         .thenReturn(CompletableFuture.completedFuture(
             new BotApiResponse("ok", Collections.emptyList())
         ));
+    MessageEvent request = new MessageEvent<>(
+        "replyToken",
+        new UserSource("userId"),
+        new TextMessageContent("id", "lihat detail makanan"),
+        Instant.now()
+    );
     botService.handleMessageEvent(request);
     verify(botTemplate, times(1)).createFlexDetailLaporan("url", 1, 2, 3);
     request = new MessageEvent<>(

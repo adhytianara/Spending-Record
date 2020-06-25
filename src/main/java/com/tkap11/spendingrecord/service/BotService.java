@@ -168,6 +168,9 @@ public class BotService {
     }
   }
 
+  /**
+   * Push message.
+   */
   public void push(PushMessage pushMessage) {
     try {
       lineMessagingClient.pushMessage(pushMessage).get();
