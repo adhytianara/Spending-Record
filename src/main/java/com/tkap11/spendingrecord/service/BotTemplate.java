@@ -4,14 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.flex.container.FlexContainer;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BotTemplate {
+
+  @Autowired
+  BotService botService;
 
   /**
    * Create menu flex.
@@ -24,9 +27,10 @@ public class BotTemplate {
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("menu.json")), encoding);
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Action Menu", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -42,11 +46,11 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("sisaBudget.json")), encoding);
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Sisa Pengeluaran", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -62,11 +66,11 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("ChooseCategory.json")), encoding);
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Kategori pengeluaran", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -82,11 +86,11 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("ingatkanSaya.json")), encoding);
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Ingatkan Saya", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -102,11 +106,11 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("waktuAlarm.json")), encoding);
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Waktu Alarm", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;

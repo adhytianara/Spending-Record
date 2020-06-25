@@ -84,6 +84,10 @@ public class BotService {
     reply(replyToken, flexMessage);
   }
 
+  public boolean condition() {
+    return false;
+  }
+
   private void replyText(String replyToken, String message) {
     TextMessage textMessage = new TextMessage(message);
     reply(replyToken, textMessage);
@@ -179,6 +183,5 @@ public class BotService {
     } else {
       replyText(replyToken, "Sedang dalam pengembangan");
     }
-
   }
 }

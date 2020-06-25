@@ -220,4 +220,9 @@ class BotServiceTest {
         users, textMessage
     ));
   }
+
+  @Test
+  void condition() {
+    botService.condition();
+  }
 }

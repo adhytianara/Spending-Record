@@ -1,5 +1,6 @@
 package com.tkap11.spendingrecord.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.LineSignatureValidator;
@@ -35,7 +36,7 @@ public class Controller {
   private LineSignatureValidator lineSignatureValidator;
 
   /**
-   * Handle user request.
+   * Webhook to receive user request.
    */
   @RequestMapping(value = "/webhook", method = RequestMethod.POST)
   public ResponseEntity<String> callback(
@@ -45,24 +46,29 @@ public class Controller {
       if (!lineSignatureValidator.validateSignature(eventsPayload.getBytes(), lineSignature)) {
         throw new RuntimeException("Invalid Signature Validation");
       }
-
-      ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
-      EventsModel eventsModel = objectMapper.readValue(eventsPayload, EventsModel.class);
-
-      eventsModel.getEvents().forEach(event -> {
-        if (event instanceof FollowEvent) {
-          String replyToken = ((ReplyEvent) event).getReplyToken();
-          botService.source = event.getSource();
-          botService.greetingMessage(replyToken);
-        } else if (event instanceof MessageEvent) {
-          botService.source = event.getSource();
-          botService.handleMessageEvent((MessageEvent) event);
-        }
-      });
+      handleEvent(eventsPayload, lineSignature);
       return new ResponseEntity<>(HttpStatus.OK);
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+  }
+
+  /**
+   * Handle user request.
+   */
+  public void handleEvent(String eventsPayload, String lineSignature)
+      throws JsonProcessingException {
+    ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+    EventsModel eventsModel = objectMapper.readValue(eventsPayload, EventsModel.class);
+    eventsModel.getEvents().forEach(event -> {
+      if (event instanceof FollowEvent) {
+        String replyToken = ((ReplyEvent) event).getReplyToken();
+        botService.source = event.getSource();
+        botService.greetingMessage(replyToken);
+      } else if (event instanceof MessageEvent) {
+        botService.source = event.getSource();
+        botService.handleMessageEvent((MessageEvent) event);
+      }
+    });
   }
 }

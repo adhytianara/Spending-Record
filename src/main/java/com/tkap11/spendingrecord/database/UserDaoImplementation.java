@@ -22,24 +22,25 @@ public class UserDaoImplementation implements UserDao {
       + " (user_id, display_name) VALUES (?, ?);";
 
   private static final ResultSetExtractor<List<User>> MULTIPLE_RS_EXTRACTOR =
-      new ResultSetExtractor<List<User>>() {
-    @Override
-    public List<User> extractData(ResultSet resultSet)
-        throws SQLException, DataAccessException {
-      List<User> list = new Vector<User>();
-      while (resultSet.next()) {
-        User p = new User(
-            resultSet.getLong("id"),
-            resultSet.getString("user_id"),
-            resultSet.getString("display_name"));
-        list.add(p);
-      }
-      return list;
-    }
-  };
+      UserDaoImplementation::extractData;
 
   public UserDaoImplementation(DataSource dataSource) {
     jdbcTemplate = new JdbcTemplate(dataSource);
+  }
+
+  /**
+   * Extract data for user table.
+   */
+  public static List<User> extractData(ResultSet resultSet) throws SQLException {
+    List<User> list = new Vector<User>();
+    while (resultSet.next()) {
+      User p = new User(
+          resultSet.getLong("id"),
+          resultSet.getString("user_id"),
+          resultSet.getString("display_name"));
+      list.add(p);
+    }
+    return list;
   }
 
   @Override
