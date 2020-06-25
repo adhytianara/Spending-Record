@@ -40,7 +40,7 @@ public class BotTemplate {
   /**
    * Create sisa budget flex.
    */
-  public FlexMessage createFlexSisa(String category, String nominal) {
+  public FlexMessage createFlexSisa(String category, String budget, String sisa) {
     FlexMessage flexMessage = new FlexMessage("Sisa Pengeluaran", null);
     try {
       ClassLoader classLoader = getClass().getClassLoader();
@@ -49,7 +49,7 @@ public class BotTemplate {
           classLoader.getResourceAsStream("sisaBudget.json")), encoding);
 
       flexTemplate = String.format(flexTemplate, escape(category),
-          escape(nominal), escape(nominal));
+          escape(budget), escape(sisa));
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
