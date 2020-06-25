@@ -20,6 +20,9 @@ import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
 import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
+import com.tkap11.spendingrecord.catatpengeluaran.ConfirmationState;
+import com.tkap11.spendingrecord.catatpengeluaran.InsertMoneyState;
+import com.tkap11.spendingrecord.repository.SpendingDatabase;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -53,6 +56,9 @@ class BotServiceTest {
 
   @Mock
   private LineMessagingClient lineMessagingClient;
+
+  @Mock
+  private SpendingDatabase spendingService;
 
   @Spy
   private HashMap<String, CatatPengeluaranState> currentHandler = new HashMap<>();
@@ -204,16 +210,21 @@ class BotServiceTest {
     MessageEvent request = new MessageEvent<>(
         "replyToken",
         new UserSource("userId"),
-        new TextMessageContent("id", "makanan"),
+        new TextMessageContent("id", "ya"),
         Instant.now()
     );
+    CatatPengeluaranState state = new ConfirmationState(
+        new InsertMoneyState(
+            new ChooseCategoryState(
+                "userId", "displayName")));
     when(currentHandler.get(null))
-        .thenReturn(new ChooseCategoryState("senderId", "displayName"));
+        .thenReturn(state);
     when(lineMessagingClient.replyMessage(new ReplyMessage(
         "replyToken", singletonList(null))))
         .thenReturn(CompletableFuture.completedFuture(
             new BotApiResponse("ok", Collections.emptyList())
         ));
+    when(spendingService.saveRecord("userId;displayName;null;")).thenReturn(1);
     botService.handleMessageEvent(request);
   }
 
