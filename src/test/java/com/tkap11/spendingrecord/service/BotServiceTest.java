@@ -19,6 +19,7 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.tkap11.spendingrecord.catatpengeluaran.CatatPengeluaranState;
+import com.tkap11.spendingrecord.catatpengeluaran.ChooseCategoryState;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -76,6 +77,9 @@ class BotServiceTest {
     botService.greetingMessage("replyToken");
     verify(lineMessagingClient).replyMessage(new ReplyMessage(
         "replyToken", messageList));
+    when(lineMessagingClient.getProfile(null))
+        .thenThrow(new RuntimeException());
+    botService.getProfile(null);
   }
 
   @Test
@@ -153,6 +157,10 @@ class BotServiceTest {
     ));
     botService.handleMessageEvent(request);
     verify(botTemplate, times(1)).createFlexAlarm();
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+        "replyToken", singletonList(null)
+    ))).thenThrow(new RuntimeException());
+    botService.handleMessageEvent(request);
   }
 
   @Test
@@ -192,6 +200,25 @@ class BotServiceTest {
   }
 
   @Test
+  void catatPengeluaranState() {
+    MessageEvent request = new MessageEvent<>(
+        "replyToken",
+        new UserSource("userId"),
+        new TextMessageContent("id", "makanan"),
+        Instant.now()
+    );
+    when(currentHandler.get(null))
+        .thenReturn(new ChooseCategoryState("senderId", "displayName"));
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+        "replyToken", singletonList(null))))
+        .thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+        ));
+    botService.handleMessageEvent(request);
+  }
+
+
+  @Test
   void pushAlarm() {
     TextMessage textMessage = new TextMessage("halo");
     when(lineMessagingClient.pushMessage(new PushMessage(
@@ -199,10 +226,16 @@ class BotServiceTest {
     ))).thenReturn(CompletableFuture.completedFuture(
         new BotApiResponse("ok", Collections.emptyList())
     ));
-    botService.pushAlarm("user", textMessage);
+    PushMessage pushMessage = new PushMessage("user", textMessage);
+    botService.push(pushMessage);
     verify(lineMessagingClient).pushMessage(new PushMessage(
         "user", textMessage
     ));
+    when(lineMessagingClient.pushMessage(new PushMessage(
+        "user", textMessage
+    ))).thenThrow(new RuntimeException());
+    pushMessage = new PushMessage("user", textMessage);
+    botService.push(pushMessage);
   }
 
   @Test
@@ -219,6 +252,10 @@ class BotServiceTest {
     verify(lineMessagingClient).multicast(new Multicast(
         users, textMessage
     ));
+    when(lineMessagingClient.multicast(new Multicast(
+        users, textMessage
+    ))).thenThrow(new RuntimeException());
+    botService.multicast(users, textMessage);
   }
 
   @Test

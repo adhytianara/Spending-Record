@@ -106,8 +106,8 @@ public class BotService {
   private void reply(ReplyMessage replyMessage) {
     try {
       lineMessagingClient.replyMessage(replyMessage).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
     }
   }
 
@@ -117,8 +117,9 @@ public class BotService {
   public UserProfileResponse getProfile(String userId) {
     try {
       return lineMessagingClient.getProfile(userId).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
+      return null;
     }
   }
 
@@ -128,8 +129,8 @@ public class BotService {
   public void push(PushMessage pushMessage) {
     try {
       lineMessagingClient.pushMessage(pushMessage).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
     }
   }
 
@@ -145,8 +146,8 @@ public class BotService {
     try {
       Multicast multicast = new Multicast(to, message);
       lineMessagingClient.multicast(multicast).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException | ExecutionException | RuntimeException e) {
+      e.printStackTrace();
     }
   }
 
