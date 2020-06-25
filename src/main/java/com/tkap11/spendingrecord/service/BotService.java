@@ -59,8 +59,6 @@ public class BotService {
   @Autowired
   private LihatCategoryLaporanState lihatCategoryLaporanState;
 
-  private final HashMap<String, SisaBudgetState> currentHandlerSisa = new HashMap<>();
-
   private HashMap<String, State> currentHandler = new HashMap<>();
 
   public void greetingMessage(String replyToken) {
@@ -118,10 +116,14 @@ public class BotService {
     reply(replyToken, flexMessage);
   }
 
+  /**
+   * Reply sisa flex.
+   */
   public void replyFlexAlarm(String replyToken) {
     FlexMessage flexMessage = botTemplate.createFlexAlarm();
     List<Message> messageList = new ArrayList<>();
-    messageList.add(new TextMessage("Fitur ini belum dapat digunakan, masih dalam tahap pengembangan"));
+    messageList.add(new TextMessage("Fitur ini belum dapat digunakan, "
+        + "masih dalam tahap pengembangan"));
     messageList.add(flexMessage);
     reply(replyToken, messageList);
   }
