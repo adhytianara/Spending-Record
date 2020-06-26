@@ -1,7 +1,6 @@
 package com.tkap11.spendingrecord.database;
 
-import static org.mockito.Mockito.when;
-
+import com.tkap11.spendingrecord.model.Spending;
 import com.tkap11.spendingrecord.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,9 +14,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserDaoImplementationTest {
+class SpendingDaoImplementationTest {
   @Mock
   private JdbcTemplate jdbcTemplate;
 
@@ -25,7 +26,7 @@ class UserDaoImplementationTest {
   private ResultSet resultSet;
 
   @InjectMocks
-  UserDaoImplementation userDaoImplementation = new UserDaoImplementation(getDataSource());
+  SpendingDaoImplementation dao = new SpendingDaoImplementation(getDataSource());
 
   DataSource getDataSource() {
     String dbUrl = System.getenv("JDBC_DATABASE_URL");
@@ -43,35 +44,27 @@ class UserDaoImplementationTest {
 
   @Test
   void get() {
-    List<User> users = userDaoImplementation.get();
-    Assert.assertNull(users);
+    List<Spending> spendings = dao.get();
+    Assert.assertNull(spendings);
   }
 
   @Test
   void getByUserId() {
-    List<User> users = userDaoImplementation.getByUserId("userId");
-    Assert.assertNull(users);
+    List<Spending> spendings = dao.getByUserId("userId");
+    Assert.assertNull(spendings);
   }
 
   @Test
-  void registerUser() {
-    int register = userDaoImplementation.registerUser("userId", "displayName");
-    Assert.assertEquals(register, 0);
-  }
-
-  @Test
-  void statusIngatkanbyUserId() {
-    userDaoImplementation.setStatusIngatkanbyUserId("true", "userId");
-    List<User> userList = userDaoImplementation.getStatusIngatkanbyUserId("userId");
-    Assert.assertNull(userList);
-    userList = userDaoImplementation.getAllUserIngatkanAktif();
-    Assert.assertNull(userList);
+  void saveRecord() {
+    int save = dao.saveRecord("userId", "displayName", "category",
+        "timestamp", "nominal");
+    Assert.assertEquals(save, 0);
   }
 
   @Test
   void extractData() throws SQLException {
     when(resultSet.next()).thenReturn(true).thenReturn(false);
-    List<User> users = userDaoImplementation.extractData(resultSet);
-    Assert.assertNotNull(users);
+    List<Spending> spendings = dao.extractData(resultSet);
+    Assert.assertNotNull(spendings);
   }
 }

@@ -7,11 +7,13 @@ import java.util.List;
 public abstract class SisaBudgetState implements State {
   private final List<String> categories = Arrays.asList(
       "makanan", "transportasi", "tagihan", "belanja", "lainnya");
+  private final List<String> action = Arrays.asList(
+      "menu", "atur budget", "sisa budget", "catat pengeluaran",
+      "lihat laporan", "ingatkan saya", "reset data");
   protected SisaBudgetState state;
   protected String description;
   protected String messageToUser;
-  List<String> action = Arrays.asList(
-      "menu", "atur budget", "sisa budget", "catat pengeluaran", "lihat laporan", "ingatkan saya");
+
 
   public abstract SisaBudgetState userChooseCategory(String userMessage);
 

@@ -35,10 +35,40 @@ class UserDatabaseTest {
   @Test
   void findUserById() {
     List<User> users = new ArrayList<>();
-    users.add(new User(Long.parseLong("1"), "userId", "adhytia"));
+    users.add(new User(Long.parseLong("1"), "userId", "adhytia", "false"));
     when(userDao.getByUserId("%userId%"))
         .thenReturn(users);
     dbService.findUserById("userId");
     verify(userDao, times(1)).getByUserId("%userId%");
+  }
+
+  @Test
+  void getAllUsers() {
+    List<User> users = new ArrayList<>();
+    users.add(new User(Long.parseLong("1"), "userId", "adhytia", "false"));
+    when(userDao.get()).thenReturn(users);
+    dbService.getAllUsers();
+    verify(userDao, times(1)).get();
+  }
+
+  @Test
+  void getStatusIngatkanbyUserId() {
+    List<User> users = new ArrayList<>();
+    users.add(new User(Long.parseLong("1"), "userId", "adhytia", "false"));
+    when(userDao.getStatusIngatkanbyUserId("userId")).thenReturn(users);
+    when(userDao.setStatusIngatkanbyUserId("status", "userId"))
+        .thenReturn(1);
+    dbService.setStatusIngatkan("status", "userId");
+    dbService.getStatusIngatkanbyUserId("userId");
+    verify(userDao, times(1)).getStatusIngatkanbyUserId("userId");
+  }
+
+  @Test
+  void getAllUserIngatkanAktif() {
+    List<User> users = new ArrayList<>();
+    users.add(new User(Long.parseLong("1"), "userId", "adhytia", "false"));
+    when(userDao.getAllUserIngatkanAktif()).thenReturn(users);
+    dbService.getAllUserIngatkanAktif();
+    verify(userDao, times(1)).getAllUserIngatkanAktif();
   }
 }

@@ -33,7 +33,7 @@ public class LihatCategoryLaporanState extends LihatLaporanState {
 
   @Override
   public LihatLaporanState otherServiceMessage() {
-    messageToUser = "Untuk beralih ke fitur lain, klik tombol 'Batal' terlebih dahulu";
+    messageToUser = "Untuk beralih ke fitur lain, kirim pesan 'batal' terlebih dahulu";
     this.message = new TextMessage(messageToUser);
     return this;
   }
@@ -77,11 +77,11 @@ public class LihatCategoryLaporanState extends LihatLaporanState {
         Double total = Double.valueOf(makanan + transportasi + tagihan + belanja + lainnya);
         total = (total == 0 ? 1.0 : total);
         message = botTemplate.createFlexDetailPersentase(
-            String.valueOf(Double.valueOf(makanan) * 100 / total),
-            String.valueOf(Double.valueOf(transportasi) * 100 / total),
-            String.valueOf(Double.valueOf(tagihan) * 100 / total),
-            String.valueOf(Double.valueOf(belanja) * 100 / total),
-            String.valueOf(Double.valueOf(lainnya) * 100 / total)
+            String.format("%.2f", Double.valueOf(makanan) * 100 / total),
+            String.format("%.2f", Double.valueOf(transportasi) * 100 / total),
+            String.format("%.2f", Double.valueOf(tagihan) * 100 / total),
+            String.format("%.2f", Double.valueOf(belanja) * 100 / total),
+            String.format("%.2f", Double.valueOf(lainnya) * 100 / total)
         );
         break;
       case "semua":

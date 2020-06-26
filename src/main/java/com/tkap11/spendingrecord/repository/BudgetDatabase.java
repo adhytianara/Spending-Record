@@ -12,8 +12,8 @@ public class BudgetDatabase {
   @Autowired
   private BudgetDao budgetDao;
 
-  public int setBudget(String userId, String category, int budget) {
-    return budgetDao.setBudget(userId, category, budget);
+  public int setBudget(String userId, String category, String period, int budget) {
+    return budgetDao.setBudget(userId, category, period, budget);
   }
 
   public List<Budget> getBudget(String userId, String category) {

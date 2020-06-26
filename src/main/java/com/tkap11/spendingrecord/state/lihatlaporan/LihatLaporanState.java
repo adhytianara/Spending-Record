@@ -10,8 +10,9 @@ public abstract class LihatLaporanState implements State {
       "lihat detail makanan", "lihat detail transportasi", "lihat detail persentase",
       "lihat detail tagihan", "lihat detail belanja", "lihat detail lainnya",
       "lihat detail semua kategori");
-  private List<String> action = Arrays.asList(
-      "menu", "atur budget", "sisa budget", "catat pengeluaran", "lihat laporan", "ingatkan saya");
+  private final List<String> action = Arrays.asList(
+      "menu", "atur budget", "sisa budget", "catat pengeluaran",
+      "lihat laporan", "ingatkan saya", "reset data");
   protected List<String> urls = Arrays.asList(
       "https://files.catbox.moe/0zswty.png",
       "https://files.catbox.moe/o6wnt2.png",

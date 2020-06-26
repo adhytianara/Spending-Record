@@ -10,6 +10,4 @@ public interface SpendingDao {
 
   int saveRecord(String userId, String displayName, String category,
                  String timestamp, String nominal);
-
-  List<Spending> getSisa(String userId, String category);
 }

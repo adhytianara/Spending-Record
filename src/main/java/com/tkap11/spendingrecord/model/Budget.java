@@ -6,6 +6,7 @@ public class Budget {
   private int sisaBudget;
   private String userId;
   private String category;
+  private String period;
 
   /**
    * Budget constructor.
@@ -26,11 +27,12 @@ public class Budget {
    * @param budget allocated budget
    * @param sisaBudget budget left
    */
-  public Budget(String userId, String category, int budget, int sisaBudget) {
+  public Budget(String userId, String category, int budget, int sisaBudget, String period) {
     this.userId = userId;
     this.category = category;
     this.budget = budget;
     this.sisaBudget = sisaBudget;
+    this.period = period;
   }
 
   public int getBudget() {
@@ -63,5 +65,13 @@ public class Budget {
 
   public void setCategory(String category) {
     this.category = category;
+  }
+
+  public String getPeriod() {
+    return period;
+  }
+
+  public void setPeriod(String period) {
+    this.period = period;
   }
 }

@@ -6,6 +6,8 @@ import com.linecorp.bot.model.message.flex.container.FlexContainer;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Objects;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.text.StringEscapeUtils;
@@ -40,7 +42,7 @@ public class BotTemplate {
   /**
    * Create sisa budget flex.
    */
-  public FlexMessage createFlexSisa(String category, String nominal) {
+  public FlexMessage createFlexSisa(String category, String budget, String sisa) {
     FlexMessage flexMessage = new FlexMessage("Sisa Pengeluaran", null);
     try {
       ClassLoader classLoader = getClass().getClassLoader();
@@ -49,7 +51,7 @@ public class BotTemplate {
           classLoader.getResourceAsStream("sisaBudget.json")), encoding);
 
       flexTemplate = String.format(flexTemplate, escape(category),
-          escape(nominal), escape(nominal));
+          escape(budget), escape(sisa));
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
@@ -192,11 +194,16 @@ public class BotTemplate {
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("detailLaporan.json")), encoding);
 
+      NumberFormat formatter = new DecimalFormat("#,###");
+      String formatedDay = formatter.format(Double.valueOf(day));
+      String formatedWeek = formatter.format(Double.valueOf(week));
+      String formatedMonth = formatter.format(Double.valueOf(month));
+
       flexTemplate = String.format(flexTemplate,
           escape(url),
-          escape(String.valueOf(day)),
-          escape(String.valueOf(week)),
-          escape(String.valueOf(month)));
+          escape(String.valueOf(formatedDay)),
+          escape(String.valueOf(formatedWeek)),
+          escape(String.valueOf(formatedMonth)));
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
