@@ -3,7 +3,10 @@ package com.tkap11.spendingrecord.repository;
 
 import com.tkap11.spendingrecord.database.UserDao;
 import com.tkap11.spendingrecord.model.User;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +41,25 @@ public class UserDatabase {
   public List<User> getAllUsers() {
     List<User> users = userDao.get();
     return users;
+  }
+
+  public List<User> getStatusIngatkanbyUserId(String userId) {
+    return userDao.getStatusIngatkanbyUserId(userId);
+  }
+
+  /**
+   * Get all user that has active status.
+   */
+  public Set<String> getAllUserIngatkanAktif() {
+    List<User> users = userDao.getAllUserIngatkanAktif();
+    List<String> userIdList = new ArrayList<>();
+    for (User user : users) {
+      userIdList.add(user.getUserId());
+    }
+    return new HashSet(userIdList);
+  }
+
+  public int setStatusIngatkan(String status, String userId) {
+    return userDao.setStatusIngatkanbyUserId(status, userId);
   }
 }

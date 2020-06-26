@@ -10,7 +10,7 @@ class UserTest {
 
   @BeforeEach
   void setUp() {
-    user = new User(Long.parseLong("1"), "userid", "adhytia");
+    user = new User(Long.parseLong("1"), "userid", "adhytia", "false");
   }
 
   @Test
@@ -50,5 +50,18 @@ class UserTest {
     user.setDisplayName("spendingrecord");
     String displayName = user.getDisplayName();
     assertEquals(displayName, "spendingrecord");
+  }
+
+  @Test
+  void getIngatkan() {
+    String ingatkan = user.getIngatkan();
+    assertEquals(ingatkan, "false");
+  }
+
+  @Test
+  void setIngatkan() {
+    user.setIngatkan("true");
+    String ingatkan = user.getIngatkan();
+    assertEquals(ingatkan, "true");
   }
 }

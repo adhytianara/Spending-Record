@@ -4,14 +4,24 @@ public class User {
   private Long id;
   private String userId;
   private String displayName;
+  private String ingatkan;
 
   /**
    * Represent user.
    */
-  public User(Long id, String userId, String displayName) {
+  public User(Long id, String userId, String displayName, String ingatkan) {
     this.id = id;
     this.userId = userId;
     this.displayName = displayName;
+    this.ingatkan = ingatkan;
+  }
+
+  public String getIngatkan() {
+    return ingatkan;
+  }
+
+  public void setIngatkan(String ingatkan) {
+    this.ingatkan = ingatkan;
   }
 
   public Long getId() {
