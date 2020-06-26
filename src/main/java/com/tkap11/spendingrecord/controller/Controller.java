@@ -62,7 +62,7 @@ public class Controller {
     EventsModel eventsModel = objectMapper.readValue(eventsPayload, EventsModel.class);
     eventsModel.getEvents().forEach(event -> {
       if (event instanceof FollowEvent) {
-        String replyToken = ((ReplyEvent) event).getReplyToken();
+        String replyToken = ((FollowEvent) event).getReplyToken();
         botService.source = event.getSource();
         botService.greetingMessage(replyToken);
       } else if (event instanceof MessageEvent) {
