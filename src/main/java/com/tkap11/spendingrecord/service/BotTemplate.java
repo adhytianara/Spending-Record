@@ -85,7 +85,7 @@ public class BotTemplate {
   }
 
   /**
-   * Create sisa pengeluaran flex.
+   * Create sisa category flex.
    */
   public FlexMessage createFlexSisaCategory() {
     FlexMessage flexMessage = new FlexMessage("Kategori Sisa Pengeluaran", null);
@@ -105,10 +105,10 @@ public class BotTemplate {
   }
 
   /**
-   * Create category flex.
+   * Create spending category flex.
    */
   public FlexMessage createFlexChooseCategory() {
-    FlexMessage flexMessage = new FlexMessage("Kategori pengeluaran", null);
+    FlexMessage flexMessage = new FlexMessage("Kategori Pengeluaran", null);
     try {
       ClassLoader classLoader = getClass().getClassLoader();
       String encoding = StandardCharsets.UTF_8.name();
@@ -117,7 +117,27 @@ public class BotTemplate {
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
-      flexMessage = new FlexMessage("Kategori pengeluaran", flexContainer);
+      flexMessage = new FlexMessage("Kategori Pengeluaran", flexContainer);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return flexMessage;
+  }
+
+  /**
+   * Create budget category flex.
+   */
+  public FlexMessage createFlexBudgetCategory() {
+    FlexMessage flexMessage = new FlexMessage("Kategori Atur Budget", null);
+    try {
+      ClassLoader classLoader = getClass().getClassLoader();
+      String encoding = StandardCharsets.UTF_8.name();
+      String flexTemplate = IOUtils.toString(Objects.requireNonNull(
+          classLoader.getResourceAsStream("budgetCategory.json")), encoding);
+
+      ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
+      flexMessage = new FlexMessage("Kategori Atur Budget", flexContainer);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -127,13 +147,15 @@ public class BotTemplate {
   /**
    * Create alarm flex.
    */
-  public FlexMessage createFlexAlarm() {
+  public FlexMessage createFlexAlarm(String state) {
     FlexMessage flexMessage = new FlexMessage("Ingatkan Saya", null);
     try {
       ClassLoader classLoader = getClass().getClassLoader();
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("ingatkanSaya.json")), encoding);
+
+      flexTemplate = String.format(flexTemplate, escape(state));
 
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);

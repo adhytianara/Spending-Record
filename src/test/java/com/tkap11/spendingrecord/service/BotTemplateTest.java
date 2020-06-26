@@ -21,6 +21,12 @@ class BotTemplateTest {
   }
 
   @Test
+  void createFlexBudgetCategory() {
+    FlexMessage flexMessage = botTemplate.createFlexBudgetCategory();
+    assertTrue(flexMessage instanceof FlexMessage);
+  }
+
+  @Test
   void createFlexSisaCategory() {
     FlexMessage flexMessage = botTemplate.createFlexSisaCategory();
     assertTrue(flexMessage instanceof FlexMessage);
@@ -40,7 +46,7 @@ class BotTemplateTest {
 
   @Test
   void createFlexAlarm() {
-    FlexMessage flexMessage = botTemplate.createFlexAlarm();
+    FlexMessage flexMessage = botTemplate.createFlexAlarm("state");
     assertTrue(flexMessage instanceof FlexMessage);
   }
 

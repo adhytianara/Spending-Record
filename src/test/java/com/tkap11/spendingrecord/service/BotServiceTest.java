@@ -146,6 +146,23 @@ class BotServiceTest {
   }
 
   @Test
+  void handleMessageEventWhenUserSendAturMessage() {
+    final MessageEvent request = new MessageEvent<>(
+        "replyToken",
+        new UserSource("userId"),
+        new TextMessageContent("id", "atur"),
+        Instant.now()
+    );
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+        "replyToken", singletonList(null))))
+        .thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+        ));
+    botService.handleMessageEvent(request);
+    verify(botTemplate, times(1)).createFlexBudgetCategory();
+  }
+
+  @Test
   void handleMessageEventWhenUserSendSisaCategoryMessage() {
     final MessageEvent request = new MessageEvent<>(
         "replyToken",
