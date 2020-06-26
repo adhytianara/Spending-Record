@@ -111,13 +111,24 @@ public class BotService {
     reply(replyToken, messageList);
   }
 
+  /**
+   * Reply spending category flex.
+   */
   public void relpyFlexChooseCategory(String replyToken) {
     FlexMessage flexMessage = botTemplate.createFlexChooseCategory();
     reply(replyToken, flexMessage);
   }
 
   /**
-   * Reply sisa kategori flex.
+   * Reply budget category flex.
+   */
+  public void relpyFlexBudgetCategory(String replyToken) {
+    FlexMessage flexMessage = botTemplate.createFlexBudgetCategory();
+    reply(replyToken, flexMessage);
+  }
+
+  /**
+   * Reply sisa category flex.
    */
   public void relpyFlexSisaCategory(String replyToken) {
     FlexMessage flexMessage = botTemplate.createFlexSisaCategory();
@@ -144,15 +155,23 @@ public class BotService {
   }
 
   /**
-   * Reply sisa flex.
+   * Reply ingatkan saya flex.
    */
-  public void replyFlexAlarm(String replyToken) {
-    FlexMessage flexMessage = botTemplate.createFlexAlarm();
+  public void replyFlexAlarm(String replyToken, Message message) {
     List<Message> messageList = new ArrayList<>();
-    messageList.add(new TextMessage("Fitur ini belum dapat digunakan, "
-        + "masih dalam tahap pengembangan"));
-    messageList.add(flexMessage);
-    reply(replyToken, messageList);
+    if (message.toString().contains("menonaktifkan")) {
+      FlexMessage flexMessage = botTemplate.createFlexAlarm("Sedang Aktif");
+      messageList.add(message);
+      messageList.add(flexMessage);
+      reply(replyToken, messageList);
+    } else if (message.toString().contains("mengaktifkan")) {
+      FlexMessage flexMessage = botTemplate.createFlexAlarm("Tidak Aktif");
+      messageList.add(message);
+      messageList.add(flexMessage);
+      reply(replyToken, messageList);
+    } else {
+      reply(replyToken, message);
+    }
   }
 
   public void replyFlexUbah(String replyToken) {
@@ -296,7 +315,7 @@ public class BotService {
     } else if (userMessage.toLowerCase().contains("atur")) {
       AturState categoryHandler = new AturCategoryState();
       currentHandler.put(senderId, categoryHandler);
-      relpyFlexChooseCategory(replyToken);
+      relpyFlexBudgetCategory(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("sisa")) {
       SisaBudgetState categoryHandlerSisa = new SisaCategoryState(senderId);
       currentHandler.put(senderId, categoryHandlerSisa);
@@ -305,7 +324,7 @@ public class BotService {
       ingatkanSayaConfirmationState.setUserId(senderId);
       currentHandler.put(senderId, ingatkanSayaConfirmationState);
       ingatkanSayaConfirmationState.getUserIngatkanResponse();
-      reply(replyToken, ingatkanSayaConfirmationState.getMessagetoUser());
+      replyFlexAlarm(replyToken, ingatkanSayaConfirmationState.getMessagetoUser());
     } else if (textMessageContent.getText().toLowerCase().contains("ubah")) {
       replyFlexUbah(replyToken);
     } else if (userMessage.toLowerCase().contains("lihat detail ")) {
