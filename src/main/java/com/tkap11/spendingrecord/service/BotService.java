@@ -22,6 +22,8 @@ import com.tkap11.spendingrecord.state.aturbudget.AturCategoryState;
 import com.tkap11.spendingrecord.state.aturbudget.AturState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
+import com.tkap11.spendingrecord.state.ingatkansaya.IngatkanSayaConfirmationState;
+import com.tkap11.spendingrecord.state.ingatkansaya.IngatkanSayaState;
 import com.tkap11.spendingrecord.state.lihatlaporan.LihatCategoryLaporanState;
 import com.tkap11.spendingrecord.state.lihatlaporan.LihatLaporanState;
 import com.tkap11.spendingrecord.state.sisabudget.SisaBudgetState;
@@ -32,7 +34,6 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -58,6 +59,8 @@ public class BotService {
   private BudgetDatabase budgetDatabase;
   @Autowired
   private LihatCategoryLaporanState lihatCategoryLaporanState;
+  @Autowired
+  private IngatkanSayaConfirmationState ingatkanSayaConfirmationState;
 
   private HashMap<String, State> currentHandler = new HashMap<>();
 
@@ -70,6 +73,22 @@ public class BotService {
     String senderId = source.getSenderId();
     UserProfileResponse sender = getProfile(senderId);
     userService.registerUser(sender.getUserId(), sender.getDisplayName());
+  }
+
+  @Scheduled(cron = "0 0 6 ? * *")
+  public void reminderSiang() {
+    remindUsers("Sudah makan siang? jangan lupa catat pengeluarannya ya!");
+  }
+
+  @Scheduled(cron = "0 0 14 ? * *")
+  public void reminderMalam() {
+    remindUsers("Sebelum tidur, catat pengeluaran hari ini dulu yuk!");
+  }
+
+  private void remindUsers(String message) {
+    TextMessage textMessage = new TextMessage(message);
+    Set<String> userIdList = userService.getAllUserIngatkanAktif();
+    multicast(userIdList, textMessage);
   }
 
   /**
@@ -239,7 +258,7 @@ public class BotService {
       replyText(replyToken, handler.messageToUser);
       if (handler.messageToUser.contains("berhasil")) {
         budgetDatabase.setBudget(senderId, handler.category,
-                YearMonth.now().toString(), handler.amount);
+            YearMonth.now().toString(), handler.amount);
       }
     } else if (oldHandler instanceof SisaBudgetState) {
       SisaBudgetState handler = (SisaBudgetState) oldHandler;
@@ -254,6 +273,11 @@ public class BotService {
     } else if (oldHandler instanceof LihatLaporanState) {
       LihatLaporanState handler = (LihatLaporanState) oldHandler;
       LihatLaporanState newHandler = handler.handleUserRequest(userMessage.toLowerCase());
+      currentHandler.put(senderId, newHandler);
+      reply(replyToken, handler.getMessagetoUser());
+    } else if ((oldHandler instanceof IngatkanSayaState)) {
+      IngatkanSayaState handler = (IngatkanSayaState) oldHandler;
+      IngatkanSayaState newHandler = handler.handleUserRequest(userMessage.toLowerCase());
       currentHandler.put(senderId, newHandler);
       reply(replyToken, handler.getMessagetoUser());
     } else if (userMessage.toLowerCase().contains("menu")) {
@@ -273,7 +297,10 @@ public class BotService {
       currentHandler.put(senderId, categoryHandlerSisa);
       relpyFlexSisaCategory(replyToken);
     } else if (textMessageContent.getText().toLowerCase().contains("ingatkan")) {
-      replyFlexAlarm(replyToken);
+      ingatkanSayaConfirmationState.setUserId(senderId);
+      currentHandler.put(senderId, ingatkanSayaConfirmationState);
+      ingatkanSayaConfirmationState.getUserIngatkanResponse();
+      reply(replyToken, ingatkanSayaConfirmationState.getMessagetoUser());
     } else if (textMessageContent.getText().toLowerCase().contains("ubah")) {
       replyFlexUbah(replyToken);
     } else if (userMessage.toLowerCase().contains("lihat detail ")) {
