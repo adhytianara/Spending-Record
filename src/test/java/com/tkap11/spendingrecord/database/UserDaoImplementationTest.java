@@ -1,5 +1,7 @@
 package com.tkap11.spendingrecord.database;
 
+import static org.mockito.Mockito.when;
+
 import com.tkap11.spendingrecord.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserDaoImplementationTest {
@@ -56,6 +57,15 @@ class UserDaoImplementationTest {
   void registerUser() {
     int register = userDaoImplementation.registerUser("userId", "displayName");
     Assert.assertEquals(register, 0);
+  }
+
+  @Test
+  void statusIngatkanbyUserId() {
+    userDaoImplementation.setStatusIngatkanbyUserId("true", "userId");
+    List<User> userList = userDaoImplementation.getStatusIngatkanbyUserId("userId");
+    Assert.assertNull(userList);
+    userList = userDaoImplementation.getAllUserIngatkanAktif();
+    Assert.assertNull(userList);
   }
 
   @Test

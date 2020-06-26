@@ -22,9 +22,11 @@ import com.linecorp.bot.model.response.BotApiResponse;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import com.tkap11.spendingrecord.state.State;
 import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
+import com.tkap11.spendingrecord.state.ingatkansaya.IngatkanSayaConfirmationState;
 import com.tkap11.spendingrecord.state.lihatlaporan.LihatCategoryLaporanState;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,6 +52,9 @@ class BotServiceTest {
   UserDatabase userDatabase;
 
   @Mock
+  private UserDatabase userService;
+
+  @Mock
   private Source source;
 
   @Mock
@@ -57,6 +62,9 @@ class BotServiceTest {
 
   @Mock
   private LihatCategoryLaporanState lihatCategoryLaporanState;
+
+  @Mock
+  private IngatkanSayaConfirmationState ingatkanSayaConfirmationState;
 
   @Mock
   private HashMap<String, State> currentHandler = new HashMap<>();
@@ -67,8 +75,6 @@ class BotServiceTest {
         .thenReturn(CompletableFuture.completedFuture(
             new UserProfileResponse("displayName", "userId", "", "")
         ));
-    when(userDatabase.registerUser("userId", "displayName"))
-        .thenReturn(2);
     String senderId = source.getSenderId();
     UserProfileResponse sender = botService.getProfile(senderId);
     FlexMessage flexMessage = botTemplate.createFlexMenu();
@@ -174,7 +180,7 @@ class BotServiceTest {
         .thenReturn(CompletableFuture.completedFuture(
             new BotApiResponse("ok", Collections.emptyList())
         ));
-    botService.replyFlexSisa("replyToken","category", "budget", "sisa");
+    botService.replyFlexSisa("replyToken", "category", "budget", "sisa");
     verify(lineMessagingClient).replyMessage(new ReplyMessage(
         "replyToken", messageList));
   }
@@ -193,31 +199,36 @@ class BotServiceTest {
         .thenReturn(CompletableFuture.completedFuture(
             new BotApiResponse("ok", Collections.emptyList())
         ));
-    botService.replyFlexSisaBackup("replyToken","category");
+    botService.replyFlexSisaBackup("replyToken", "category");
     verify(botTemplate, times(1)).createFlexSisaBackup("CATEGORY");
   }
 
   @Test
   void handleMessageEventWhenUserSendIngatkanMessage() {
-    final MessageEvent request = new MessageEvent<>(
+    TextMessage message = new TextMessage("ingatkan");
+    doNothing().when(ingatkanSayaConfirmationState).setUserId(null);
+    doNothing().when(ingatkanSayaConfirmationState).getUserIngatkanResponse();
+    when(ingatkanSayaConfirmationState.getMessagetoUser())
+        .thenReturn(message);
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+        "replyToken", Arrays.asList(message))))
+        .thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+        ));
+    MessageEvent request = new MessageEvent<>(
         "replyToken",
         new UserSource("userId"),
         new TextMessageContent("id", "ingatkan"),
         Instant.now()
     );
-    FlexMessage flexMessage = botTemplate.createFlexAlarm();
-    List<Message> messageList = new ArrayList<>();
-    messageList.add(new TextMessage("Fitur ini belum dapat digunakan, masih dalam tahap pengembangan"));
-    messageList.add(flexMessage);
-
-    when(lineMessagingClient.replyMessage(new ReplyMessage(
-        "replyToken", messageList)))
-        .thenReturn(CompletableFuture.completedFuture(
-            new BotApiResponse("ok", Collections.emptyList())
-        ));
     botService.handleMessageEvent(request);
-    verify(lineMessagingClient).replyMessage(new ReplyMessage(
-        "replyToken", messageList));
+    verify(ingatkanSayaConfirmationState, times(1)).setUserId(null);
+    verify(ingatkanSayaConfirmationState, times(1)).getUserIngatkanResponse();
+    verify(ingatkanSayaConfirmationState, times(1)).getMessagetoUser();
+
+    when(currentHandler.get(null))
+        .thenReturn(new IngatkanSayaConfirmationState());
+    botService.handleMessageEvent(request);
   }
 
   @Test
@@ -266,10 +277,12 @@ class BotServiceTest {
         new TextMessageContent("id", "makanan"),
         Instant.now()
     );
+    TextMessage textMessage = new TextMessage("Kategori berhasil dipilih. "
+        + "Berapa uang yang kamu habiskan untuk makanan ?");
     when(currentHandler.get(null))
         .thenReturn(new ChooseCategoryState("senderId", "displayName"));
     when(lineMessagingClient.replyMessage(new ReplyMessage(
-        "replyToken", singletonList(null))))
+        "replyToken", Arrays.asList(textMessage))))
         .thenReturn(CompletableFuture.completedFuture(
             new BotApiResponse("ok", Collections.emptyList())
         ));
@@ -344,5 +357,34 @@ class BotServiceTest {
         users, textMessage
     ))).thenThrow(new RuntimeException());
     botService.multicast(users, textMessage);
+  }
+
+  @Test
+  void reminderUsers() {
+    Set<String> userIdList = new HashSet<>();
+    TextMessage textSiang = new TextMessage("Sudah makan siang? "
+        + "jangan lupa catat pengeluarannya ya!");
+    when(userService.getAllUserIngatkanAktif()).thenReturn(userIdList);
+    when(lineMessagingClient.multicast(new Multicast(
+        userIdList, textSiang
+    ))).thenReturn(CompletableFuture.completedFuture(
+        new BotApiResponse("ok", Collections.emptyList())
+    ));
+    botService.reminderSiang();
+    verify(lineMessagingClient).multicast(new Multicast(
+        userIdList, textSiang
+    ));
+
+    TextMessage textMalam = new TextMessage("Sebelum tidur, catat pengeluaran hari ini dulu yuk!");
+    when(userService.getAllUserIngatkanAktif()).thenReturn(userIdList);
+    when(lineMessagingClient.multicast(new Multicast(
+        userIdList, textMalam
+    ))).thenReturn(CompletableFuture.completedFuture(
+        new BotApiResponse("ok", Collections.emptyList())
+    ));
+    botService.reminderMalam();
+    verify(lineMessagingClient).multicast(new Multicast(
+        userIdList, textMalam
+    ));
   }
 }
