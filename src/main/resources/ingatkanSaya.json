@@ -5,11 +5,8 @@
     "layout": "vertical",
     "contents": [
       {
-        "type": "text",
-        "text": "Remainder",
-        "weight": "bold",
-        "size": "md",
-        "align": "center"
+        "type": "separator",
+        "color": "#348255"
       }
     ]
   },
@@ -26,7 +23,7 @@
     "contents": [
       {
         "type": "text",
-        "text": "Notifikasi Pengingat akan dikirimkan pada jam 13:00 dan 21:00",
+        "text": "Notifikasi Pengingat akan dikirimkan pada jam 13:00 dan 21:00 WIB",
         "size": "sm",
         "wrap": true,
         "margin": "lg"
@@ -39,7 +36,7 @@
     "contents": [
       {
         "type": "separator",
-        "color": "#000000"
+        "color": "#348255"
       },
       {
         "type": "text",
