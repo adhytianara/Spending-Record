@@ -161,13 +161,13 @@ public class BotService {
     List<Message> messageList = new ArrayList<>();
     if (message.toString().contains("menonaktifkan")) {
       FlexMessage flexMessage = botTemplate.createFlexAlarm("Sedang Aktif");
-      messageList.add(message);
       messageList.add(flexMessage);
+      messageList.add(message);
       reply(replyToken, messageList);
     } else if (message.toString().contains("mengaktifkan")) {
       FlexMessage flexMessage = botTemplate.createFlexAlarm("Tidak Aktif");
-      messageList.add(message);
       messageList.add(flexMessage);
+      messageList.add(message);
       reply(replyToken, messageList);
     } else {
       reply(replyToken, message);

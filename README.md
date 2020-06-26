@@ -20,6 +20,7 @@ Ingatkan Saya [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/ba
 Atur Budget [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/AturBudget-Ismail/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/AturBudget-Ismail)<br>
 ##### Ihsan : <br>
 Sisa Budget [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/SisaPengeluaran-Ihsan/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/SisaPengeluaran-Ihsan)<br>
+Desain Logo & Flex<br>
 ##### Nabilah : <br>
 Ingatkan Saya [![coverage report](https://gitlab.com/TKAdpro11/SpendingRecord/badges/IngatkanSaya-NabilahAdani/coverage.svg)](https://gitlab.com/TKAdpro11/SpendingRecord/-/commits/IngatkanSaya-NabilahAdani)<br>
 ##### Dahlan : <br>
