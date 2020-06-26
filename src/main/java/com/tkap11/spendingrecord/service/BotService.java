@@ -85,7 +85,7 @@ public class BotService {
     remindUsers("Sebelum tidur, catat pengeluaran hari ini dulu yuk!");
   }
 
-  @Scheduled(cron = "0 0 0 1 * *")
+  @Scheduled(cron = "0 0 0 1 * ? *")
   private void monthlyNotification() {
     remindUsers("Sudah Awal bulan lho. Jangan lupa atur budgetmu untuk bulan ini ya.");
   }
