@@ -33,7 +33,7 @@ public class LihatCategoryLaporanState extends LihatLaporanState {
 
   @Override
   public LihatLaporanState otherServiceMessage() {
-    messageToUser = "Untuk beralih ke fitur lain, klik tombol 'Batal' terlebih dahulu";
+    messageToUser = "Untuk beralih ke fitur lain, kirim pesan 'batal' terlebih dahulu";
     this.message = new TextMessage(messageToUser);
     return this;
   }
