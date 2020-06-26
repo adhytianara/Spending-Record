@@ -47,6 +47,9 @@ public class UserDatabase {
     return userDao.getStatusIngatkanbyUserId(userId);
   }
 
+  /**
+   * Get all user that has active status.
+   */
   public Set<String> getAllUserIngatkanAktif() {
     List<User> users = userDao.getAllUserIngatkanAktif();
     List<String> userIdList = new ArrayList<>();
