@@ -108,6 +108,9 @@ public class BotService {
     List<Message> messageList = new ArrayList<>();
     messageList.add(new TextMessage("Berikut adalah Sisa Budget-mu pada kategori : " + category));
     messageList.add(flexMessage);
+    if (sisa.equals("0")) {
+      messageList.add(new TextMessage("Semoga kedepannya bisa lebih berhemat yaa..."));
+    }
     reply(replyToken, messageList);
   }
 
@@ -195,27 +198,6 @@ public class BotService {
       e.printStackTrace();
     }
   }
-
-  @Scheduled(cron = "* */5 * * * *")
-  private void monthlyNotification() {
-    Set<String> userIDs = new HashSet<String>();
-    for (User user: userService.getAllUsers()) {
-      userIDs.add(user.getUserId());
-    }
-    sendMulticast(userIDs, "Sudah Awal bulan lho. Jangan lupa atur budgetmu untuk bulan ini ya.");
-  }
-
-  private void sendMulticast(Set<String> sourceUsers, String txtMessage) {
-    TextMessage message = new TextMessage(txtMessage);
-    Multicast multicast = new Multicast(sourceUsers, message);
-
-    try {
-      lineMessagingClient.multicast(multicast).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
 
   private void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
     try {
