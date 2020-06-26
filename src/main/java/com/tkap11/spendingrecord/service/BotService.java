@@ -163,6 +163,7 @@ public class BotService {
       FlexMessage flexMessage = botTemplate.createFlexAlarm("Tidak Aktif");
       messageList.add(message);
       messageList.add(flexMessage);
+      reply(replyToken, messageList);
     } else {
       reply(replyToken, message);
     }
