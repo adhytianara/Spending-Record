@@ -30,4 +30,10 @@ class AturConfirmationStateTest {
     AturState nextState = state.handleUserRequest("agefjhababf,masm,", "bla");
     assertTrue(nextState instanceof AturConfirmationState);
   }
+
+  @Test
+  void otherServiceMessage() {
+    AturState nextState = state.otherServiceMessage();
+    assertTrue(nextState instanceof AturConfirmationState);
+  }
 }

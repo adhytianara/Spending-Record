@@ -86,7 +86,7 @@ public class BotService {
   }
 
   @Scheduled(cron = "0 0 0 1 * *")
-  private void monthlyNotification() {
+  public void monthlyNotification() {
     remindUsers("Sudah Awal bulan lho. Jangan lupa atur budgetmu untuk bulan ini ya.");
   }
 
@@ -161,17 +161,21 @@ public class BotService {
     List<Message> messageList = new ArrayList<>();
     if (message.toString().contains("menonaktifkan")) {
       FlexMessage flexMessage = botTemplate.createFlexAlarm("Sedang Aktif");
-      messageList.add(message);
       messageList.add(flexMessage);
+      messageList.add(message);
       reply(replyToken, messageList);
     } else if (message.toString().contains("mengaktifkan")) {
       FlexMessage flexMessage = botTemplate.createFlexAlarm("Tidak Aktif");
-      messageList.add(message);
       messageList.add(flexMessage);
+      messageList.add(message);
       reply(replyToken, messageList);
     } else {
       reply(replyToken, message);
     }
+  }
+
+  public boolean condition() {
+    return false;
   }
 
   public void replyFlexUbah(String replyToken) {
@@ -242,7 +246,10 @@ public class BotService {
     }
   }
 
-  private void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
+  /**
+   * Display sisa budget to user.
+   */
+  public void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
     try {
       String category = sisaResult.get(0).getCategory();
       String budget = Integer.toString(sisaResult.get(0).getBudget());

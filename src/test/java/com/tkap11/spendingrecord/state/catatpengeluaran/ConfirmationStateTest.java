@@ -3,6 +3,7 @@ package com.tkap11.spendingrecord.state.catatpengeluaran;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.tkap11.spendingrecord.state.sisabudget.SisaBudgetState;
 import org.junit.jupiter.api.Test;
 
 class ConfirmationStateTest {
@@ -43,5 +44,11 @@ class ConfirmationStateTest {
   void getDescription() {
     String description = currentState.getDescription();
     assertEquals("senderId;displayName;null;null", description);
+  }
+
+  @Test
+  void otherServiceMessage() {
+    CatatPengeluaranState nextState = this.currentState.otherServiceMessage();
+    assertTrue(nextState instanceof ConfirmationState);
   }
 }

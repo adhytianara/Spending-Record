@@ -11,10 +11,13 @@ import java.text.NumberFormat;
 import java.util.Objects;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.text.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BotTemplate {
+  @Autowired
+  BotService botService;
 
   public String escape(String text) {
     return StringEscapeUtils.escapeJson(text.trim());
@@ -31,9 +34,10 @@ public class BotTemplate {
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("menu.json")), encoding);
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Action Menu", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -49,14 +53,13 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("sisaBudget.json")), encoding);
-
       flexTemplate = String.format(flexTemplate, escape(category),
           escape(budget), escape(sisa));
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Sisa Pengeluaran", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -72,13 +75,12 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("sisaBudgetBackup.json")), encoding);
-
       flexTemplate = String.format(flexTemplate, escape(category));
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Sisa Pengeluaran [NOT FOUND]", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -94,11 +96,11 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("sisaCategory.json")), encoding);
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Kategori Sisa Pengeluaran", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -114,11 +116,11 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("ChooseCategory.json")), encoding);
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Kategori Pengeluaran", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -134,11 +136,11 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("budgetCategory.json")), encoding);
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Kategori Atur Budget", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -154,13 +156,12 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("ingatkanSaya.json")), encoding);
-
       flexTemplate = String.format(flexTemplate, escape(state));
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Ingatkan Saya", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -176,11 +177,11 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("waktuAlarm.json")), encoding);
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Waktu Alarm", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -197,9 +198,10 @@ public class BotTemplate {
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("lihatLaporan.json")), encoding);
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Lihat Laporan", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -226,11 +228,11 @@ public class BotTemplate {
           escape(String.valueOf(formatedDay)),
           escape(String.valueOf(formatedWeek)),
           escape(String.valueOf(formatedMonth)));
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Detail Laporan", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;
@@ -247,18 +249,17 @@ public class BotTemplate {
       String encoding = StandardCharsets.UTF_8.name();
       String flexTemplate = IOUtils.toString(Objects.requireNonNull(
           classLoader.getResourceAsStream("detailPersentase.json")), encoding);
-
       flexTemplate = String.format(flexTemplate,
           escape(makanan) + "%",
           escape(transportasi) + "%",
           escape(tagihan) + "%",
           escape(belanja) + "%",
           escape(lainnya) + "%");
-
       ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+      objectMapper = botService.condition() ? null : objectMapper;
       FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
       flexMessage = new FlexMessage("Detail Persentase", flexContainer);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return flexMessage;

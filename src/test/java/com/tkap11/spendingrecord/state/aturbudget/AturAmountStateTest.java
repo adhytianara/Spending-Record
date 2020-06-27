@@ -2,6 +2,8 @@ package com.tkap11.spendingrecord.state.aturbudget;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.tkap11.spendingrecord.state.catatpengeluaran.CatatPengeluaranState;
+import com.tkap11.spendingrecord.state.catatpengeluaran.ConfirmationState;
 import org.junit.jupiter.api.Test;
 
 class AturAmountStateTest {
@@ -28,6 +30,12 @@ class AturAmountStateTest {
   @Test
   void unknownMessage() {
     AturState nextState = state.handleUserRequest("ahfbskjbskjfbas", "bla");
+    assertTrue(nextState instanceof AturAmountState);
+  }
+
+  @Test
+  void otherServiceMessage() {
+    AturState nextState = state.otherServiceMessage();
     assertTrue(nextState instanceof AturAmountState);
   }
 }
