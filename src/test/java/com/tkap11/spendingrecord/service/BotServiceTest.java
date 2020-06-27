@@ -19,11 +19,14 @@ import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
+import com.tkap11.spendingrecord.model.Budget;
 import com.tkap11.spendingrecord.repository.UserDatabase;
 import com.tkap11.spendingrecord.state.State;
+import com.tkap11.spendingrecord.state.aturbudget.AturCategoryState;
 import com.tkap11.spendingrecord.state.catatpengeluaran.ChooseCategoryState;
 import com.tkap11.spendingrecord.state.ingatkansaya.IngatkanSayaConfirmationState;
 import com.tkap11.spendingrecord.state.lihatlaporan.LihatCategoryLaporanState;
+import com.tkap11.spendingrecord.state.sisabudget.SisaCategoryState;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,6 +163,9 @@ class BotServiceTest {
         ));
     botService.handleMessageEvent(request);
     verify(botTemplate, times(1)).createFlexBudgetCategory();
+    when(currentHandler.get(null))
+        .thenReturn(new AturCategoryState());
+    botService.handleMessageEvent(request);
   }
 
   @Test
@@ -177,6 +183,9 @@ class BotServiceTest {
         ));
     botService.handleMessageEvent(request);
     verify(botTemplate, times(1)).createFlexSisaCategory();
+    when(currentHandler.get(null))
+        .thenReturn(new SisaCategoryState("userId"));
+    botService.handleMessageEvent(request);
   }
 
   @Test
@@ -334,6 +343,9 @@ class BotServiceTest {
         Instant.now()
     );
     botService.handleMessageEvent(request);
+    when(currentHandler.get(null))
+        .thenReturn(new LihatCategoryLaporanState());
+    botService.handleMessageEvent(request);
   }
 
   @Test
@@ -421,5 +433,21 @@ class BotServiceTest {
   @Test
   void condition() {
     botService.condition();
+  }
+
+  @Test
+  void executeSisa(){
+    List<Budget> sisaResult = Arrays.asList(
+        new Budget("userId", "makanan", 10000,
+            1000, "juni")
+    );
+    when(lineMessagingClient.replyMessage(new ReplyMessage(
+        "replyToken", singletonList(null))))
+        .thenReturn(CompletableFuture.completedFuture(
+            new BotApiResponse("ok", Collections.emptyList())
+        ));
+    botService.executeSisa("replyToken", sisaResult, null);
+    String[] sisaBackup = new String[]{"makanan", "tagihan"};
+    botService.executeSisa("replyToken", null, sisaBackup);
   }
 }

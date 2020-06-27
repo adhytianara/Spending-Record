@@ -246,7 +246,7 @@ public class BotService {
     }
   }
 
-  private void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
+  public void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
     try {
       String category = sisaResult.get(0).getCategory();
       String budget = Integer.toString(sisaResult.get(0).getBudget());
