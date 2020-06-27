@@ -246,6 +246,9 @@ public class BotService {
     }
   }
 
+  /**
+   * Display sisa budget to user.
+   */
   public void executeSisa(String replyToken, List<Budget> sisaResult, String[] sisaBackup) {
     try {
       String category = sisaResult.get(0).getCategory();
