@@ -2,14 +2,10 @@
   "type": "bubble",
   "hero": {
     "type": "image",
-    "url": "https://files.catbox.moe/02n9ge.png",
+    "url": "https://i.ibb.co/qdNBGDf/3.png",
     "size": "full",
     "aspectRatio": "20:13",
-    "aspectMode": "cover",
-    "action": {
-      "type": "message",
-      "text": "menu"
-    }
+    "aspectMode": "cover"
   },
   "body": {
     "type": "box",
@@ -21,11 +17,11 @@
         "contents": [
           {
             "type": "text",
-            "text": "Catat Pengeluaran",
+            "text": "Pilih Kategori",
             "size": "xl",
             "color": "#348255",
             "weight": "bold",
-            "decoration": "none"
+            "align": "center"
           }
         ]
       },
