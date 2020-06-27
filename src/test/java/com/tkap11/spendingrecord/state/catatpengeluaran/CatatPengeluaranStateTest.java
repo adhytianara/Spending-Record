@@ -3,6 +3,7 @@ package com.tkap11.spendingrecord.state.catatpengeluaran;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.tkap11.spendingrecord.state.sisabudget.SisaCategoryState;
 import org.junit.jupiter.api.Test;
 
 class CatatPengeluaranStateTest {
@@ -30,5 +31,8 @@ class CatatPengeluaranStateTest {
 
     nextState = state.handleUserRequest("batal");
     assertEquals(nextState, null);
+
+    nextState = state.handleUserRequest("menu");
+    assertTrue(nextState instanceof CatatPengeluaranState);
   }
 }
