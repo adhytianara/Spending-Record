@@ -44,4 +44,10 @@ class InsertMoneyStateTest {
     String description = currentState.getDescription();
     assertEquals("senderId;displayName;null", description);
   }
+
+  @Test
+  void otherServiceMessage() {
+    CatatPengeluaranState nextState = this.currentState.otherServiceMessage();
+    assertTrue(nextState instanceof InsertMoneyState);
+  }
 }

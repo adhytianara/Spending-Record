@@ -86,7 +86,7 @@ public class BotService {
   }
 
   @Scheduled(cron = "0 0 0 1 * *")
-  private void monthlyNotification() {
+  public void monthlyNotification() {
     remindUsers("Sudah Awal bulan lho. Jangan lupa atur budgetmu untuk bulan ini ya.");
   }
 
@@ -172,6 +172,10 @@ public class BotService {
     } else {
       reply(replyToken, message);
     }
+  }
+
+  public boolean condition() {
+    return false;
   }
 
   public void replyFlexUbah(String replyToken) {

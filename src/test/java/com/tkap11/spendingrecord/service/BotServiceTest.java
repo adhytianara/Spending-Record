@@ -403,5 +403,23 @@ class BotServiceTest {
     verify(lineMessagingClient).multicast(new Multicast(
         userIdList, textMalam
     ));
+
+    TextMessage monthly = new TextMessage("Sudah Awal bulan lho. "
+        + "Jangan lupa atur budgetmu untuk bulan ini ya.");
+    when(userService.getAllUserIngatkanAktif()).thenReturn(userIdList);
+    when(lineMessagingClient.multicast(new Multicast(
+        userIdList, monthly
+    ))).thenReturn(CompletableFuture.completedFuture(
+        new BotApiResponse("ok", Collections.emptyList())
+    ));
+    botService.monthlyNotification();
+    verify(lineMessagingClient).multicast(new Multicast(
+        userIdList, monthly
+    ));
+  }
+
+  @Test
+  void condition() {
+    botService.condition();
   }
 }
