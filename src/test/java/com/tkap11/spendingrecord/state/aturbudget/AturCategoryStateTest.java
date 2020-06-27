@@ -24,5 +24,8 @@ class AturCategoryStateTest {
 
     nextState = state.handleUserRequest("batal", "bla");
     assertEquals(nextState, null);
+
+    nextState = state.handleUserRequest("menu", "bla");
+    assertTrue(nextState instanceof AturCategoryState);
   }
 }
