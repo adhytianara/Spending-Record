@@ -436,7 +436,7 @@ class BotServiceTest {
   }
 
   @Test
-  void executeSisa(){
+  void executeSisa() {
     List<Budget> sisaResult = Arrays.asList(
         new Budget("userId", "makanan", 10000,
             1000, "juni")
