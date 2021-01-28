@@ -14,12 +14,12 @@ public abstract class LihatLaporanState implements State {
       "menu", "atur budget", "sisa budget", "catat pengeluaran",
       "lihat laporan", "ingatkan saya", "reset data");
   protected List<String> urls = Arrays.asList(
-      "https://files.catbox.moe/0zswty.png",
-      "https://files.catbox.moe/o6wnt2.png",
-      "https://files.catbox.moe/a7d1of.png",
-      "https://files.catbox.moe/2uxzif.png",
-      "https://files.catbox.moe/0rxrkq.png",
-      "https://files.catbox.moe/etgtaw.png"
+      "https://i.ibb.co/pvp4SgK/0zswty.png",
+      "https://i.ibb.co/bBp825Z/o6wnt2.png",
+      "https://i.ibb.co/PD95Cs0/a7d1of.png",
+      "https://i.ibb.co/YBSKc6K/2uxzif.png",
+      "https://i.ibb.co/C8smqFf/0rxrkq.png",
+      "https://i.ibb.co/VVpC512/etgtaw.png"
   );
   protected LihatLaporanState state;
   protected String messageToUser;
